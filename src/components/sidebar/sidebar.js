@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Styled from './sidebar.styled';
-import {NameTitle, SideItem} from "./sidebar.styled";
+import {NODES} from "../nodes/nodes";
+
+
 
 export const Sidebar = () => {
+    const [search, setSearch] = useState('');
+    const [foundNodes, setFoundNodes] = useState(NODES);
+
     const onDragStart = (event, nodeType) => {
         event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';
+    };
+
+    const filter = (e) => {
+        const keyword = e.target.value;
+
+        if (keyword !== '') {
+            const results = NODES.filter((node) => {
+                return node.data.label.toLowerCase().startsWith(keyword.toLowerCase());
+            });
+            setFoundNodes(results);
+        } else {
+            setFoundNodes(NODES);
+        }
+
+        setSearch(keyword);
     };
 
     return (
@@ -14,17 +34,31 @@ export const Sidebar = () => {
                 <Styled.NameTitle>M-FLOW UFRGS</Styled.NameTitle>
             </Styled.TitleContainer>
             <Styled.SideAside>
+                <Styled.NameTitle>Nodos</Styled.NameTitle>
+                <Styled.InputSearch
+                    id="outlined-basic"
+                    label="Filtro"
+                    variant="outlined"
+                    type="search"
+                    value={search}
+                    onChange={filter}
+                    size="small"
+                    placeholder="Filtro"
+                />
                 <Styled.SideGraggAside>
-                    <Styled.SideItem onDragStart={(event) => onDragStart(event, 'input')} draggable>
-                        Input Node
-                    </Styled.SideItem>
-                    <Styled.SideItem onDragStart={(event) => onDragStart(event, 'default')} draggable>
-                        Default Node
-                    </Styled.SideItem>
-                    <Styled.SideItem onDragStart={(event) => onDragStart(event, 'output')} draggable>
-                        Output Node
-                    </Styled.SideItem>
+                    {foundNodes && foundNodes.length > 0 ? (
+                        foundNodes.map((node) => (
+                            <Styled.SideItem key={node.id} onDragStart={(event) => onDragStart(event, node.type)} draggable>
+                                {node.data.label}
+                            </Styled.SideItem>
+                        ))
+                    ) : (
+                        <></>
+                    )}
                 </Styled.SideGraggAside>
+                {
+                    foundNodes.length === 0 ? <Styled.NameTitle style={{textAlign: 'center'}}>Nenhum resultado encontrado!</Styled.NameTitle> : <></>
+                }
             </Styled.SideAside>
         </Styled.SideContainer>
     );

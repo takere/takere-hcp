@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import ReactFlow, {
     ReactFlowProvider,
     addEdge,
@@ -11,18 +11,45 @@ import ReactFlow, {
 import './dnd.css';
 import {Sidebar} from "../sidebar/sidebar";
 import {theme} from "../../utils/colors";
+import {getDataByNode, NodeTypes} from "../nodes/nodes";
+import {ConnectionLine} from "../connectionLine/connectionLine";
+import { DialogPop } from "../dialog/dialog"
 
 const initialElements = [];
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
-const onElementClick = (event, element) => console.log('click', element);
 
 const Diagrams = () => {
+    const [openDialog, setOpenDialog] = useState(false);
     const reactFlowWrapper = useRef(null);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [elements, setElements] = useState(initialElements);
-    const onConnect = (params) => setElements((els) => addEdge(params, els));
+    const [selectedElement, setSelectedElement] = useState(null);
+
+
+    const handleClickOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+        setSelectedElement(null);
+    };
+
+    const onElementClick = (event, element) => {
+        setSelectedElement(element);
+        handleClickOpenDialog()
+    }
+
+
+    const onConnect = useCallback(
+        (params) =>
+            setElements((els) =>
+                addEdge({ ...params, animated: true }, els)
+            ),
+        []
+    );
     const onElementsRemove = (elementsToRemove) =>
         setElements((els) => removeElements(elementsToRemove, els));
     const [captureElementClick, setCaptureElementClick] = useState(false);
@@ -48,7 +75,7 @@ const Diagrams = () => {
             id: getId(),
             type,
             position,
-            data: { label: `${type} node` },
+            data: getDataByNode(type),
         };
 
         setElements((es) => es.concat(newNode));
@@ -56,12 +83,15 @@ const Diagrams = () => {
 
     return (
         <div className="dndflow">
+            { selectedElement && openDialog && <DialogPop open={openDialog} handleClose={handleCloseDialog} data={selectedElement} /> }
             <ReactFlowProvider>
                 <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                     <ReactFlow
+                        nodeTypes={NodeTypes}
                         elements={elements}
                         onConnect={onConnect}
                         onElementsRemove={onElementsRemove}
+                        connectionLineComponent={ConnectionLine}
                         onElementClick={onElementClick}
                         onLoad={onLoad}
                         onDrop={onDrop}
