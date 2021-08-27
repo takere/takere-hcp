@@ -25,7 +25,14 @@ export const InputSearch = styled(TextField)`
   width: 100%;
 `;
 
+export const InputDefault = styled(TextField)`
+  width: 100%;
+  padding-top: 45px;
+`;
+
 export const SideItem = styled.div`
+  flex-direction: column;
+  flex: 1;
   margin-bottom: 5px;
   background-color: ${theme.colors.night.x1};
   padding: 10px;
@@ -33,18 +40,29 @@ export const SideItem = styled.div`
   border-radius: 8px;
   color: ${theme.colors.day.x1};
   font-weight: 400;
-  font-size: 14px;
 `;
 
 export const TitleContainer = styled.div`
-  margin-top: -10px;
   border-radius: 8px;
-  padding: 2px;
-  background-color: ${theme.colors.primary.x1};
+  background-color: #fff;
   text-align: center;
+`;
+
+export const TitleNodeItem = styled.p`
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+`;
+
+export const DescriptionNodeItem = styled.p`
+  text-align: left;
 `;
 
 export const NameTitle = styled.h2`
    color: ${theme.colors.night.x1};
    padding: 5px;
+`;
+
+export const Spacing = styled.div`
+  margin-bottom: 10px;
 `;

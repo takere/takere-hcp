@@ -1,6 +1,7 @@
 import React from 'react';
 import * as Styled from './menuDrawer.styled';
-import {Link, useRouteMatch} from "react-router-dom";
+import {Link, useHistory, useRouteMatch} from "react-router-dom";
+import {makeLogout} from "../../services/auth/auth";
 
 const MENU = [
     {
@@ -14,10 +15,20 @@ const MENU = [
 ]
 
 export const MenuDrawer = () => {
-    let { path, url } = useRouteMatch();
+    const history = useHistory();
+
+    const handleLogout = () => {
+        makeLogout();
+        history.push('/login');
+    }
+
+    const handleNew = () => {
+        history.push('/dash');
+    }
 
     return (
         <Styled.SideContainer>
+            <Styled.Spacing />
             {
                 MENU.map(m => (
                     <Link to={`${m.path}`}>
@@ -27,7 +38,10 @@ export const MenuDrawer = () => {
                     </Link>
                 ))
             }
-            <Styled.ExitSideItem>
+            <Styled.SideAddItem onClick={handleNew}>
+                <Styled.IconExit>add</Styled.IconExit>
+            </Styled.SideAddItem>
+            <Styled.ExitSideItem onClick={handleLogout}>
                 <Styled.IconExit>logout</Styled.IconExit>
             </Styled.ExitSideItem>
         </Styled.SideContainer>

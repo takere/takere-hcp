@@ -3,7 +3,6 @@ import * as Styled from './sidebar.styled';
 import {NODES} from "../nodes/nodes";
 
 
-
 export const Sidebar = () => {
     const [search, setSearch] = useState('');
     const [foundNodes, setFoundNodes] = useState(NODES);
@@ -30,9 +29,6 @@ export const Sidebar = () => {
 
     return (
         <Styled.SideContainer>
-            <Styled.TitleContainer>
-                <Styled.NameTitle>M-FLOW UFRGS</Styled.NameTitle>
-            </Styled.TitleContainer>
             <Styled.SideAside>
                 <Styled.NameTitle>Nodos</Styled.NameTitle>
                 <Styled.InputSearch
@@ -49,7 +45,12 @@ export const Sidebar = () => {
                     {foundNodes && foundNodes.length > 0 ? (
                         foundNodes.map((node) => (
                             <Styled.SideItem key={node.id} onDragStart={(event) => onDragStart(event, node.type)} draggable>
-                                {node.data.label}
+                                <Styled.TitleNodeItem>
+                                    {node.data.label}
+                                </Styled.TitleNodeItem>
+                                <Styled.DescriptionNodeItem>
+                                    {node.data.description}
+                                </Styled.DescriptionNodeItem>
                             </Styled.SideItem>
                         ))
                     ) : (

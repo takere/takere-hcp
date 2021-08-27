@@ -11,6 +11,10 @@ export const SideContainer = styled.div`
   border-color: ${theme.colors.night.x5};
 `;
 
+export const Spacing = styled.div`
+  margin-bottom: 35px;
+`;
+
 export const IconItem = styled(Icon)`
   font-size: 28px;
   color: ${theme.colors.night.x1};
@@ -30,7 +34,6 @@ export const ExitSideItem = styled.div`
   margin-bottom: 20px;
   flex: 1;
   display: flex;
-  align-self: flex-end;
   justify-content: center;
   align-content: center;
   align-items: center;
@@ -47,6 +50,26 @@ export const ExitSideItem = styled.div`
   }
 `;
 
+export const SideAddItem = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  background-color: ${theme.colors.primary.x1};;
+  margin-bottom: 25px;
+  padding: 10px 10px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  &:hover {
+    background-color: ${theme.colors.primary.x1};
+    ${IconItem} {
+      color: ${theme.colors.primary.x1};
+    }
+  }
+`;
+
 export const SideItem = styled.div`
   flex: 1;
   display: flex;
@@ -54,7 +77,7 @@ export const SideItem = styled.div`
   align-content: center;
   align-items: center;
   background-color: ${theme.colors.day.x1};;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   padding: 10px 10px;
   border-radius: 8px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);

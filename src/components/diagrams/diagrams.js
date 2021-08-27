@@ -14,6 +14,10 @@ import {theme} from "../../utils/colors";
 import {getDataByNode, NodeTypes} from "../nodes/nodes";
 import {ConnectionLine} from "../connectionLine/connectionLine";
 import { DialogPop } from "../dialog/dialog"
+import Button from "@material-ui/core/Button";
+import * as Styled from "../sidebar/sidebar.styled";
+import {SaveDialogPop} from "../dialog/saveDialog";
+import Icon from "@material-ui/core/Icon";
 
 const initialElements = [];
 
@@ -22,6 +26,7 @@ const getId = () => `dndnode_${id++}`;
 
 const Diagrams = () => {
     const [openDialog, setOpenDialog] = useState(false);
+    const [openSaveDialog, setOpenSaveDialog] = useState(false);
     const reactFlowWrapper = useRef(null);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [elements, setElements] = useState(initialElements);
@@ -32,9 +37,18 @@ const Diagrams = () => {
         setOpenDialog(true);
     };
 
+    const handleClickOpenSaveDialog = () => {
+        console.log('asdada')
+        setOpenSaveDialog(true);
+    };
+
     const handleCloseDialog = () => {
         setOpenDialog(false);
         setSelectedElement(null);
+    };
+
+    const handleCloseSaveDialog = () => {
+        setOpenSaveDialog(false);
     };
 
     const onElementClick = (event, element) => {
@@ -83,6 +97,7 @@ const Diagrams = () => {
 
     return (
         <div className="dndflow">
+            { openSaveDialog && <SaveDialogPop open={openSaveDialog} handleClose={handleCloseSaveDialog} data={{}} /> }
             { selectedElement && openDialog && <DialogPop open={openDialog} handleClose={handleCloseDialog} data={selectedElement} /> }
             <ReactFlowProvider>
                 <div className="reactflow-wrapper" ref={reactFlowWrapper}>
@@ -106,6 +121,21 @@ const Diagrams = () => {
                             size={1}
                         />
                         <Controls />
+
+                        <Button
+                            style={{
+                                zIndex: '1000',
+                                position: 'absolute',
+                                bottom: 0,
+                                right: 0,
+                                marginBottom: 20,
+                                marginRight: 20,
+                                backgroundColor: theme.colors.primary.x1,
+                                width: '50px'}}
+                            onClick={handleClickOpenSaveDialog}
+                            variant="contained">
+                            <Icon style={{textAlign: 'center', fontSize: 28, color: theme.colors.night.x1 }}>save</Icon>
+                        </Button>
                     </ReactFlow>
                 </div>
                 <Sidebar />
