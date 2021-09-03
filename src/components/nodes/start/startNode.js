@@ -4,7 +4,7 @@ import Icon from '@material-ui/core/Icon';
 import * as Styled from "./startNode.styled";
 import {theme} from "../../../utils/colors";
 
-export const StartNode = ({ data }) => {
+export const StartNode = (data) => {
     return (
         <Styled.Node>
             <Styled.NodeContainer>

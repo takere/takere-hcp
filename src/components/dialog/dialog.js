@@ -11,7 +11,7 @@ import {theme} from "../../utils/colors";
 export const DialogPop = ({open, handleClose, data}) => {
     const { data: payloadData } = data;
 
-    console.log('data dialog', payloadData, data)
+    console.log('data dialog', payloadData)
 
     return (
         <Dialog
@@ -22,13 +22,13 @@ export const DialogPop = ({open, handleClose, data}) => {
             aria-labelledby="max-width-dialog-title"
         >
             <DialogTitle id="max-width-dialog-title">
-                {payloadData.data.label}
+                {payloadData.label}
                 <DialogContentText>
-                {payloadData.data.description}
+                {payloadData.description}
             </DialogContentText></DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    {payloadData.data.description}
+                    {payloadData.description}
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

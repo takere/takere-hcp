@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import * as Styled from './sidebar.styled';
-import {NODES} from "../nodes/nodes";
+import {Requests} from "../../services/axios/requests";
 
 
 export const Sidebar = () => {
     const [search, setSearch] = useState('');
-    const [foundNodes, setFoundNodes] = useState(NODES);
+    const [nodes, setNodes] = useState([]);
+    const [foundNodes, setFoundNodes] = useState([]);
 
-    const onDragStart = (event, nodeType) => {
-        event.dataTransfer.setData('application/reactflow', nodeType);
+    useEffect(() => {
+        new Requests().getNodes().then(r => {
+            console.log(r)
+            setNodes(r);
+            setFoundNodes(r);
+        })
+    }, []);
+
+    const onDragStart = (event, node) => {
+        event.dataTransfer.setData('application/reactflow', JSON.stringify(node));
         event.dataTransfer.effectAllowed = 'move';
     };
 
@@ -16,12 +25,12 @@ export const Sidebar = () => {
         const keyword = e.target.value;
 
         if (keyword !== '') {
-            const results = NODES.filter((node) => {
+            const results = nodes.filter((node) => {
                 return node.data.label.toLowerCase().startsWith(keyword.toLowerCase());
             });
             setFoundNodes(results);
         } else {
-            setFoundNodes(NODES);
+            setFoundNodes(nodes);
         }
 
         setSearch(keyword);
@@ -44,7 +53,7 @@ export const Sidebar = () => {
                 <Styled.SideGraggAside>
                     {foundNodes && foundNodes.length > 0 ? (
                         foundNodes.map((node) => (
-                            <Styled.SideItem key={node.id} onDragStart={(event) => onDragStart(event, node.type)} draggable>
+                            <Styled.SideItem key={node.id} onDragStart={(event) => onDragStart(event, node)} draggable>
                                 <Styled.TitleNodeItem>
                                     {node.data.label}
                                 </Styled.TitleNodeItem>

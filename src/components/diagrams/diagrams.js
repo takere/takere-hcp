@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, {useState, useRef, useCallback, useEffect} from 'react';
 import ReactFlow, {
     ReactFlowProvider,
     addEdge,
@@ -24,13 +24,25 @@ const initialElements = [];
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
-const Diagrams = () => {
+const Diagrams = ({flowDb}) => {
     const [openDialog, setOpenDialog] = useState(false);
     const [openSaveDialog, setOpenSaveDialog] = useState(false);
     const reactFlowWrapper = useRef(null);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [elements, setElements] = useState(initialElements);
     const [selectedElement, setSelectedElement] = useState(null);
+    const [flow, setFlow] = useState(null);
+
+    useEffect(() => {
+        if(flowDb?.data){
+            setElements(flowDb.data)
+            console.log(elements)
+            setFlow(flowDb);
+        } else {
+            setElements([])
+            setFlow(null)
+        }
+    }, [flowDb]);
 
 
     const handleClickOpenDialog = () => {
@@ -80,24 +92,23 @@ const Diagrams = () => {
         event.preventDefault();
 
         const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-        const type = event.dataTransfer.getData('application/reactflow');
+        const node = JSON.parse(event.dataTransfer.getData('application/reactflow'));
         const position = reactFlowInstance.project({
             x: event.clientX - reactFlowBounds.left,
             y: event.clientY - reactFlowBounds.top,
         });
         const newNode = {
             id: getId(),
-            type,
+            type: node.type,
             position,
-            data: getDataByNode(type),
+            data: node.data,
         };
-
         setElements((es) => es.concat(newNode));
     };
 
     return (
         <div className="dndflow">
-            { openSaveDialog && <SaveDialogPop open={openSaveDialog} handleClose={handleCloseSaveDialog} data={{}} /> }
+            { openSaveDialog && <SaveDialogPop open={openSaveDialog} handleClose={handleCloseSaveDialog} data={{flow, elements}} /> }
             { selectedElement && openDialog && <DialogPop open={openDialog} handleClose={handleCloseDialog} data={selectedElement} /> }
             <ReactFlowProvider>
                 <div className="reactflow-wrapper" ref={reactFlowWrapper}>

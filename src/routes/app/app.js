@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import {BrowserRouter as Router, useRouteMatch, Switch} from "react-router-dom";
+import {useRouteMatch, Switch} from "react-router-dom";
 import {MenuDrawer} from "../../components/menuDrawer/menuDrawer";
-import {Login} from "../login/login";
 import ProtectedRoute from "../protectedRoute/protectedRoute";
 import {Home} from "../home/home";
 import {Dashboard} from "../dashboard/dashboard";
@@ -19,6 +18,7 @@ export const AppPage = () => {
             <MenuDrawer />
                     <Switch>
                         <ProtectedRoute exact path={`/`} component={Home} />
+                        <ProtectedRoute path={`/dash/flow/:id`} component={Dashboard} />
                         <ProtectedRoute path={`/dash`} component={Dashboard} />
                         <ProtectedRoute path={`/profile`} component={Profile} />
                     </Switch>

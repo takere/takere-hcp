@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -7,11 +7,26 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {theme} from "../../utils/colors";
 import * as Styled from "../sidebar/sidebar.styled";
+import {Requests} from "../../services/axios/requests";
 
 
 export const SaveDialogPop = ({open, handleClose, data}) => {
-    const [name, setName] = useState('');
+    const [name, setName] = useState( '');
     const [description, setDescription] = useState('');
+    const [dataFlow, setDataFlow] = useState([]);
+
+
+    useEffect(() => {
+        console.log(data)
+        if(data?.flow?.flowName){
+            setName(data.flow.flowName)
+        }
+        if(data?.flow?.flowDescription){
+            setDescription(data.flow.flowDescription)
+        }
+        console.log(data?.elements)
+        setDataFlow(data?.elements)
+    }, [data]);
 
     const onNameChange = (e) => {
         const keyword = e.target.value;
@@ -19,7 +34,15 @@ export const SaveDialogPop = ({open, handleClose, data}) => {
     }
 
     const handleSave = () => {
+        const payload = {
+            name,
+            description,
+            data: dataFlow
+        }
 
+        new Requests().createOrUpdateFlow(payload).then(r => {
+            handleClose()
+        })
     }
 
     const onDescriptionChange = (e) => {
