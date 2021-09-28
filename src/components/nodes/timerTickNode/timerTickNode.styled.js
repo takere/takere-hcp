@@ -4,14 +4,14 @@ import {theme} from "../../../utils/colors";
 export const Node = styled.div`
   background: ${theme.colors.feedback.success.x1};
   color: ${theme.colors.day.x1};
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   align-content: center;
   align-items: center;
-  border-width: 2px;
+  border-width: 1px;
   border-color: ${theme.colors.night.x1};
   border-style:solid;
-  border-radius: 8px;
+  border-radius: 12px;
   display: flex;
   justify-content: center;
 `;

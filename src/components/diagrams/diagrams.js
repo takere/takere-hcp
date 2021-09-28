@@ -11,11 +11,10 @@ import ReactFlow, {
 import './dnd.css';
 import {Sidebar} from "../sidebar/sidebar";
 import {theme} from "../../utils/colors";
-import {getDataByNode, NodeTypes} from "../nodes/nodes";
+import {NodeTypes} from "../nodes/nodes";
 import {ConnectionLine} from "../connectionLine/connectionLine";
 import { DialogPop } from "../dialog/dialog"
 import Button from "@material-ui/core/Button";
-import * as Styled from "../sidebar/sidebar.styled";
 import {SaveDialogPop} from "../dialog/saveDialog";
 import Icon from "@material-ui/core/Icon";
 
@@ -36,7 +35,6 @@ const Diagrams = ({flowDb}) => {
     useEffect(() => {
         if(flowDb?.data){
             setElements(flowDb.data)
-            console.log(elements)
             setFlow(flowDb);
         } else {
             setElements([])
@@ -44,13 +42,11 @@ const Diagrams = ({flowDb}) => {
         }
     }, [flowDb]);
 
-
     const handleClickOpenDialog = () => {
         setOpenDialog(true);
     };
 
     const handleClickOpenSaveDialog = () => {
-        console.log('asdada')
         setOpenSaveDialog(true);
     };
 
@@ -64,9 +60,22 @@ const Diagrams = ({flowDb}) => {
     };
 
     const onElementClick = (event, element) => {
+        console.log(element)
         setSelectedElement(element);
         handleClickOpenDialog()
     }
+
+    const onAddElementResultValue = (e, result) => {
+        const newElements = elements.map(
+            el => el.id === e.id ? { ...el, data: {
+                    ...el.data,
+                    results: result
+                }} : el
+        )
+        console.log('update', newElements)
+        setElements(newElements);
+        console.log('ele', elements)
+    };
 
 
     const onConnect = useCallback(
@@ -109,7 +118,7 @@ const Diagrams = ({flowDb}) => {
     return (
         <div className="dndflow">
             { openSaveDialog && <SaveDialogPop open={openSaveDialog} handleClose={handleCloseSaveDialog} data={{flow, elements}} /> }
-            { selectedElement && openDialog && <DialogPop open={openDialog} handleClose={handleCloseDialog} data={selectedElement} /> }
+            { selectedElement && openDialog && <DialogPop open={openDialog} handleClose={handleCloseDialog} data={selectedElement} onAddElementResultValue={onAddElementResultValue}  /> }
             <ReactFlowProvider>
                 <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                     <ReactFlow

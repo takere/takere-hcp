@@ -14,6 +14,7 @@ export const SaveDialogPop = ({open, handleClose, data}) => {
     const [name, setName] = useState( '');
     const [description, setDescription] = useState('');
     const [dataFlow, setDataFlow] = useState([]);
+    const [userEmail, setUserEmail] = useState( '');
 
 
     useEffect(() => {
@@ -33,10 +34,16 @@ export const SaveDialogPop = ({open, handleClose, data}) => {
         setName(keyword)
     }
 
+    const onUserEmailChange = (e) => {
+        const keyword = e.target.value;
+        setUserEmail(keyword)
+    }
+
     const handleSave = () => {
         const payload = {
             name,
             description,
+            userEmail,
             data: dataFlow
         }
 
@@ -88,6 +95,18 @@ export const SaveDialogPop = ({open, handleClose, data}) => {
                         onChange={onDescriptionChange}
                         size="small"
                         placeholder="Descrição"
+                    />
+                    <Styled.Spacing />
+                    <Styled.InputDefault
+                        id="outlined-basic"
+                        label="Email do paciente"
+                        variant="outlined"
+                        type="text-area"
+                        value={userEmail}
+                        helperText="Adicione aqui o email do usuário do fluxo"
+                        onChange={onUserEmailChange}
+                        size="small"
+                        placeholder="joao@gmail.com"
                     />
                     <Styled.Spacing />
                 </Styled.TitleContainer>
