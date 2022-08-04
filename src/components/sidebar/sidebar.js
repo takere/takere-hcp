@@ -52,8 +52,8 @@ export const Sidebar = () => {
                 />
                 <Styled.SideGraggAside>
                     {foundNodes && foundNodes.length > 0 ? (
-                        foundNodes.map((node) => (
-                            <Styled.SideItem key={node.id} onDragStart={(event) => onDragStart(event, node)} draggable>
+                        foundNodes.map((node, index) => (
+                            <Styled.SideItem key={index} onDragStart={(event) => onDragStart(event, node)} draggable>
                                 <Styled.TitleNodeItem>
                                     {node.data.label}
                                 </Styled.TitleNodeItem>

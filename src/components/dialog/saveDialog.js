@@ -25,7 +25,9 @@ export const SaveDialogPop = ({open, handleClose, data}) => {
         if(data?.flow?.flowDescription){
             setDescription(data.flow.flowDescription)
         }
-        console.log(data?.elements)
+        if(data?.flow?.flowEmail){
+            setUserEmail(data.flow.flowEmail)
+        }
         setDataFlow(data?.elements)
     }, [data]);
 

@@ -14,9 +14,10 @@ export const GenericNode = (data) => {
                 <Icon style={{textAlign: 'center', fontSize: 28, color: theme.colors.night.x1 }}>{data.data.icon}</Icon>
             </Styled.NodeContainer>
             {
-                data?.data?.handles && data?.data?.handles.map(h => {
+                data?.data?.handles && data?.data?.handles.map((h,i) => {
                     return (
                         <Handle
+                            key={i}
                             type={h.type}
                             position={h.position}
                             id={h.id}

@@ -30,8 +30,8 @@ export const MenuDrawer = () => {
         <Styled.SideContainer>
             <Styled.Spacing />
             {
-                MENU.map(m => (
-                    <Link to={`${m.path}`}>
+                MENU.map((m,i) => (
+                    <Link to={`${m.path}`} key={i}>
                         <Styled.SideItem>
                             <Styled.IconItem>{m.icon}</Styled.IconItem>
                         </Styled.SideItem>

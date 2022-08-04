@@ -31,6 +31,7 @@ const Diagrams = ({flowDb}) => {
     const [elements, setElements] = useState(initialElements);
     const [selectedElement, setSelectedElement] = useState(null);
     const [flow, setFlow] = useState(null);
+    const [index, setIndex] = useState(0);
 
     useEffect(() => {
         if(flowDb?.data){
@@ -80,11 +81,13 @@ const Diagrams = ({flowDb}) => {
 
     const onConnect = useCallback(
         (params) =>
-            setElements((els) =>
+            setElements((els) => 
                 addEdge({ ...params, animated: true }, els)
-            ),
+        ),
         []
     );
+    //const onConnect = (params) => setElements((eds) => addEdge(params, eds));
+
     const onElementsRemove = (elementsToRemove) =>
         setElements((els) => removeElements(elementsToRemove, els));
     const [captureElementClick, setCaptureElementClick] = useState(false);
@@ -107,11 +110,13 @@ const Diagrams = ({flowDb}) => {
             y: event.clientY - reactFlowBounds.top,
         });
         const newNode = {
+            key: index,
             id: getId(),
             type: node.type,
             position,
             data: node.data,
         };
+        setIndex(index+1);
         setElements((es) => es.concat(newNode));
     };
 
