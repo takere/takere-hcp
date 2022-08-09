@@ -1,10 +1,10 @@
 import React from "react";
 import { Handle } from "react-flow-renderer";
 import Icon from "@material-ui/core/Icon";
-import * as Styled from "./genericNode.styled";
+import * as Styled from "./InNode.styled";
 import { theme } from "../../../utils/colors";
 
-export const GenericNode = (data) => {
+export const InNode = (data) => {
   const nodeStyle = data?.data?.style;
 
   return (
