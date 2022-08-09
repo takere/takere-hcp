@@ -2,7 +2,7 @@ import React from 'react';
 import mapping from './index';
 import RawTextInput from './RawTextInput';
 
-const InputFactory = ({ type, data }) => {
+function inputFactory( type, data ) {
   
   if (mapping[normalizeType(type)] === undefined) {
     return (<RawTextInput { ...data } />);  
@@ -11,7 +11,7 @@ const InputFactory = ({ type, data }) => {
   return React.createElement(mapping[normalizeType(type)], { ...data });
 }
 
-export default InputFactory;
+export default inputFactory;
 
 function normalizeType(type) {
   return type

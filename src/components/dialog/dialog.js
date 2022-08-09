@@ -7,7 +7,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { theme } from "../../utils/colors";
 import { toast } from "react-toastify";
-import InputFactory from "../input/InputFactory";
+import inputFactory from "../input/inputFactory";
 
 export const DialogPop = ({
   open,
@@ -56,18 +56,18 @@ export const DialogPop = ({
         <DialogContentText>{payloadData.description}</DialogContentText>
       </DialogTitle>
       <DialogContent>
-        {payloadData?.inputFields.map((i) => {
-          return (
-            <InputFactory 
-              type={i.type}
-              data={{label: i.name, 
-                value: dataForm[i.slug], 
-                helperText: i.description, 
-                onChange: (e) => onFormChange(e, i), 
-                options: i?.options}}
-            />
+        {payloadData?.inputFields.map((i) => (
+            inputFactory(
+            i.type, 
+            {
+              label: i.name, 
+              value: dataForm[i.slug], 
+              helperText: i.description, 
+              onChange: (e) => onFormChange(e, i), 
+              options: i?.options
+            }
           )
-        })}
+        ))}
       </DialogContent>
       <DialogActions>
         <Button
