@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 import { DatePicker } from "@material-ui/pickers";
-import {theme} from "../../utils/colors";
+import {theme} from "../../../utils/colors";
 
 export const InputDefault = styled(TextField)`
   width: 100%;

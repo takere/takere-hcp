@@ -5,11 +5,11 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { theme } from "../../utils/colors";
+import { theme } from "../../../utils/colors";
 import { toast } from "react-toastify";
-import inputFactory from "../input/inputFactory";
+import inputFactory from "../../input/inputFactory";
 
-export const DialogPop = ({
+export const GenericDialog = ({
   open,
   handleClose,
   data,
@@ -55,6 +55,8 @@ export const DialogPop = ({
         {payloadData.label}
         <DialogContentText>{payloadData.description}</DialogContentText>
       </DialogTitle>
+
+
       <DialogContent>
         {payloadData?.inputFields.map((i) => (
             inputFactory(
@@ -69,6 +71,8 @@ export const DialogPop = ({
           )
         ))}
       </DialogContent>
+
+
       <DialogActions>
         <Button
           onClick={saveInputs}

@@ -7,9 +7,10 @@ import {TimerTickNode} from "./timerTickNode/timerTickNode";
 
 export const NodeTypes = {
     TIME_TICKER: TimerTickNode,
-    GENERIC_NODE: OutNode,
+    GENERIC_NODE: GenericNode,
     CONDITIONAL_NODE: ConditionalNode,
-    INOUT_NODE: InoutNode,
-    IN_NODE: InNode,
-    OUT_NODE: OutNode
+    EXPLANATION_NODE: GenericNode,
+    // INOUT_NODE: InoutNode,
+    // IN_NODE: InNode,
+    // OUT_NODE: OutNode
 }

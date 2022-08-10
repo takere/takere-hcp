@@ -2,13 +2,13 @@ import styled from "styled-components";
 import {theme} from "../../../utils/colors";
 
 export const Node = styled.div`
-  background: ${props => props.nodeStyle.backgroundColor};
+  background: ${props => props.nodeStyle?.backgroundColor ?? "#AAA"};
   width: 100px;
   height: 100px;
   align-content: center;
   align-items: center;
   border-width: 1px;
-  border-color: ${props => props.nodeStyle.borderColor};
+  border-color: ${props => props.nodeStyle?.borderColor ?? "#333"};
   border-style:solid;
   border-radius: 12px;
   display: flex;
