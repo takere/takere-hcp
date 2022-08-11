@@ -9,6 +9,7 @@ import { theme } from "../../../utils/colors";
 import { toast } from "react-toastify";
 import { inputFactory } from "../../input";
 import { EditorState, ContentState } from 'draft-js';
+import { convertFromHTML, convertToHTML } from "draft-convert";
 
 export const ExplanationDialog = ({
   open,
@@ -19,34 +20,54 @@ export const ExplanationDialog = ({
   const [dataForm, setDataForm] = useState(data.data.results || {});
   const [totalPages, setTotalPages] = useState(data.data.results?.totalPages || 1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pages, setPages] = useState(['']);
-  const [editorState, setEditorState] = useState(() => EditorState.createWithContent(
-    ContentState.createFromText('')
-  ));
+  const [pages, setPages] = useState(data.data.results?.pages ?? []);
+  const [editorState, setEditorState] = useState(() => {
+    const loadedPages = data.data.results?.pages;
+    let content;
+
+    if (loadedPages != undefined) {
+      content = EditorState.createWithContent(convertFromHTML(loadedPages[0]));
+    }
+    else {
+      content = ContentState.createFromText('');
+    }
+
+    EditorState.createWithContent(content);
+  });
   
   const { data: payloadData } = data;
 
-  console.log(payloadData);
+  // console.log(payloadData);
 
-  const onFormChange = (e, i) => {
-    let value = null;
+  // const onFormChange = (e, i) => {
+  //   let value = null;
 
-    value = e?.target?.value;
-    if (i.type === "DATE_INPUT") {
-      value = e.toISOString();
-    } else if (i.type === "BOOLEAN_INPUT") {
-      value = e.target.checked;
-    } else if (i.type === "NUMBER_INPUT") {
-      value = parseInt(e?.target?.value);
-    }
+  //   value = e?.target?.value;
+  //   if (i.type === "DATE_INPUT") {
+  //     value = e.toISOString();
+  //   } else if (i.type === "BOOLEAN_INPUT") {
+  //     value = e.target.checked;
+  //   } else if (i.type === "NUMBER_INPUT") {
+  //     value = parseInt(e?.target?.value);
+  //   }
+
+  //   setDataForm({
+  //     ...dataForm,
+  //     [i.slug]: value,
+  //   });
+  // };
+
+  const saveInputs = () => {
+    const parsedPages = [];
+
+    pages.forEach(page => {
+      parsedPages.push(convertToHTML(page.getCurrentContent()));
+    })
 
     setDataForm({
       ...dataForm,
-      [i.slug]: value,
+      pages: parsedPages
     });
-  };
-
-  const saveInputs = () => {
     onAddElementResultValue(data, dataForm);
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
