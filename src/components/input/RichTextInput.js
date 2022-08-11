@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-import { convertToHTML } from 'draft-convert';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './style.css'
 
 import { Spacing } from './styled';
 
-const RichTextInput = ({ label, editorState, setEditorState, onChange }) => {
+const RichTextInput = ({ label, editorState, setEditorState }) => {
   
   
   const onChangeState = (state) => {
     setEditorState(state);
-    
-    // let currentContentAsHTML = convertToHTML(state.getCurrentContent());
-    
-    // onChange(currentContentAsHTML);
   };
 
   return (

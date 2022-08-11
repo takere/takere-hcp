@@ -7,7 +7,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { theme } from "../../../utils/colors";
 import { toast } from "react-toastify";
-import inputFactory from "../../input/inputFactory";
+import { inputFactory } from "../../input";
 import { EditorState, ContentState } from 'draft-js';
 
 export const ExplanationDialog = ({
@@ -135,8 +135,7 @@ export const ExplanationDialog = ({
           {
             label: "content",
             editorState, 
-            setEditorState: onChangeState,
-            // onChange: onChangeContent
+            setEditorState: onChangeState
           }
         )}
       </DialogContent>

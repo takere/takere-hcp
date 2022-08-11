@@ -7,7 +7,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { theme } from "../../../utils/colors";
 import { toast } from "react-toastify";
-import inputFactory from "../../input/inputFactory";
+import { inputFactory } from "../../input";
 
 export const GenericDialog = ({
   open,

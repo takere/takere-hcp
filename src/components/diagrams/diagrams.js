@@ -16,7 +16,7 @@ import { GenericDialog } from "../dialog/generic";
 import Button from "@material-ui/core/Button";
 import { SaveDialogPop } from "../dialog/saveDialog";
 import Icon from "@material-ui/core/Icon";
-import { DialogFactory } from '../dialog';
+import { dialogFactory } from '../dialog';
 
 const initialElements = [];
 
@@ -134,14 +134,14 @@ const Diagrams = ({ flowDb }) => {
         />
       )}
       {
-        selectedElement && openDialog && (
-          <DialogFactory
-            type={selectedElement.type}
-            open={openDialog}
-            handleClose={handleCloseDialog}
-            data={selectedElement}
-            onAddElementResultValue={onAddElementResultValue}
-          />
+        selectedElement && openDialog && dialogFactory(
+          selectedElement.type,
+          {
+            open: openDialog,
+            handleClose: handleCloseDialog,
+            data: selectedElement,
+            onAddElementResultValue: onAddElementResultValue
+          }
         )
       }
       <ReactFlowProvider>

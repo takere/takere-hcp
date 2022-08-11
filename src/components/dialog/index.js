@@ -8,10 +8,10 @@ const dialogs = {
   other: GenericDialog
 };
 
-export const DialogFactory = ({ type, ...props }) => {
+export function dialogFactory(type, props) {
   if (dialogs[type] === undefined) {
-    return React.createElement(dialogs["other"], props);
+    return (<GenericDialog { ...props } />);
   }
 
-  return React.createElement(dialogs[type], props);
+  return React.createElement(dialogs[type], { ...props });
 }
