@@ -7,39 +7,22 @@ import RawTextInput from "./RawTextInput";
 import RichTextInput from "./RichTextInput";
 
 const mapping = {
-  BooleanInput: BooleanInput,
-  DateInput: DateInput,
-  MultiSelectionInput: MultiSelectionInput,
-  Multiselect: MultiSelectionInput,
-  NumberInput: NumberInput,
-  RawTextInput: RawTextInput,
-  RichTextInput: RichTextInput
+  BOOLEAN_INPUT: BooleanInput,
+  DATE_INPUT: DateInput,
+  MULTI_SELECTION_INPUT: MultiSelectionInput,
+  MULTI_SELECT: MultiSelectionInput,
+  NUMBER_INPUT: NumberInput,
+  RAW_TEXT_INPUT: RawTextInput,
+  RICH_TEXT_INPUT: RichTextInput
 };
 
 export default mapping;
 
 export function inputFactory(type, data) {
   
-  if (mapping[normalizeType(type)] === undefined) {
+  if (mapping[type] === undefined) {
     return (<RawTextInput { ...data } />);  
   }
 
-  return React.createElement(mapping[normalizeType(type)], { ...data });
-}
-
-function normalizeType(type) {
-  return type
-    .toLowerCase()
-    .split("_")
-    .map(term => capitalize(term))
-    .join()
-    .replaceAll(",", "")
-}
-
-function capitalize(str) {
-  if (str.length === 0) {
-    return str.toUpperCase();
-  }
-
-  return (str.charAt(0).toUpperCase() + str.slice(1));
+  return React.createElement(mapping[type], { ...data });
 }

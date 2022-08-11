@@ -12,11 +12,11 @@ import { Sidebar } from "../sidebar/sidebar";
 import { theme } from "../../utils/colors";
 import { NodeTypes } from "../nodes/nodes";
 import { ConnectionLine } from "../connectionLine/connectionLine";
-import { GenericDialog } from "../dialog/generic";
 import Button from "@material-ui/core/Button";
 import { SaveDialogPop } from "../dialog/saveDialog";
 import Icon from "@material-ui/core/Icon";
 import { dialogFactory } from '../dialog';
+import { isConnectionAllowed } from "./connections";
 
 const initialElements = [];
 
@@ -61,7 +61,6 @@ const Diagrams = ({ flowDb }) => {
   };
 
   const onElementClick = (event, element) => {
-    console.log(element);
     setSelectedElement(element);
     handleClickOpenDialog();
   };
@@ -78,17 +77,21 @@ const Diagrams = ({ flowDb }) => {
           }
         : el
     );
-    console.log("update", newElements);
     setElements(newElements);
-    console.log("ele", elements);
   };
 
-  const onConnect = useCallback(
-    (params) =>
-      setElements((els) => addEdge({ ...params, animated: true }, els)),
-    []
+  const onConnect = (
+    (params) => {
+      const sourceId = params.source;
+      const targetId = params.target;
+      const sourceNode = elements.filter(element => element.id === sourceId)[0];
+      const targetNode = elements.filter(element => element.id === targetId)[0];
+
+      if (isConnectionAllowed(sourceNode.type, targetNode.type)) {
+        setElements((els) => addEdge({ ...params, animated: true }, els))
+      }
+    }
   );
-  //const onConnect = (params) => setElements((eds) => addEdge(params, eds));
 
   const onElementsRemove = (elementsToRemove) =>
     setElements((els) => removeElements(elementsToRemove, els));
@@ -134,7 +137,8 @@ const Diagrams = ({ flowDb }) => {
         />
       )}
       {
-        selectedElement && openDialog && dialogFactory(
+        selectedElement && openDialog && 
+        dialogFactory(
           selectedElement.type,
           {
             open: openDialog,
