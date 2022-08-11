@@ -1,25 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { Editor, EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
 import { convertToHTML } from 'draft-convert';
-import 'draft-js/dist/Draft.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './style.css'
+
 import { Spacing } from './styled';
 
 const RichTextInput = ({ label, value, helperText, onChange }) => {
   
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
 
-  useEffect(() => {
-    let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
+  const onChangeState = (state) => {
+    setEditorState(state);
+    let currentContentAsHTML = convertToHTML(state.getCurrentContent());
     
     onChange(currentContentAsHTML);
 
-  }, [editorState]);
+    console.log()
+  };
 
   return (
-    <>
-      <Editor editorState={editorState} onChange={setEditorState} />
+    <fieldset>
+      <legend className='title'>{label}</legend>
+      <Editor 
+        editorState={editorState} 
+        onEditorStateChange={onChangeState}
+        wrapperClassName="wrapper-class"
+        editorClassName="editor-class"
+        toolbarClassName="toolbar-class"
+      />
       <Spacing />
-    </>
+    </fieldset>
   );
 };
 

@@ -1,0 +1,33 @@
+.wrapper-class {
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+.editor-class {
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+.toolbar-class {
+  border: 1px solid #ccc;
+}
+
+.title {
+  color: rgba(0, 0, 0, 0.54);
+  padding: 0 0.4em;
+  font-weight: 400;
+  font-size: 0.8rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1;
+  letter-spacing: 0.00938em;
+  background-color: white;
+}
+
+fieldset {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: inherit;
+  border-color: rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  margin: 0;
+}

@@ -127,12 +127,12 @@ export const ExplanationDialog = ({
           }
         )}
         {inputFactory(
-          "RAW_TEXT_INPUT", 
+          "RICH_TEXT_INPUT", 
           {
             label: "content",
             value: content,
             helperText: "Page content",
-            onChange: (newContent) => onChangeContent(newContent)
+            onChange: (newContent) => console.log(newContent)
           }
         )}
       </DialogContent>
