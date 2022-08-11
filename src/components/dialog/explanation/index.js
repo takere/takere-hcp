@@ -8,6 +8,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { theme } from "../../../utils/colors";
 import { toast } from "react-toastify";
 import inputFactory from "../../input/inputFactory";
+import { EditorState, ContentState } from 'draft-js';
 
 export const ExplanationDialog = ({
   open,
@@ -18,8 +19,11 @@ export const ExplanationDialog = ({
   const [dataForm, setDataForm] = useState(data.data.results || {});
   const [totalPages, setTotalPages] = useState(data.data.results?.totalPages || 1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [content, setContent] = useState('');
   const [pages, setPages] = useState(['']);
+  const [editorState, setEditorState] = useState(() => EditorState.createWithContent(
+    ContentState.createFromText('')
+  ));
+  
   const { data: payloadData } = data;
 
   console.log(payloadData);
@@ -69,9 +73,9 @@ export const ExplanationDialog = ({
 
     setTotalPages(newTotalPageNumber);
     setCurrentPage(1);
-    setContent(pages[0]);
 
     setPages(updatedPages);
+    setEditorState(pages[0]);
   }
 
   const onChangeCurrentPage = (newCurrentPage) => {
@@ -82,15 +86,15 @@ export const ExplanationDialog = ({
     }
 
     setCurrentPage(newCurrentPageNumber);
-    setContent(pages[newCurrentPageNumber-1]);
+    setEditorState(pages[newCurrentPageNumber-1]);
   }
 
-  const onChangeContent = (newContent) => {
+  const onChangeState = (newState) => {
+    setEditorState(newState);
+
     const updatedPages = pages;
     
-    updatedPages[currentPage-1] = newContent.target.value;
-
-    setContent(newContent.target.value);
+    updatedPages[currentPage-1] = newState;
     setPages(updatedPages);
   }
 
@@ -130,9 +134,9 @@ export const ExplanationDialog = ({
           "RICH_TEXT_INPUT", 
           {
             label: "content",
-            value: content,
-            helperText: "Page content",
-            onChange: (newContent) => console.log(newContent)
+            editorState, 
+            setEditorState: onChangeState,
+            // onChange: onChangeContent
           }
         )}
       </DialogContent>
