@@ -32,8 +32,8 @@ export default Routes;
 function buildPublicRoutes() {
   const routeSwitch = [];
 
-  publicRoutes.forEach(route => {
-    routeSwitch.push(<Public { ...route } />);
+  publicRoutes.forEach((route, index) => {
+    routeSwitch.push(<Public key={index} { ...route } />);
   })
 
   return routeSwitch;
@@ -42,8 +42,8 @@ function buildPublicRoutes() {
 function buildProtectedRoutes() {
   const routeSwitch = [];
 
-  protectedRoutes.forEach(route => {
-    routeSwitch.push(<Protected { ...route } />);
+  protectedRoutes.forEach((route, index) => {
+    routeSwitch.push(<Protected key={index} { ...route } />);
   })
 
   return routeSwitch;
