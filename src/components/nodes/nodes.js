@@ -5,7 +5,7 @@ import { OutNode } from "./out/OutNode";
 import ConditionalNode from "./conditional";
 import {TimerTickNode} from "./timerTickNode/timerTickNode";
 
-export const NodeTypes = {
+export const nodeTypes = {
     TIME_TICKER: TimerTickNode,
     BEGIN_NODE: TimerTickNode,
     GENERIC_NODE: GenericNode,
