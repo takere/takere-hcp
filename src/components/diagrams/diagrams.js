@@ -66,18 +66,23 @@ const Diagrams = ({ flowDb }) => {
   };
 
   const onAddElementResultValue = (e, result) => {
-    const newElements = elements.map((el) =>
-      el.id === e.id
+    console.log('#', e);
+    console.log('##', elements);
+
+    const newElements = elements.map((element) =>
+      element.id === e.id
         ? {
-            ...el,
+            ...element,
             data: {
-              ...el.data,
+              ...element.data,
               results: result,
             },
           }
-        : el
+        : element
     );
     setElements(newElements);
+
+    console.log(newElements)
   };
 
   const onConnect = (

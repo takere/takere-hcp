@@ -18,7 +18,7 @@ export const ExplanationDialog = ({
   onAddElementResultValue,
 }) => {
   const [dataForm, setDataForm] = useState(data.data.results || {});
-  const [totalPages, setTotalPages] = useState(data.data.results?.totalPages || 1);
+  const [totalPages, setTotalPages] = useState(data.data.results?.pages?.length ?? 1);
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(data.data.results?.pages ?? []);
   const [editorState, setEditorState] = useState(() => {
