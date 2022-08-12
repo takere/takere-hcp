@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -66,10 +66,6 @@ const Diagrams = ({ flowDb }) => {
   };
 
   const onAddElementResultValue = (e, result) => {
-    console.log('#', e);
-    console.log('##', elements);
-    console.log('#@', result);
-
     const newElements = elements.map((element) =>
       element.id === e.id
         ? {
@@ -82,8 +78,6 @@ const Diagrams = ({ flowDb }) => {
         : element
     );
     setElements(newElements);
-
-    console.log(newElements)
   };
 
   const onConnect = (
@@ -131,8 +125,6 @@ const Diagrams = ({ flowDb }) => {
     };
     setIndex(index + 1);
     setElements((es) => es.concat(newNode));
-
-    console.log(newNode)
   };
 
   return (
