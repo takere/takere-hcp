@@ -68,6 +68,7 @@ const Diagrams = ({ flowDb }) => {
   const onAddElementResultValue = (e, result) => {
     console.log('#', e);
     console.log('##', elements);
+    console.log('#@', result);
 
     const newElements = elements.map((element) =>
       element.id === e.id
@@ -130,6 +131,8 @@ const Diagrams = ({ flowDb }) => {
     };
     setIndex(index + 1);
     setElements((es) => es.concat(newNode));
+
+    console.log(newNode)
   };
 
   return (

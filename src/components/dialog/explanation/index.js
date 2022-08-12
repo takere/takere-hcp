@@ -20,19 +20,28 @@ export const ExplanationDialog = ({
   const [dataForm, setDataForm] = useState(data.data.results || {});
   const [totalPages, setTotalPages] = useState(data.data.results?.pages?.length ?? 1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pages, setPages] = useState(data.data.results?.pages ?? []);
+  const [pages, setPages] = useState(() => {
+    const storedPages = data.data.results?.pages ?? [];
+    const parsedPages = []; // Set of editor states
+
+    storedPages.forEach(page => {
+      parsedPages.push(EditorState.createWithContent(convertFromHTML(page)));
+    });
+    console.log(parsedPages)
+    return parsedPages;
+  });
   const [editorState, setEditorState] = useState(() => {
     const loadedPages = data.data.results?.pages;
     let content;
 
     if (loadedPages != undefined) {
-      content = EditorState.createWithContent(convertFromHTML(loadedPages[0]));
+      content = convertFromHTML(loadedPages[0]);
     }
     else {
       content = ContentState.createFromText('');
     }
 
-    EditorState.createWithContent(content);
+    return EditorState.createWithContent(content);
   });
   
   const { data: payloadData } = data;
@@ -64,11 +73,13 @@ export const ExplanationDialog = ({
       parsedPages.push(convertToHTML(page.getCurrentContent()));
     })
 
-    setDataForm({
+    const newDataForm = {
       ...dataForm,
       pages: parsedPages
-    });
-    onAddElementResultValue(data, dataForm);
+    };
+
+    setDataForm(newDataForm);
+    onAddElementResultValue(data, newDataForm);
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
