@@ -4,6 +4,8 @@ import {
     useParams
 } from "react-router-dom";
 import {Requests} from "../../services/axios/requests";
+import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
+import * as Styled from "./dashboard.styled";
 
 export const Dashboard = () => {
     const [flow, setFlow] = useState(null);
@@ -23,6 +25,9 @@ export const Dashboard = () => {
     }, [id])
 
     return (
-        <Diagrams flowDb={flow}/>
+        <Styled.PageWithDrawer>
+            <MenuDrawer />
+            <Diagrams flowDb={flow}/>
+        </Styled.PageWithDrawer>
     );
 }

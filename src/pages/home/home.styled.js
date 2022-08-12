@@ -3,6 +3,12 @@ import styled from 'styled-components'
 import {theme} from "../../utils/colors";
 import Icon from "@material-ui/core/Icon";
 
+export const PageWithDrawer = styled.div`
+  flex-direction: row;
+  display: flex;
+  flex: 1;
+`;
+
 export const Container = styled.div`
   flex: 1;
   background-color: ${theme.colors.day.x1};

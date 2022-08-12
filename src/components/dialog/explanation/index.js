@@ -27,7 +27,7 @@ export const ExplanationDialog = ({
     storedPages.forEach(page => {
       parsedPages.push(EditorState.createWithContent(convertFromHTML(page)));
     });
-    console.log(parsedPages)
+
     return parsedPages;
   });
   const [editorState, setEditorState] = useState(() => {
@@ -45,26 +45,6 @@ export const ExplanationDialog = ({
   });
   
   const { data: payloadData } = data;
-
-  // console.log(payloadData);
-
-  // const onFormChange = (e, i) => {
-  //   let value = null;
-
-  //   value = e?.target?.value;
-  //   if (i.type === "DATE_INPUT") {
-  //     value = e.toISOString();
-  //   } else if (i.type === "BOOLEAN_INPUT") {
-  //     value = e.target.checked;
-  //   } else if (i.type === "NUMBER_INPUT") {
-  //     value = parseInt(e?.target?.value);
-  //   }
-
-  //   setDataForm({
-  //     ...dataForm,
-  //     [i.slug]: value,
-  //   });
-  // };
 
   const saveInputs = () => {
     const parsedPages = [];

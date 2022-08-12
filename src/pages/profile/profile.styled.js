@@ -2,6 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import {theme} from "../../utils/colors";
 
+export const PageWithDrawer = styled.div`
+  flex-direction: row;
+  display: flex;
+  flex: 1;
+`;
+
 export const Container = styled.div`
   flex: 1;
   background-color: ${theme.colors.day.x1};
