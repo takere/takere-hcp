@@ -86,8 +86,8 @@ export const ExplanationDialog = ({
         <ContentInput value={editorState} onChange={onChangeEditorState} />
       </Body>
       <Footer>
-        <SuccessButton title='Salvar' onClick={saveInputs} />
-        <DefaultButton title='Fechar' onClick={handleClose} />
+        <SuccessButton title='Save' onClick={saveInputs} />
+        <DefaultButton title='Close' onClick={handleClose} />
       </Footer>
     </Dialog>
   );
