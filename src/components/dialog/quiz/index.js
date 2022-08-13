@@ -144,14 +144,6 @@ export default QuizDialog;
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
-function loadStoredFields(data) {
-  if (!hasResults(data)) {
-    return {};
-  }
-
-  return data.data.results;
-}
-
 function hasResults(data) {
   return  data
           && data.data 

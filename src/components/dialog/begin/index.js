@@ -103,14 +103,6 @@ export default BeginDialog;
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
-function loadStoredFields(data) {
-  if (!data || !data.data || !data.data.results) {
-    return {};
-  }
-
-  return data.data.results;
-}
-
 function loadStoredStartDate(data) {
   if (
     !data ||
