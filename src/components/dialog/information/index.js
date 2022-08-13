@@ -10,7 +10,7 @@ import RawTextInput from "../../input/RawTextInput";
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export const InformationDialog = ({
+const InformationDialog = ({
   open,
   handleClose,
   data,
@@ -69,6 +69,8 @@ export const InformationDialog = ({
     </Dialog>
   );
 };
+
+export default InformationDialog;
 
 
 //-----------------------------------------------------------------------------

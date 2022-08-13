@@ -14,7 +14,7 @@ import NumberInput from "../../input/NumberInput";
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export const QuizDialog = ({
+const QuizDialog = ({
   open,
   handleClose,
   data,
@@ -137,6 +137,8 @@ export const QuizDialog = ({
     </Dialog>
   );
 };
+
+export default QuizDialog;
 
 
 //-----------------------------------------------------------------------------

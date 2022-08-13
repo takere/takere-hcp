@@ -15,7 +15,7 @@ import DateInput from "../../input/DateInput";
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export const MedicationControlDialog = ({
+const MedicationControlDialog = ({
   open,
   handleClose,
   data,
@@ -126,6 +126,8 @@ export const MedicationControlDialog = ({
     </Dialog>
   );
 };
+
+export default MedicationControlDialog;
 
 
 //-----------------------------------------------------------------------------

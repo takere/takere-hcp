@@ -12,7 +12,7 @@ import MultiSelectionInput from "../../input/MultiSelectionInput";
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export const ReminderDialog = ({
+const ReminderDialog = ({
   open,
   handleClose,
   data,
@@ -80,6 +80,8 @@ export const ReminderDialog = ({
     </Dialog>
   );
 };
+
+export default ReminderDialog;
 
 
 //-----------------------------------------------------------------------------

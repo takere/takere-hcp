@@ -4,13 +4,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import BeginDialog from "./begin";
-import { ExplanationDialog } from "./explanation";
-import { SaveFlowDialog } from './save';
-import { QuizDialog } from './quiz';
-import { MedicationControlDialog } from './medication-control';
-import { ReminderDialog } from './reminder';
-import { InformationDialog } from './information';
-import { ConditionalDialog } from './conditional';
+import ExplanationDialog from "./explanation";
+import SaveFlowDialog from './save';
+import QuizDialog from './quiz';
+import MedicationControlDialog from './medication-control';
+import ReminderDialog from './reminder';
+import InformationDialog from './information';
+import ConditionalDialog from './conditional';
 import DialogFactoryException from './exception/DialogFactoryException';
 
 

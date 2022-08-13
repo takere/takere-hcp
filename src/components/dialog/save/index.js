@@ -1,19 +1,33 @@
 import React, { useEffect, useState } from "react";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import { theme } from "../../../utils/colors";
-import * as Styled from "./styled";
+import SuccessButton from "../../buttons/SuccessButton";
+import DefaultButton from "../../buttons/DefaultButton";
 import { Requests } from "../../../services/axios/requests";
+import { Header, Body, Footer } from "../";
+import RawTextInput from "../../input/RawTextInput";
 
-export const SaveFlowDialog = ({ open, handleClose, data }) => {
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
+const SaveFlowDialog = ({ open, handleClose, data }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [dataFlow, setDataFlow] = useState([]);
   const [userEmail, setUserEmail] = useState("");
+
+  const handleSave = () => {
+    const payload = {
+      name,
+      description,
+      userEmail,
+      data: dataFlow,
+    };
+
+    new Requests().createOrUpdateFlow(payload).then((r) => {
+      handleClose();
+    });
+  };
 
   useEffect(() => {
     console.log(data);
@@ -29,34 +43,6 @@ export const SaveFlowDialog = ({ open, handleClose, data }) => {
     setDataFlow(data?.elements);
   }, [data]);
 
-  const onNameChange = (e) => {
-    const keyword = e.target.value;
-    setName(keyword);
-  };
-
-  const onUserEmailChange = (e) => {
-    const keyword = e.target.value;
-    setUserEmail(keyword);
-  };
-
-  const handleSave = () => {
-    const payload = {
-      name,
-      description,
-      userEmail,
-      data: dataFlow,
-    };
-
-    new Requests().createOrUpdateFlow(payload).then((r) => {
-      handleClose();
-    });
-  };
-
-  const onDescriptionChange = (e) => {
-    const keyword = e.target.value;
-    setDescription(keyword);
-  };
-
   return (
     <Dialog
       fullWidth={true}
@@ -65,65 +51,36 @@ export const SaveFlowDialog = ({ open, handleClose, data }) => {
       onClose={handleClose}
       aria-labelledby="max-width-dialog-title"
     >
-      <DialogTitle id="max-width-dialog-title">
-        Savar Fluxo
-        <DialogContentText>
-          Criar um fluxo novo, use esse popup para salvar seu fluxo!
-        </DialogContentText>
-      </DialogTitle>
-      <DialogContent>
-        <Styled.TitleContainer>
-          <Styled.Spacing />
-          <Styled.InputDefault
-            id="outlined-basic"
-            label="Nome do fluxo"
-            variant="outlined"
-            type="text"
-            helperText="Adicione aqui um nome para o fluxo"
-            value={name}
-            onChange={onNameChange}
-            size="small"
-            placeholder="Fluxo para tratamento de dor"
-          />
-          <Styled.Spacing />
-          <Styled.InputDefault
-            id="outlined-basic"
-            label="Descrição"
-            variant="outlined"
-            type="text-area"
-            value={description}
-            helperText="Adicione aqui uma descrição do fluxo"
-            onChange={onDescriptionChange}
-            size="small"
-            placeholder="Descrição"
-          />
-          <Styled.Spacing />
-          <Styled.InputDefault
-            id="outlined-basic"
-            label="Email do paciente"
-            variant="outlined"
-            type="text-area"
-            value={userEmail}
-            helperText="Adicione aqui o email do usuário do fluxo"
-            onChange={onUserEmailChange}
-            size="small"
-            placeholder="joao@gmail.com"
-          />
-          <Styled.Spacing />
-        </Styled.TitleContainer>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          onClick={handleSave}
-          variant="contained"
-          style={{ backgroundColor: theme.colors.feedback.success.x1 }}
-        >
-          Salvar
-        </Button>
-        <Button onClick={handleClose} variant="contained" color="default">
-          Fechar
-        </Button>
-      </DialogActions>
+      <Header 
+        title='Save care plan' 
+        subtitle='Use this popup to save your care plan!' 
+      />
+      <Body>
+        <RawTextInput
+          label="Care plan name"
+          helperText="Cancer care plan, urolithiasis care plan..."
+          value={name}
+          onChange={setName}
+        />
+        <RawTextInput
+          label="Description"
+          helperText="This care plan is about..."
+          value={description}
+          onChange={setDescription}
+        />
+        <RawTextInput
+          label="Patient email"
+          helperText="This care plan is for..."
+          value={userEmail}
+          onChange={setUserEmail}
+        />
+      </Body>
+      <Footer>
+        <SuccessButton title="Save" onClick={handleSave} />
+        <DefaultButton title="Close" onClick={handleClose} />
+      </Footer>
     </Dialog>
   );
 };
+
+export default SaveFlowDialog;

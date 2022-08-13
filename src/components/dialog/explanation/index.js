@@ -13,7 +13,7 @@ import RichTextInput from "../../input/RichTextInput";
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export const ExplanationDialog = ({
+const ExplanationDialog = ({
   open,
   handleClose,
   data,
@@ -107,6 +107,8 @@ export const ExplanationDialog = ({
     </Dialog>
   );
 };
+
+export default ExplanationDialog;
 
 
 //-----------------------------------------------------------------------------

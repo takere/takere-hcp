@@ -12,7 +12,7 @@ import MultiSelectionInput from "../../input/MultiSelectionInput";
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export const ConditionalDialog = ({
+const ConditionalDialog = ({
   open,
   handleClose,
   data,
@@ -72,6 +72,8 @@ export const ConditionalDialog = ({
     </Dialog>
   );
 };
+
+export default ConditionalDialog;
 
 
 //-----------------------------------------------------------------------------
