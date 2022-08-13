@@ -75,7 +75,7 @@ export const InformationDialog = ({
           onChange={onDescriptionChange}
         />
         <RawTextInput
-          label="Why?"
+          label="Content"
           helperText="Reminder content"
           value={content}
           onChange={onContentChange}
