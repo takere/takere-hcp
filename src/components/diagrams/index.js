@@ -9,7 +9,6 @@ import * as Styled from './styled';
 import { Sidebar } from "../sidebar/sidebar";
 import { nodeTypes } from "../nodes/nodes";
 import { ConnectionLine } from "../connectionLine/connectionLine";
-import { SaveDialogPop } from "../dialog/saveDialog";
 import { dialogFactory } from '../dialog';
 import { isConnectionAllowed } from "./connections";
 import AccentSmallButton from "../buttons/AccentSmallButton";
@@ -195,12 +194,13 @@ function buildSaveFlowDialog(display, onClose, data) {
     return (<></>);
   }
 
-  return (
-    <SaveDialogPop
-      open={display}
-      handleClose={onClose}
-      data={data}
-    />
+  return dialogFactory(
+    "SAVE_FLOW",
+    {
+      open: display,
+      handleClose: onClose,
+      data
+    }
   );
 }
 
@@ -210,7 +210,7 @@ function buildNodeDialog(selectedElement, openDialog, handleCloseDialog, onAddEl
   }
 
   return dialogFactory(
-    selectedElement.type,
+    selectedElement.type.replace("_NODE", ""),
     {
       open: openDialog,
       handleClose: handleCloseDialog,

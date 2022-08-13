@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import { theme } from "../../../utils/colors";
 import { toast } from "react-toastify";
 import { inputFactory } from "../../input";
 import { EditorState, ContentState } from 'draft-js';
 import { convertFromHTML, convertToHTML } from "draft-convert";
+import SuccessButton from '../../buttons/SuccessButton';
+import DefaultButton from '../../buttons/DefaultButton';
+import { Header, Body, Footer } from '../'
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 export const ExplanationDialog = ({
   open,
   handleClose,
@@ -118,52 +119,51 @@ export const ExplanationDialog = ({
       onClose={handleClose}
       aria-labelledby="max-width-dialog-title"
     >
-      <DialogTitle id="max-width-dialog-title">
-        {payloadData.label}
-        <DialogContentText>{payloadData.description}</DialogContentText>
-      </DialogTitle>
-
-      <DialogContent>
-        {inputFactory(
-          "NUMBER_INPUT", 
-          {
-            label: "Total pages",
-            value: totalPages,
-            helperText: "Explanation total pages",
-            onChange: (newTotalPages) => onTotalPagesChange(newTotalPages)
-          }
-        )}
-        {inputFactory(
-          "NUMBER_INPUT", 
-          {
-            label: "Current page",
-            value: currentPage,
-            helperText: "Page to be edited",
-            onChange: (newCurrentPage) => onChangeCurrentPage(newCurrentPage)
-          }
-        )}
-        {inputFactory(
-          "RICH_TEXT_INPUT", 
-          {
-            label: "content",
-            editorState, 
-            setEditorState: onChangeState
-          }
-        )}
-      </DialogContent>
-
-      <DialogActions>
-        <Button
-          onClick={saveInputs}
-          variant="contained"
-          style={{ backgroundColor: theme.colors.feedback.success.x1 }}
-        >
-          Salvar
-        </Button>
-        <Button onClick={handleClose} variant="contained" color="default">
-          Fechar
-        </Button>
-      </DialogActions>
+      <Header title={payloadData.label} subtitle={payloadData.description} />
+      <Body>
+        <TotalPagesInput value={totalPages} onChange={onTotalPagesChange} />
+        <CurrentPageInput value={currentPage} onChange={onChangeCurrentPage} />
+        <ContentInput value={editorState} onChange={onChangeState} />
+      </Body>
+      <Footer>
+        <SuccessButton title='Salvar' onClick={saveInputs} />
+        <DefaultButton title='Fechar' onClick={handleClose} />
+      </Footer>
     </Dialog>
   );
 };
+
+const TotalPagesInput = ({ value, onChange }) => (
+  inputFactory(
+    "NUMBER_INPUT", 
+    {
+      label: "Total pages",
+      value,
+      helperText: "Explanation total pages",
+      onChange
+    }
+  )
+);
+
+const CurrentPageInput = ({ value, onChange }) => (
+  inputFactory(
+    "NUMBER_INPUT", 
+    {
+      label: "Current page",
+      value,
+      helperText: "Page to be edited",
+      onChange
+    }
+  )
+);
+
+const ContentInput = ({ value, onChange }) => (
+  inputFactory(
+    "RICH_TEXT_INPUT", 
+    {
+      label: "content",
+      editorState: value, 
+      setEditorState: onChange
+    }
+  )
+);
