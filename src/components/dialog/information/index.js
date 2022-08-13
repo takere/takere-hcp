@@ -5,13 +5,12 @@ import { inputFactory } from "../../input";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
-import severityOptions from './severity.type.json';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export const ReminderDialog = ({
+export const InformationDialog = ({
   open,
   handleClose,
   data,
@@ -22,14 +21,12 @@ export const ReminderDialog = ({
   const [name, setName] = useState(loadStoredName(data));
   const [description, setDescription] = useState(loadStoredDescription(data));
   const [content, setContent] = useState(loadStoredContent(data));
-  const [severity, setSeverity] = useState(loadStoredSeverity(data));
 
   const saveInputs = () => {
     const inputData = {
       name,
       description,
-      content,
-      severity
+      content
     };
 
     onAddElementResultValue(data, inputData);
@@ -46,10 +43,6 @@ export const ReminderDialog = ({
 
   const onContentChange = (event) => {
     setContent(event.target.value);
-  };
-
-  const onSeverityChange = (event) => {
-    setSeverity(event.target.value);
   };
 
   return (
@@ -70,22 +63,15 @@ export const ReminderDialog = ({
         />
         <RawTextInput
           label="Description"
-          helperText="This reminder is about..."
+          helperText="Information summary"
           value={description}
           onChange={onDescriptionChange}
         />
         <RawTextInput
           label="Content"
-          helperText="Reminder content"
+          helperText="Information content"
           value={content}
           onChange={onContentChange}
-        />
-        <MultiSelectionInput
-          label="Severity"
-          helperText="How critical is to use this reminder?"
-          value={severity}
-          onChange={onSeverityChange}
-          options={severityOptions}
         />
       </Body>
       <Footer>
@@ -105,19 +91,6 @@ const RawTextInput = ({ label, helperText, value, onChange }) => (
       helperText,
       onChange,
     }
-  )
-);
-
-const MultiSelectionInput = ({ label, helperText, value, onChange, options }) => (
-  inputFactory(
-    "MULTI_SELECTION_INPUT", 
-    {
-      label,
-      value,
-      helperText,
-      onChange,
-      options,
-      }
   )
 );
 
@@ -153,12 +126,4 @@ function loadStoredContent(data) {
   }
 
   return data.data.results.content;
-}
-
-function loadStoredSeverity(data) {
-  if (!hasResults(data) || !data.data.results.severity) {
-    return severityOptions[0].value;
-  }
-
-  return data.data.results.severity;
 }

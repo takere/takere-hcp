@@ -10,6 +10,7 @@ import { SaveFlowDialog } from './save';
 import { QuizDialog } from './quiz';
 import { MedicationControlDialog } from './medication-control';
 import { ReminderDialog } from './reminder';
+import { InformationDialog } from './information';
 
 
 //-----------------------------------------------------------------------------
@@ -22,7 +23,8 @@ const dialogs = {
   SAVE_FLOW: SaveFlowDialog,
   QUIZ: QuizDialog,
   MEDICATION_CONTROL: MedicationControlDialog,
-  REMINDER: ReminderDialog
+  REMINDER: ReminderDialog,
+  INFORMATION: InformationDialog
 };
 
 
