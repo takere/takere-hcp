@@ -10,7 +10,7 @@ import { Sidebar } from "../sidebar/sidebar";
 import { nodeTypes } from "../nodes/nodes";
 import { ConnectionLine } from "../connectionLine/connectionLine";
 import { dialogFactory } from '../dialog';
-import { isConnectionAllowed } from "./connections";
+import connections from "./connections.json";
 import AccentSmallButton from "../buttons/AccentSmallButton";
 import DotsBackground from "./DotsBackground";
 
@@ -189,6 +189,19 @@ const ReactFlowContent = ({
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
+function isConnectionAllowed(sourceNodeType, targetNodeType) {
+  if (connections[sourceNodeType] === undefined) {
+    return false;
+  }
+
+  if (connections[targetNodeType] === undefined) {
+    return false;
+  }
+
+  return connections[sourceNodeType].includes(targetNodeType);
+}
+
+
 function buildSaveFlowDialog(display, onClose, data) {
   if (!display) {
     return (<></>);
