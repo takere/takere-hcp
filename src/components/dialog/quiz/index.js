@@ -5,52 +5,8 @@ import { inputFactory } from "../../input";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
-
-
-//-----------------------------------------------------------------------------
-//        Constants
-//-----------------------------------------------------------------------------
-const answerTypeOptions = [
-  {
-    value: "number",
-    label: "Numeric",
-  },
-  {
-    value: "text",
-    label: "Single line text",
-  },
-  {
-    value: "checkbox",
-    label: "Checkbox",
-  },
-  {
-    value: "radio",
-    label: "Radio",
-  },
-  {
-    value: "text-area",
-    label: "Multiple line text",
-  },
-];
-
-const frequencyTypeOptions = [
-  {
-    value: "daily",
-    label: "Daily",
-  },
-  {
-    value: "everyHours",
-    label: "Every x hours",
-  },
-  {
-    value: "weekly",
-    label: "Weekly",
-  },
-  {
-    value: "everyDays",
-    label: "Every x days",
-  },
-];
+import frequencyTypeOptions from './frequency.type.json';
+import answerTypeOptions from './answer.type.json';
 
 
 //-----------------------------------------------------------------------------
@@ -64,10 +20,7 @@ export const QuizDialog = ({
 }) => {
   const { data: payloadData } = data;
 
-  const [dataForm, setDataForm] = useState(loadStoredFields(data));
-  const [totalQuestions, setTotalQuestions] = useState(
-    loadStoredTotalQuestions(data)
-  );
+  const [totalQuestions, setTotalQuestions] = useState(loadStoredTotalQuestions(data));
   const [questions, setQuestions] = useState(loadStoredQuestions(data));
   const [question, setQuestion] = useState(loadStoredQuestion(data));
   const [currentQuestion, setCurrentQuestion] = useState(1);
@@ -76,7 +29,6 @@ export const QuizDialog = ({
 
   const saveInputs = () => {
     onAddElementResultValue(data, questions);
-    console.log(questions);
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
@@ -90,7 +42,7 @@ export const QuizDialog = ({
     if (value > totalQuestions) {
       const updatedQuestions = questions;
 
-      updatedQuestions.push({ question: '', answerType: 'number', frequency: 'daily' });
+      updatedQuestions.push(buildEmptyQuestion());
       
       setQuestions(updatedQuestions);
     }
@@ -253,10 +205,18 @@ function hasQuestions(data) {
 
 function loadStoredQuestions(data) {
   if (!hasResults(data) || !hasQuestions(data)) {
-    return [{ question: '', answerType: 'number', frequency: 'daily' }];
+    return [buildEmptyQuestion()];
   }
 
   return data.data.results.questions;
+}
+
+function buildEmptyQuestion() {
+  return { 
+    question: '', 
+    answerType: answerTypeOptions[0].value, 
+    frequency: frequencyTypeOptions[0].value
+  };
 }
 
 function loadStoredQuestion(data) {
