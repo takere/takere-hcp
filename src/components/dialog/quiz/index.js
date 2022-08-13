@@ -8,7 +8,7 @@ import { Header, Body, Footer } from "../";
 
 
 //-----------------------------------------------------------------------------
-//        Components
+//        Constants
 //-----------------------------------------------------------------------------
 const answerTypeOptions = [
   {
@@ -52,6 +52,10 @@ const frequencyTypeOptions = [
   },
 ];
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 export const QuizDialog = ({
   open,
   handleClose,
@@ -64,15 +68,16 @@ export const QuizDialog = ({
   const [totalQuestions, setTotalQuestions] = useState(
     loadStoredTotalQuestions(data)
   );
-  const [questions, setQuestions] = useState([{ question: '', answerType: 'number', frequency: 'daily' }]);
-  const [question, setQuestion] = useState("");
+  const [questions, setQuestions] = useState(loadStoredQuestions(data));
+  const [question, setQuestion] = useState(loadStoredQuestion(data));
   const [currentQuestion, setCurrentQuestion] = useState(1);
-  const [answerType, setAnswerType] = useState("");
-  const [frequency, setFrequency] = useState("");
+  const [answerType, setAnswerType] = useState(loadStoredAnswerType(data));
+  const [frequency, setFrequency] = useState(loadStoredFrequency(data));
 
   const saveInputs = () => {
-
+    onAddElementResultValue(data, questions);
     console.log(questions);
+    toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
   const onTotalQuestionsChange = (event) => {
@@ -221,22 +226,59 @@ const MultiSelectionInput = ({ label, helperText, value, onChange, options }) =>
 //        Functions
 //-----------------------------------------------------------------------------
 function loadStoredFields(data) {
-  if (!data || !data.data || !data.data.results) {
+  if (!hasResults(data)) {
     return {};
   }
 
   return data.data.results;
 }
 
+function hasResults(data) {
+  return  data
+          && data.data 
+          && data.data.results;
+}
+
 function loadStoredTotalQuestions(data) {
-  if (
-    !data ||
-    !data.data ||
-    !data.data.results ||
-    !data.data.results.questions
-  ) {
+  if (!hasResults(data) || !hasQuestions(data)) {
     return 1;
   }
 
+  return data.data.results.questions.length;
+}
+
+function hasQuestions(data) {
   return data.data.results.questions;
+}
+
+function loadStoredQuestions(data) {
+  if (!hasResults(data) || !hasQuestions(data)) {
+    return [{ question: '', answerType: 'number', frequency: 'daily' }];
+  }
+
+  return data.data.results.questions;
+}
+
+function loadStoredQuestion(data) {
+  if (!hasResults(data) || !hasQuestions(data)) {
+    return '';
+  }
+
+  return data.data.results.questions[0].question;
+}
+
+function loadStoredAnswerType(data) {
+  if (!hasResults(data) || !hasQuestions(data)) {
+    return '';
+  }
+
+  return data.data.results.questions[0].answerType;
+}
+
+function loadStoredFrequency(data) {
+  if (!hasResults(data) || !hasQuestions(data)) {
+    return '';
+  }
+
+  return data.data.results.questions[0].frequency;
 }
