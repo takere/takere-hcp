@@ -7,6 +7,7 @@ import BeginDialog from "./begin";
 import { ExplanationDialog } from "./explanation";
 import { GenericDialog } from "./generic";
 import { SaveFlowDialog } from './save';
+import { QuizDialog } from './quiz';
 
 
 //-----------------------------------------------------------------------------
@@ -16,7 +17,8 @@ const dialogs = {
   BEGIN: BeginDialog,
   EXPLANATION: ExplanationDialog,
   GENERIC: GenericDialog,
-  SAVE_FLOW: SaveFlowDialog
+  SAVE_FLOW: SaveFlowDialog,
+  QUIZ: QuizDialog
 };
 
 

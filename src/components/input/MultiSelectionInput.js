@@ -15,8 +15,8 @@ const MultiSelectionInput = ({ label, value, helperText, onChange, options }) =>
       }}
       helperText={helperText}
     >
-      {options?.map((option) => (
-        <option key={option.value} value={option.value}>
+      {options?.map((option, index) => (
+        <option key={option.key ?? index} value={option.value}>
           {option.label}
         </option>
       ))}
