@@ -18,45 +18,18 @@ export const ExplanationDialog = ({
   data,
   onAddElementResultValue,
 }) => {
-  const [dataForm, setDataForm] = useState(data.data.results || {});
-  const [totalPages, setTotalPages] = useState(data.data.results?.pages?.length ?? 1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pages, setPages] = useState(() => {
-    const storedPages = data.data.results?.pages ?? [];
-    const parsedPages = []; // Set of editor states
-
-    storedPages.forEach(page => {
-      parsedPages.push(EditorState.createWithContent(convertFromHTML(page)));
-    });
-
-    return parsedPages;
-  });
-  const [editorState, setEditorState] = useState(() => {
-    const loadedPages = data.data.results?.pages;
-    let content;
-
-    if (loadedPages != undefined) {
-      content = convertFromHTML(loadedPages[0]);
-    }
-    else {
-      content = ContentState.createFromText('');
-    }
-
-    return EditorState.createWithContent(content);
-  });
-  
   const { data: payloadData } = data;
-
+  
+  const [dataForm, setDataForm] = useState(loadStoredFields(data));
+  const [totalPages, setTotalPages] = useState(loadStoredTotalPages(data));
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pages, setPages] = useState(() => loadStoredPages(data));
+  const [editorState, setEditorState] = useState(loadEditorState(data));
+  
   const saveInputs = () => {
-    const parsedPages = [];
-
-    pages.forEach(page => {
-      parsedPages.push(convertToHTML(page.getCurrentContent()));
-    })
-
     const newDataForm = {
       ...dataForm,
-      pages: parsedPages
+      pages: convertPagesToHtml(pages)
     };
 
     setDataForm(newDataForm);
@@ -64,50 +37,37 @@ export const ExplanationDialog = ({
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
-  const onTotalPagesChange = (newTotalPages) => {
-    let newTotalPageNumber = parseInt(newTotalPages.target.value);
+  const onTotalPagesChange = (event) => {
+    let newTotalPages = parseInt(event.target.value);
 
-    if (newTotalPageNumber <= 0) {
+    if (newTotalPages <= 0) {
       return;
     }
 
-    let updatedPages = pages;
-
-    if (newTotalPageNumber > totalPages) {
-      let totalNewPages = newTotalPageNumber - totalPages;
-
-      for (let i = 0; i < totalNewPages; i++) {
-        updatedPages.push("");
-      }
-    }
-    else if (newTotalPageNumber > 1) {
-      updatedPages = updatedPages.slice(0, newTotalPageNumber);
-    }
-
-    setTotalPages(newTotalPageNumber);
+    setTotalPages(newTotalPages);
     setCurrentPage(1);
-
-    setPages(updatedPages);
+    setPages(updatePagesBasedOnTotalPages(newTotalPages, totalPages, pages));
     setEditorState(pages[0]);
   }
 
-  const onChangeCurrentPage = (newCurrentPage) => {
-    let newCurrentPageNumber = parseInt(newCurrentPage.target.value);
+  const onChangeCurrentPage = (event) => {
+    let newCurrentPage = parseInt(event.target.value);
 
-    if (newCurrentPageNumber <= 0 || newCurrentPageNumber > totalPages) {
+    if (isPageNumberOutOfBounds(newCurrentPage, totalPages)) {
       return;
     }
 
-    setCurrentPage(newCurrentPageNumber);
-    setEditorState(pages[newCurrentPageNumber-1]);
+    setCurrentPage(newCurrentPage);
+    setEditorState(pages[newCurrentPage-1]);
   }
 
-  const onChangeState = (newState) => {
+  const onChangeEditorState = (newState) => {
     setEditorState(newState);
 
     const updatedPages = pages;
     
     updatedPages[currentPage-1] = newState;
+    
     setPages(updatedPages);
   }
 
@@ -123,7 +83,7 @@ export const ExplanationDialog = ({
       <Body>
         <TotalPagesInput value={totalPages} onChange={onTotalPagesChange} />
         <CurrentPageInput value={currentPage} onChange={onChangeCurrentPage} />
-        <ContentInput value={editorState} onChange={onChangeState} />
+        <ContentInput value={editorState} onChange={onChangeEditorState} />
       </Body>
       <Footer>
         <SuccessButton title='Salvar' onClick={saveInputs} />
@@ -167,3 +127,79 @@ const ContentInput = ({ value, onChange }) => (
     }
   )
 );
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------
+function loadStoredFields(data) {
+  if (!data || !data.data || !data.data.results) {
+    return {};
+  }
+
+  return data.data.results;
+}
+
+function loadStoredTotalPages(data) {
+  if (!data || !data.data || !data.data.results || !data.data.results.pages) {
+    return 1;
+  }
+
+  return data.data.results.pages.length;
+}
+
+function loadStoredPages(data) {
+  const storedPages = data.data.results?.pages ?? [];
+  const parsedPages = []; // Set of editor states
+
+  storedPages.forEach(page => {
+    parsedPages.push(EditorState.createWithContent(convertFromHTML(page)));
+  });
+
+  return parsedPages;
+}
+
+function loadEditorState(data) {
+  const loadedPages = data.data.results?.pages;
+  let content = '';
+
+  if (loadedPages !== undefined) {
+    content = convertFromHTML(loadedPages[0]);
+  }
+  else {
+    content = ContentState.createFromText('');
+  }
+
+  return EditorState.createWithContent(content);
+}
+
+function convertPagesToHtml(pages) {
+  const parsedPages = [];
+
+  pages.forEach(page => {
+    parsedPages.push(convertToHTML(page.getCurrentContent()));
+  });
+
+  return parsedPages;
+}
+
+function updatePagesBasedOnTotalPages(newTotalPages, oldTotalPages, pages) {
+  let updatedPages = pages;
+
+  if (newTotalPages > oldTotalPages) {
+    let totalNewPages = newTotalPages - oldTotalPages;
+
+    for (let i = 0; i < totalNewPages; i++) {
+      updatedPages.push("");
+    }
+  }
+  else if (newTotalPages > 1) {
+    updatedPages = updatedPages.slice(0, newTotalPages);
+  }
+
+  return updatedPages;
+}
+
+function isPageNumberOutOfBounds(value, total) {
+  return (value <= 0) || (value > total);
+}

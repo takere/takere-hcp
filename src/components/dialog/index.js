@@ -14,8 +14,7 @@ import { SaveFlowDialog } from './save';
 const dialogs = {
   EXPLANATION: ExplanationDialog,
   GENERIC: GenericDialog,
-  SAVE_FLOW: SaveFlowDialog,
-  other: GenericDialog
+  SAVE_FLOW: SaveFlowDialog
 };
 
 
