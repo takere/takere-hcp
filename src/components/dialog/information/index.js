@@ -33,18 +33,6 @@ export const InformationDialog = ({
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
-  const onNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const onDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
-
-  const onContentChange = (event) => {
-    setContent(event.target.value);
-  };
-
   return (
     <Dialog
       fullWidth={true}
@@ -59,19 +47,19 @@ export const InformationDialog = ({
           label="Name"
           helperText="What's the subject?"
           value={name}
-          onChange={onNameChange}
+          onChange={setName}
         />
         <RawTextInput
           label="Description"
           helperText="Information summary"
           value={description}
-          onChange={onDescriptionChange}
+          onChange={setDescription}
         />
         <RawTextInput
           label="Content"
           helperText="Information content"
           value={content}
-          onChange={onContentChange}
+          onChange={setContent}
         />
       </Body>
       <Footer>

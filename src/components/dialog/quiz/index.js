@@ -34,8 +34,8 @@ export const QuizDialog = ({
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
-  const onTotalQuestionsChange = (event) => {
-    const value = parseInt(event.target.value);
+  const onTotalQuestionsChange = (rawValue) => {
+    const value = parseInt(rawValue);
 
     if (value < 1) {
       return;
@@ -55,26 +55,14 @@ export const QuizDialog = ({
     setTotalQuestions(value);
   };
 
-  const onCurrentQuestionChange = (event) => {
-    const value = parseInt(event.target.value);
+  const onCurrentQuestionChange = (rawValue) => {
+    const value = parseInt(rawValue);
 
     if ((value < 1) || (value > totalQuestions)) {
       return;
     }
 
     setCurrentQuestion(value);
-  };
-
-  const onQuestionChange = (event) => {
-    setQuestion(event.target.value);
-  };
-
-  const onAnswerTypeChange = (event) => {
-    setAnswerType(event.target.value);
-  };
-
-  const onFrequencyChange = (event) => {
-    setFrequency(event.target.value);
   };
 
   useEffect(() => {
@@ -125,20 +113,20 @@ export const QuizDialog = ({
           label="Question"
           helperText="What's the question?"
           value={question}
-          onChange={onQuestionChange}
+          onChange={setQuestion}
         />
         <MultiSelectionInput
           label="Answer type"
           helperText="How do you expect the answer?"
           value={answerType}
-          onChange={onAnswerTypeChange}
+          onChange={setAnswerType}
           options={answerTypeOptions}
         />
         <MultiSelectionInput
           label="Frequency"
           helperText="How often this treatment should be performed?"
           value={frequency}
-          onChange={onFrequencyChange}
+          onChange={setFrequency}
           options={frequencyTypeOptions}
         />
       </Body>

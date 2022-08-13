@@ -35,18 +35,6 @@ export const ConditionalDialog = ({
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
-  const onLeftChange = (event) => {
-    setLeft(event.target.value);
-  };
-
-  const onOperatorChange = (event) => {
-    setOperator(event.target.value);
-  };
-
-  const onRightChange = (event) => {
-    setRight(event.target.value);
-  };
-
   return (
     <Dialog
       fullWidth={true}
@@ -61,20 +49,20 @@ export const ConditionalDialog = ({
           label="Left"
           helperText="Left operand"
           value={left}
-          onChange={onLeftChange}
+          onChange={setLeft}
         />
         <MultiSelectionInput
           label="Operator"
           helperText="Operator that will be applied in the left and right terms"
           value={operator}
-          onChange={onOperatorChange}
+          onChange={setOperator}
           options={OperatorOptions}
         />
         <RawTextInput
           label="Right"
           helperText="Right operand"
           value={right}
-          onChange={onRightChange}
+          onChange={setRight}
         />
       </Body>
       <Footer>

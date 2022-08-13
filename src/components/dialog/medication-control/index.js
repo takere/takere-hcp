@@ -50,42 +50,6 @@ export const MedicationControlDialog = ({
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
-  const onNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const onDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
-
-  const onWhyChange = (event) => {
-    setWhy(event.target.value);
-  };
-
-  const onNotesChange = (event) => {
-    setNotes(event.target.value);
-  };
-
-  const onDosageChange = (event) => {
-    setDosage(event.target.value);
-  };
-
-  const onEndDateChange = (event) => {
-    setEndDate(event.target.value);
-  };
-
-  const onUndefinedEndChange = (event) => {
-    setUndefinedEnd(event.target.checked);
-  };
-
-  const onFrequencyChange = (event) => {
-    setFrequency(event.target.value);
-  };
-
-  const onSeverityChange = (event) => {
-    setSeverity(event.target.value);
-  };
-
   return (
     <Dialog
       fullWidth={true}
@@ -100,58 +64,58 @@ export const MedicationControlDialog = ({
           label="Name"
           helperText="Medication name"
           value={name}
-          onChange={onNameChange}
+          onChange={setName}
         />
         <RawTextInput
           label="Description"
           helperText="This medication is about..."
           value={description}
-          onChange={onDescriptionChange}
+          onChange={setDescription}
         />
         <RawTextInput
           label="Why?"
           helperText="This medication is important because..."
           value={why}
-          onChange={onWhyChange}
+          onChange={setWhy}
         />
         <RawTextInput
           label="Notes"
           helperText="Extra information"
           value={notes}
-          onChange={onNotesChange}
+          onChange={setNotes}
         />
         <RawTextInput
           label="Dosage"
           helperText="Dosage along with its unit (ml, mg...)"
           value={dosage}
-          onChange={onDosageChange}
+          onChange={setDosage}
         />
         {!undefinedEnd &&
           <DateInput
             label="End date"
             helperText="Type care plan end date"
             value={endDate}
-            onChange={onEndDateChange}
+            onChange={setEndDate}
           />
         }
         <BooleanInput
           label="Is end date undefined?"
           helperText="Sets end date as undefined"
           value={undefinedEnd}
-          onChange={onUndefinedEndChange}
+          onChange={setUndefinedEnd}
         />
         <MultiSelectionInput
           label="Frequency"
           helperText="How often this treatment should be performed?"
           value={frequency}
-          onChange={onFrequencyChange}
+          onChange={setFrequency}
           options={frequencyOptions}
         />
         <MultiSelectionInput
           label="Severity"
           helperText="How critical is to use this medicine?"
           value={severity}
-          onChange={onSeverityChange}
+          onChange={setSeverity}
           options={severityOptions}
         />
       </Body>

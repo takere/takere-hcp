@@ -37,22 +37,6 @@ export const ReminderDialog = ({
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
-  const onNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const onDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
-
-  const onContentChange = (event) => {
-    setContent(event.target.value);
-  };
-
-  const onSeverityChange = (event) => {
-    setSeverity(event.target.value);
-  };
-
   return (
     <Dialog
       fullWidth={true}
@@ -67,25 +51,25 @@ export const ReminderDialog = ({
           label="Name"
           helperText="What's the subject?"
           value={name}
-          onChange={onNameChange}
+          onChange={setName}
         />
         <RawTextInput
           label="Description"
           helperText="This reminder is about..."
           value={description}
-          onChange={onDescriptionChange}
+          onChange={setDescription}
         />
         <RawTextInput
           label="Content"
           helperText="Reminder content"
           value={content}
-          onChange={onContentChange}
+          onChange={setContent}
         />
         <MultiSelectionInput
           label="Severity"
           helperText="How critical is to use this reminder?"
           value={severity}
-          onChange={onSeverityChange}
+          onChange={setSeverity}
           options={severityOptions}
         />
       </Body>

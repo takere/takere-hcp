@@ -1,6 +1,10 @@
 import React from 'react';
 import { InputDefault, Spacing } from './styled';
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 const MultiSelectionInput = ({ label, value, helperText, onChange, options }) => (
   <>
     <InputDefault
@@ -9,7 +13,7 @@ const MultiSelectionInput = ({ label, value, helperText, onChange, options }) =>
       select
       variant="outlined"
       value={value}
-      onChange={onChange}
+      onChange={event => onChange(event.target.value)}
       SelectProps={{
         native: true,
       }}

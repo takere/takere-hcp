@@ -40,30 +40,6 @@ const BeginDialog = ({ open, handleClose, data, onAddElementResultValue }) => {
     onAddElementResultValue(data, inputData);
   };
 
-  const onStartDateChange = (event) => {
-    setStartDate(event.target.value);
-  };
-
-  const onEndDateChange = (event) => {
-    setEndDate(event.target.value);
-  };
-
-  const onUndefinedEndChange = (event) => {
-    setUndefinedEnd(event.target.checked);
-  };
-
-  const onRepeatIntervalChange = (event) => {
-    setRepeatInterval(event.target.value);
-  };
-
-  const onSkipDaysChange = (event) => {
-    setSkipDays(event.target.value);
-  };
-
-  const onSkipImmediateChange = (event) => {
-    setSkipImmediate(event.target.checked);
-  };
-
   return (
     <Dialog
       fullWidth={true}
@@ -78,39 +54,39 @@ const BeginDialog = ({ open, handleClose, data, onAddElementResultValue }) => {
           label="Begin date"
           helperText="Type care plan begin date"
           value={startDate}
-          onChange={onStartDateChange}
+          onChange={setStartDate}
         />
         {!undefinedEnd &&
           <DateInput
             label="End date"
             helperText="Type care plan end date"
             value={endDate}
-            onChange={onEndDateChange}
+            onChange={setEndDate}
           />
         }
         <BooleanInput
           label="Is end date undefined?"
           helperText="Sets end date as undefined"
           value={undefinedEnd}
-          onChange={onUndefinedEndChange}
+          onChange={setUndefinedEnd}
         />
         <RawTextInput
           label="Repeat interval"
           helperText="How often should it repeat? (2 weeks, 5 days...)"
           value={repeatInterval}
-          onChange={onRepeatIntervalChange}
+          onChange={setRepeatInterval}
         />
         <NumberInput
           label="How often care plan should be executed?"
           helperText="Spacing between executions (in days)"
           value={skipDays}
-          onChange={onSkipDaysChange}
+          onChange={setSkipDays}
         />
         <BooleanInput
           label="Ignore immediate execution?"
           helperText="Setting this option to true will bypass immediate execution. The first run will only take place at the configured interval."
           value={skipImmediate}
-          onChange={onSkipImmediateChange}
+          onChange={setSkipImmediate}
         />
       </Body>
       <Footer>

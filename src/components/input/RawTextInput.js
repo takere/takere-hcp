@@ -1,6 +1,10 @@
 import React from 'react';
 import { InputDefault, Spacing } from './styled';
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 const RawTextInput = ({ label, value, helperText, onChange }) => (
   <>
     <InputDefault
@@ -10,7 +14,7 @@ const RawTextInput = ({ label, value, helperText, onChange }) => (
       type="text"
       helperText={helperText}
       value={value}
-      onChange={onChange}
+      onChange={event => onChange(event.target.value)}
       size="small"
     />
     <Spacing />

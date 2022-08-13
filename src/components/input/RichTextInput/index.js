@@ -4,23 +4,24 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './style.css'
 import { Spacing } from '../styled';
 
-const RichTextInput = ({ label, value, onChange }) => {
 
-  return (
-    <fieldset>
-      <legend className='title'>
-        { label }
-      </legend>
-      <Editor 
-        editorState={value} 
-        onEditorStateChange={onChange}
-        wrapperClassName="wrapper-class"
-        editorClassName="editor-class"
-        toolbarClassName="toolbar-class"
-      />
-      <Spacing />
-    </fieldset>
-  );
-};
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
+const RichTextInput = ({ label, value, onChange }) => (
+  <fieldset>
+    <legend className='title'>
+      { label }
+    </legend>
+    <Editor 
+      editorState={value} 
+      onEditorStateChange={onChange}
+      wrapperClassName="wrapper-class"
+      editorClassName="editor-class"
+      toolbarClassName="toolbar-class"
+    />
+    <Spacing />
+  </fieldset>
+);
 
 export default RichTextInput;

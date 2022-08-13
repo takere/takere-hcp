@@ -1,6 +1,10 @@
 import React from 'react';
 import { InputDefault, Spacing } from './styled';
 
+
+//-----------------------------------------------------------------------------
+//        Components
+//-----------------------------------------------------------------------------
 const NumberInput = ({ label, value, helperText, onChange }) => (
   <>
     <InputDefault
@@ -10,7 +14,7 @@ const NumberInput = ({ label, value, helperText, onChange }) => (
       type="number"
       helperText={helperText}
       value={value}
-      onChange={onChange}
+      onChange={event => onChange(event.target.value)}
       size="small"
     />
     <Spacing />
