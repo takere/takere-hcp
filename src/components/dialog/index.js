@@ -5,13 +5,13 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import BeginDialog from "./begin";
 import { ExplanationDialog } from "./explanation";
-import { GenericDialog } from "./generic";
 import { SaveFlowDialog } from './save';
 import { QuizDialog } from './quiz';
 import { MedicationControlDialog } from './medication-control';
 import { ReminderDialog } from './reminder';
 import { InformationDialog } from './information';
 import { ConditionalDialog } from './conditional';
+import DialogFactoryException from './exception/DialogFactoryException';
 
 
 //-----------------------------------------------------------------------------
@@ -20,7 +20,6 @@ import { ConditionalDialog } from './conditional';
 const dialogs = {
   BEGIN: BeginDialog,
   EXPLANATION: ExplanationDialog,
-  GENERIC: GenericDialog,
   SAVE_FLOW: SaveFlowDialog,
   QUIZ: QuizDialog,
   MEDICATION_CONTROL: MedicationControlDialog,
@@ -60,7 +59,7 @@ export const Footer = ({ children }) => (
 //-----------------------------------------------------------------------------
 export function dialogFactory(type, props) {
   if (dialogs[type] === undefined) {
-    return (<GenericDialog { ...props } />);
+    throw new DialogFactoryException(`There is no support for ${type}`);
   }
 
   return React.createElement(dialogs[type], { ...props });
