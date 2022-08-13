@@ -3,6 +3,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import BeginDialog from "./begin";
 import { ExplanationDialog } from "./explanation";
 import { GenericDialog } from "./generic";
 import { SaveFlowDialog } from './save';
@@ -12,6 +13,7 @@ import { SaveFlowDialog } from './save';
 //        Constants
 //-----------------------------------------------------------------------------
 const dialogs = {
+  BEGIN: BeginDialog,
   EXPLANATION: ExplanationDialog,
   GENERIC: GenericDialog,
   SAVE_FLOW: SaveFlowDialog
