@@ -5,10 +5,8 @@ import * as Styled from "./genericNode.styled";
 import { theme } from "../../../utils/colors";
 
 export const GenericNode = (data) => {
-  const nodeStyle = data?.data?.style;
-
   return (
-    <Styled.Node nodeStyle={nodeStyle}>
+    <Styled.Node bgColor={ data?.data?.bgColor}>
       <Styled.NodeContainer>
         <Styled.NodeName>{data.data.label}</Styled.NodeName>
         <Icon

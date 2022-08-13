@@ -5,10 +5,8 @@ import * as Styled from "./styled";
 import { theme } from "../../../utils/colors";
 
 const ConditionalNode = (data) => {
-  const nodeStyle = data?.data?.style;
-
   return (
-    <Styled.Node nodeStyle={nodeStyle}>
+    <Styled.Node bgColor={ data?.data?.bgColor}>
       <Styled.NodeContainer>
         <Styled.NodeName>{data.data.label}</Styled.NodeName>
         <Icon

@@ -19,18 +19,6 @@ const dialogs = {
 
 
 //-----------------------------------------------------------------------------
-//        Functions
-//-----------------------------------------------------------------------------
-export function dialogFactory(type, props) {
-  if (dialogs[type] === undefined) {
-    return (<GenericDialog { ...props } />);
-  }
-
-  return React.createElement(dialogs[type], { ...props });
-}
-
-
-//-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
 export const Header = ({ title, subtitle }) => (
@@ -53,3 +41,15 @@ export const Footer = ({ children }) => (
     { children }
   </DialogActions>
 );
+
+
+//-----------------------------------------------------------------------------
+//        Functions
+//-----------------------------------------------------------------------------
+export function dialogFactory(type, props) {
+  if (dialogs[type] === undefined) {
+    return (<GenericDialog { ...props } />);
+  }
+
+  return React.createElement(dialogs[type], { ...props });
+}

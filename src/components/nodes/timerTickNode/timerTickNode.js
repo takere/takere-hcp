@@ -7,7 +7,7 @@ import { theme } from "../../../utils/colors";
 export const TimerTickNode = (data) => {
   
   return (
-    <Styled.Node>
+    <Styled.Node bgColor={ data?.data?.bgColor}>
       <Styled.NodeContainer>
         <Styled.NodeName>{data.data.label}</Styled.NodeName>
         <Icon
