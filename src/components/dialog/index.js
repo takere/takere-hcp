@@ -11,6 +11,7 @@ import { QuizDialog } from './quiz';
 import { MedicationControlDialog } from './medication-control';
 import { ReminderDialog } from './reminder';
 import { InformationDialog } from './information';
+import { ConditionalDialog } from './conditional';
 
 
 //-----------------------------------------------------------------------------
@@ -24,7 +25,8 @@ const dialogs = {
   QUIZ: QuizDialog,
   MEDICATION_CONTROL: MedicationControlDialog,
   REMINDER: ReminderDialog,
-  INFORMATION: InformationDialog
+  INFORMATION: InformationDialog,
+  CONDITIONAL: ConditionalDialog
 };
 
 
