@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Diagrams from "../../components/diagrams/diagrams";
+import Diagrams from "../../components/diagrams";
 import {
     useParams
 } from "react-router-dom";

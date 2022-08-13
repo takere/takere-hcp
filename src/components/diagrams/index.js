@@ -3,28 +3,17 @@ import ReactFlow, {
   ReactFlowProvider,
   addEdge,
   removeElements,
-  Controls,
-  Background,
+  Controls
 } from "react-flow-renderer";
-import "./dnd.css";
+import * as Styled from './styled';
 import { Sidebar } from "../sidebar/sidebar";
-import { theme } from "../../utils/colors";
 import { nodeTypes } from "../nodes/nodes";
 import { ConnectionLine } from "../connectionLine/connectionLine";
-import Button from "@material-ui/core/Button";
 import { SaveDialogPop } from "../dialog/saveDialog";
-import Icon from "@material-ui/core/Icon";
 import { dialogFactory } from '../dialog';
 import { isConnectionAllowed } from "./connections";
-
-
-//-----------------------------------------------------------------------------
-//        Constants
-//-----------------------------------------------------------------------------
-const initialElements = [];
-
-let id = 0;
-const getId = () => `dndnode_${id++}`;
+import AccentSmallButton from "../buttons/AccentSmallButton";
+import DotsBackground from "./DotsBackground";
 
 
 //-----------------------------------------------------------------------------
@@ -34,7 +23,7 @@ const Diagrams = ({ flowDb }) => {
   const [openNodeDialog, setOpenNodeDialog] = useState(false);
   const [openSaveDialog, setOpenSaveDialog] = useState(false);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
-  const [nodes, setNodes] = useState(initialElements);
+  const [nodes, setNodes] = useState([]);
   const [selectedNode, setSelectedNode] = useState(null);
   const [flow, setFlow] = useState(null);
   const [index, setIndex] = useState(0);
@@ -105,6 +94,12 @@ const Diagrams = ({ flowDb }) => {
   const onDrop = (event) => {
     event.preventDefault();
 
+    const newNode = getDroppedNode(event);
+    
+    setNodes((es) => es.concat(newNode));
+  };
+
+  const getDroppedNode = (event) => {
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
     const node = JSON.parse(
       event.dataTransfer.getData("application/reactflow")
@@ -115,14 +110,16 @@ const Diagrams = ({ flowDb }) => {
     });
     const newNode = {
       key: index,
-      id: getId(),
+      id: `dndnode_${index}`,
       type: node.type,
       position,
       data: node.data,
     };
+
     setIndex(index + 1);
-    setNodes((es) => es.concat(newNode));
-  };
+
+    return newNode;
+  }
 
   useEffect(() => {
     if (flowDb?.data) {
@@ -135,7 +132,7 @@ const Diagrams = ({ flowDb }) => {
   }, [flowDb]);
 
   return (
-    <div className="dndflow">
+    <Styled.Container>
       { buildSaveFlowDialog(openSaveDialog, handleCloseSaveDialog, { flow, elements: nodes }) }
       { buildNodeDialog(selectedNode, openNodeDialog, handleCloseNodeDialog, onAddElementResultValue) }
       <ReactFlowProvider>
@@ -152,7 +149,7 @@ const Diagrams = ({ flowDb }) => {
         />
         <Sidebar />
       </ReactFlowProvider>
-    </div>
+    </Styled.Container>
   );
 };
 
@@ -169,7 +166,7 @@ const ReactFlowContent = ({
   onDragOver,
   handleClickOpenSaveDialog
 }) => (
-  <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+  <Styled.FlowArea ref={reactFlowWrapper}>
     <ReactFlow
       nodeTypes={nodeTypes}
       elements={elements}
@@ -182,41 +179,11 @@ const ReactFlowContent = ({
       onDragOver={onDragOver}
       deleteKeyCode={46}
     >
-      <Background
-        variant="dots"
-        color={theme.colors.night.x1}
-        style={{ backgroundColor: theme.colors.day.x1 }}
-        gap={40}
-        size={1}
-      />
+      <DotsBackground />
       <Controls />
-
-      <Button
-        style={{
-          zIndex: "1000",
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          marginBottom: 20,
-          marginRight: 20,
-          backgroundColor: theme.colors.primary.x1,
-          width: "50px",
-        }}
-        onClick={handleClickOpenSaveDialog}
-        variant="contained"
-      >
-        <Icon
-          style={{
-            textAlign: "center",
-            fontSize: 28,
-            color: theme.colors.night.x1,
-          }}
-        >
-          save
-        </Icon>
-      </Button>
+      <AccentSmallButton iconName='save' onClick={handleClickOpenSaveDialog} />
     </ReactFlow>
-  </div>
+  </Styled.FlowArea>
 );
 
 
