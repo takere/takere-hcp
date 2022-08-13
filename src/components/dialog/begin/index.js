@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
-import { toast } from "react-toastify";
-import { inputFactory } from "../../input";
-import { EditorState, ContentState } from "draft-js";
-import { convertFromHTML, convertToHTML } from "draft-convert";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
+import BooleanInput from "../../input/BooleanInput";
+import RawTextInput from "../../input/RawTextInput";
+import NumberInput from "../../input/NumberInput";
+import DateInput from "../../input/DateInput";
+
 
 //-----------------------------------------------------------------------------
 //        Components
@@ -122,37 +123,6 @@ const BeginDialog = ({ open, handleClose, data, onAddElementResultValue }) => {
 
 export default BeginDialog;
 
-const DateInput = ({ label, helperText, value, onChange }) =>
-  inputFactory("DATE_INPUT", {
-    label,
-    value,
-    helperText,
-    onChange,
-  });
-
-const BooleanInput = ({ label, helperText, value, onChange }) =>
-  inputFactory("BOOLEAN_INPUT", {
-    label,
-    value,
-    helperText,
-    onChange,
-  });
-
-const RawTextInput = ({ label, helperText, value, onChange }) =>
-  inputFactory("RAW_TEXT_INPUT", {
-    label,
-    value,
-    helperText,
-    onChange,
-  });
-
-const NumberInput = ({ label, helperText, value, onChange }) =>
-  inputFactory("NUMBER_INPUT", {
-    label,
-    value,
-    helperText,
-    onChange,
-  });
 
 //-----------------------------------------------------------------------------
 //        Functions

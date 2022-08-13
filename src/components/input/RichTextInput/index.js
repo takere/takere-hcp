@@ -2,22 +2,18 @@ import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './style.css'
+import { Spacing } from '../styled';
 
-import { Spacing } from './styled';
-
-const RichTextInput = ({ label, editorState, setEditorState }) => {
-  
-  
-  const onChangeState = (state) => {
-    setEditorState(state);
-  };
+const RichTextInput = ({ label, value, onChange }) => {
 
   return (
     <fieldset>
-      <legend className='title'>{label}</legend>
+      <legend className='title'>
+        { label }
+      </legend>
       <Editor 
-        editorState={editorState} 
-        onEditorStateChange={onChangeState}
+        editorState={value} 
+        onEditorStateChange={onChange}
         wrapperClassName="wrapper-class"
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"

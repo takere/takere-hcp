@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import { toast } from "react-toastify";
-import { inputFactory } from "../../input";
 import { EditorState, ContentState } from 'draft-js';
 import { convertFromHTML, convertToHTML } from "draft-convert";
 import SuccessButton from '../../buttons/SuccessButton';
 import DefaultButton from '../../buttons/DefaultButton';
 import { Header, Body, Footer } from '../'
+import NumberInput from "../../input/NumberInput";
+import RichTextInput from "../../input/RichTextInput";
 
 
 //-----------------------------------------------------------------------------
@@ -81,9 +82,9 @@ export const ExplanationDialog = ({
     >
       <Header title={payloadData.label} subtitle={payloadData.description} />
       <Body>
-        <TotalPagesInput value={totalPages} onChange={onTotalPagesChange} />
-        <CurrentPageInput value={currentPage} onChange={onChangeCurrentPage} />
-        <ContentInput value={editorState} onChange={onChangeEditorState} />
+        <NumberInput label='Total pages' helperText='Explanation total pages' value={totalPages} onChange={onTotalPagesChange} />
+        <NumberInput label='Current page' helperText='Page to be edited' value={currentPage} onChange={onChangeCurrentPage} />
+        <RichTextInput label='Content' value={editorState} onChange={onChangeEditorState} />
       </Body>
       <Footer>
         <SuccessButton title='Save' onClick={saveInputs} />
@@ -92,41 +93,6 @@ export const ExplanationDialog = ({
     </Dialog>
   );
 };
-
-const TotalPagesInput = ({ value, onChange }) => (
-  inputFactory(
-    "NUMBER_INPUT", 
-    {
-      label: "Total pages",
-      value,
-      helperText: "Explanation total pages",
-      onChange
-    }
-  )
-);
-
-const CurrentPageInput = ({ value, onChange }) => (
-  inputFactory(
-    "NUMBER_INPUT", 
-    {
-      label: "Current page",
-      value,
-      helperText: "Page to be edited",
-      onChange
-    }
-  )
-);
-
-const ContentInput = ({ value, onChange }) => (
-  inputFactory(
-    "RICH_TEXT_INPUT", 
-    {
-      label: "content",
-      editorState: value, 
-      setEditorState: onChange
-    }
-  )
-);
 
 
 //-----------------------------------------------------------------------------

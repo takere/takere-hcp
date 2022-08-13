@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import { toast } from "react-toastify";
-import { inputFactory } from "../../input";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
+import RawTextInput from "../../input/RawTextInput";
 
 
 //-----------------------------------------------------------------------------
@@ -81,18 +81,6 @@ export const InformationDialog = ({
     </Dialog>
   );
 };
-
-const RawTextInput = ({ label, helperText, value, onChange }) => (
-  inputFactory(
-    "RAW_TEXT_INPUT", 
-    {
-      label,
-      value,
-      helperText,
-      onChange,
-    }
-  )
-);
 
 
 //-----------------------------------------------------------------------------

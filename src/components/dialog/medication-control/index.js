@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import { toast } from "react-toastify";
-import { inputFactory } from "../../input";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
 import frequencyOptions from './frequency.type.json';
 import severityOptions from './severity.type.json';
+import BooleanInput from "../../input/BooleanInput";
+import RawTextInput from "../../input/RawTextInput";
+import MultiSelectionInput from "../../input/MultiSelectionInput";
+import DateInput from "../../input/DateInput";
 
 
 //-----------------------------------------------------------------------------
@@ -159,55 +162,6 @@ export const MedicationControlDialog = ({
     </Dialog>
   );
 };
-
-const DateInput = ({ label, helperText, value, onChange }) => (
-  inputFactory(
-    "DATE_INPUT", 
-    {
-      label,
-      value,
-      helperText,
-      onChange
-    }
-  )
-);
-
-const BooleanInput = ({ label, helperText, value, onChange }) => (
-  inputFactory(
-    "BOOLEAN_INPUT", 
-    {
-      label,
-      value,
-      helperText,
-      onChange
-    }
-  )
-);
-
-const RawTextInput = ({ label, helperText, value, onChange }) => (
-  inputFactory(
-    "RAW_TEXT_INPUT", 
-    {
-      label,
-      value,
-      helperText,
-      onChange,
-    }
-  )
-);
-
-const MultiSelectionInput = ({ label, helperText, value, onChange, options }) => (
-  inputFactory(
-    "MULTI_SELECTION_INPUT", 
-    {
-      label,
-      value,
-      helperText,
-      onChange,
-      options,
-      }
-  )
-);
 
 
 //-----------------------------------------------------------------------------
