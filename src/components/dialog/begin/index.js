@@ -13,7 +13,6 @@ import { Header, Body, Footer } from "../";
 //-----------------------------------------------------------------------------
 const BeginDialog = ({ open, handleClose, data, onAddElementResultValue }) => {
   const { data: payloadData } = data;
-  const [dataForm, setDataForm] = useState(loadStoredFields(data));
   const [startDate, setStartDate] = useState(loadStoredStartDate(data));
   const [endDate, setEndDate] = useState(loadStoredEndDate(data));
   const [undefinedEnd, setUndefinedEnd] = useState(
@@ -37,7 +36,7 @@ const BeginDialog = ({ open, handleClose, data, onAddElementResultValue }) => {
       skipImmediate,
     };
 
-    console.log(inputData);
+    onAddElementResultValue(data, inputData);
   };
 
   const onStartDateChange = (event) => {

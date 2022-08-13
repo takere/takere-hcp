@@ -9,6 +9,7 @@ import { GenericDialog } from "./generic";
 import { SaveFlowDialog } from './save';
 import { QuizDialog } from './quiz';
 import { MedicationControlDialog } from './medication-control';
+import { ReminderDialog } from './reminder';
 
 
 //-----------------------------------------------------------------------------
@@ -20,7 +21,8 @@ const dialogs = {
   GENERIC: GenericDialog,
   SAVE_FLOW: SaveFlowDialog,
   QUIZ: QuizDialog,
-  MEDICATION_CONTROL: MedicationControlDialog
+  MEDICATION_CONTROL: MedicationControlDialog,
+  REMINDER: ReminderDialog
 };
 
 
