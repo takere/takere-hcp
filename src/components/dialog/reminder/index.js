@@ -11,7 +11,7 @@ import severityOptions from './severity.type.json';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-export const ReminderDialog = ({
+export const InformationDialog = ({
   open,
   handleClose,
   data,
@@ -64,25 +64,25 @@ export const ReminderDialog = ({
       <Body>
         <RawTextInput
           label="Name"
-          helperText="Medication name"
+          helperText="What's the subject?"
           value={name}
           onChange={onNameChange}
         />
         <RawTextInput
           label="Description"
-          helperText="This medication is about..."
+          helperText="This reminder is about..."
           value={description}
           onChange={onDescriptionChange}
         />
         <RawTextInput
           label="Why?"
-          helperText="This medication is important because..."
+          helperText="Reminder content"
           value={content}
           onChange={onContentChange}
         />
         <MultiSelectionInput
           label="Severity"
-          helperText="How critical is to use this medicine?"
+          helperText="How critical is to use this reminder?"
           value={severity}
           onChange={onSeverityChange}
           options={severityOptions}
