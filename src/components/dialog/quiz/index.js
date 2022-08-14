@@ -193,8 +193,7 @@ function buildEmptyQuestion() {
   return { 
     question: '', 
     answerType: answerTypeOptions[0].value, 
-    frequencyType: frequencyTypeOptions[0].value,
-    frequencyValue: frequencyTypeOptions[0].value
+    frequency: { type: frequencyTypeOptions[0].value, value: frequencyTypeOptions[0].value }
   };
 }
 
