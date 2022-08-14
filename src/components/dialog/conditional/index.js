@@ -53,8 +53,6 @@ const ConditionalDialog = ({
   useEffect(() => {
     setOperatorOptions(buildOperatorOptions(connections[0], 0));
     setRightOptions(buildRightOptions(connections[0], 0));
-
-    console.log(connections[0])
   }, []);
 
   return (
