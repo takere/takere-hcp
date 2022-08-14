@@ -156,10 +156,10 @@ function buildOperatorOptions(connection, currentIndex) {
   let options = [];
   const currentResult = connection.data.results[currentIndex];
   
-  if (currentResult.answerType === 'number') {
+  if (currentResult.answer.type === 'number') {
     options = numberOperatorOptions;
   }
-  else if (currentResult.answerType === 'checkbox') {
+  else if (currentResult.answer.type === 'checkbox') {
     options = selectionOperatorOptions;
   }
   else {
@@ -178,9 +178,9 @@ function buildRightOptions(connection, currentIndex) {
     return [{ label: 'Taken', value: 'taken' }];
   }
 
-  if (!connection.data.results[currentIndex].answerOptions) {
+  if (!connection.data.results[currentIndex].answer.options) {
     return [];
   }
 
-  return connection.data.results[currentIndex].answerOptions;
+  return connection.data.results[currentIndex].answer.options;
 }
