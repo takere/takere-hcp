@@ -1,19 +1,25 @@
 import React from 'react';
-import Button from "@material-ui/core/Button";
-import { color } from './style';
+import { buttonStyle } from './style';
+import MaterialIcon from '../parts/MaterialIcon';
+import AbstractButton from '../parts/AbstractButton';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const SuccessButton = ({ title, onClick }) => (
-  <Button
+const SuccessButton = ({ iconName, title, onClick, type, style }) => (
+  <AbstractButton
+    style={{ ...buttonStyle, ...style }}
+    type={type}
     onClick={onClick}
-    variant="contained"
-    color={color}
   >
-    { title }
-  </Button>
+    {title && 
+      <>{title}</>
+    }
+    {!title && 
+      <MaterialIcon iconName={iconName} />
+    }
+  </AbstractButton>
 );
 
 export default SuccessButton;
