@@ -26,10 +26,11 @@ const Diagrams = ({ flowDb }) => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [flow, setFlow] = useState(null);
   const [index, setIndex] = useState(0);
-  const [selectedNodeConnections, setSelectedNodeConnections] = useState([]);
+  const [selectedNodeConnection, setSelectedNodeConnection] = useState({});
   const reactFlowWrapper = useRef(null);
 
   const handleClickOpenDialog = () => {
+    console.log(nodes);
     setOpenNodeDialog(true);
   };
 
@@ -50,9 +51,9 @@ const Diagrams = ({ flowDb }) => {
     const connectedNodeIds = nodes
       .filter(node => node.target === element.id)
       .map(edge => edge.source);
-    const connectedNodes = nodes.filter(node => connectedNodeIds.includes(node.id))
+    const connectedNodes = nodes.filter(node => connectedNodeIds.includes(node.id))[0];
     
-    setSelectedNodeConnections(connectedNodes)
+    setSelectedNodeConnection(connectedNodes)
     setSelectedNode(element);
     handleClickOpenDialog();
   };
@@ -80,7 +81,9 @@ const Diagrams = ({ flowDb }) => {
       const targetNode = nodes.filter(element => element.id === targetId)[0];
 
       if (isConnectionAllowed(sourceNode.type, targetNode.type)) {
-        setNodes((els) => addEdge({ ...params, animated: true }, els));
+        const connectedNodes = nodes.filter(node => (!node.target) || (node.target !== targetId));
+
+        setNodes(addEdge({ ...params, animated: true }, connectedNodes));
       }
     }
   );
@@ -140,7 +143,7 @@ const Diagrams = ({ flowDb }) => {
   return (
     <Styled.Container>
       { buildSaveFlowDialog(openSaveDialog, handleCloseSaveDialog, { flow, elements: nodes }) }
-      { buildNodeDialog(selectedNode, openNodeDialog, handleCloseNodeDialog, onAddElementResultValue, selectedNodeConnections) }
+      { buildNodeDialog(selectedNode, openNodeDialog, handleCloseNodeDialog, onAddElementResultValue, selectedNodeConnection) }
       <ReactFlowProvider>
         <ReactFlowContent 
           reactFlowWrapper={reactFlowWrapper}
@@ -241,7 +244,7 @@ function buildNodeDialog(
   openDialog,
   handleCloseDialog, 
   onAddElementResultValue,
-  selectedNodeConnections
+  selectedNodeConnection
 ) {
   if (!selectedElement || !openDialog) {
     return (<></>);
@@ -254,7 +257,7 @@ function buildNodeDialog(
       handleClose: handleCloseDialog,
       data: selectedElement,
       onAddElementResultValue: onAddElementResultValue,
-      connections: selectedNodeConnections
+      connection: selectedNodeConnection
     }
   );
 }

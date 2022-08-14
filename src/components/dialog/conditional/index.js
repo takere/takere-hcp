@@ -20,14 +20,13 @@ const ConditionalDialog = ({
   handleClose,
   data,
   onAddElementResultValue,
-  connections
+  connection
 }) => {
   const { data: payloadData } = data;
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [left, setLeft] = useState(loadStoredLeft(data, connections));
-  const [operator, setOperator] = useState(loadStoredOperator(data, connections));
-  const [right, setRight] = useState(loadStoredRight(data, connections));
+  const [left, setLeft] = useState(loadStoredLeft(data, connection));
+  const [operator, setOperator] = useState(loadStoredOperator(data, connection));
+  const [right, setRight] = useState(loadStoredRight(data, connection));
   const [operatorOptions, setOperatorOptions] = useState([]);
   const [rightOptions, setRightOptions] = useState([]);
 
@@ -42,19 +41,18 @@ const ConditionalDialog = ({
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
-  const onSelectLeft = (operand, connection) => {
+  const onSelectLeft = (operand) => {
     const newIndex = connection.data.results.findIndex(quiz => quiz.question === operand)
 
     setLeft(operand);
-    setCurrentIndex(newIndex);
     setOperatorOptions(buildOperatorOptions(connection, newIndex));
     setRightOptions(buildRightOptions(connection, newIndex));
   }
 
   useEffect(() => {
-    setOperatorOptions(buildOperatorOptions(connections[0], 0));
-    setRightOptions(buildRightOptions(connections[0], 0));
-  }, []);
+    setOperatorOptions(buildOperatorOptions(connection, 0));
+    setRightOptions(buildRightOptions(connection, 0));
+  }, [connection]);
 
   return (
     <Dialog
@@ -66,41 +64,39 @@ const ConditionalDialog = ({
     >
       <Header title={payloadData.label} subtitle={payloadData.description} />
       <Body>
-        {connections.map((connection, index) => (
-          <Styled.InputArea key={index}>
-            <MultiSelectionInput
-              label="Left"
-              helperText="Left operand"
-              value={left}
-              onChange={(operand) => onSelectLeft(operand, connection)}
-              options={buildLeftOptions(connection)}
+        <Styled.InputArea>
+          <MultiSelectionInput
+            label="Left"
+            helperText="Left operand"
+            value={left}
+            onChange={onSelectLeft}
+            options={buildLeftOptions(connection)}
+          />
+          <MultiSelectionInput
+            label="Operator"
+            helperText="Operator that will be applied in the left and right terms"
+            value={operator}
+            onChange={setOperator}
+            options={operatorOptions}
+          />
+          {rightOptions.length === 0 
+          ? 
+            <RawTextInput 
+              label="Right"
+              helperText="Right operand"
+              value={right}
+              onChange={setRight}
             />
+          :
             <MultiSelectionInput
-              label="Operator"
-              helperText="Operator that will be applied in the left and right terms"
-              value={operator}
-              onChange={setOperator}
-              options={operatorOptions}
+              label="Right"
+              helperText="Right operand"
+              value={right}
+              onChange={setRight}
+              options={rightOptions}
             />
-            {rightOptions.length === 0 
-            ? 
-              <RawTextInput 
-                label="Right"
-                helperText="Right operand"
-                value={right}
-                onChange={setRight}
-              />
-            :
-              <MultiSelectionInput
-                label="Right"
-                helperText="Right operand"
-                value={right}
-                onChange={setRight}
-                options={rightOptions}
-              />
-            }
-          </Styled.InputArea>
-        ))}
+          }
+        </Styled.InputArea>
       </Body>
       <Footer>
         <SuccessButton title="Save" onClick={saveInputs} />

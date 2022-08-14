@@ -96,7 +96,7 @@ const QuizDialog = ({
   }
 
   const handleRemoveOption = (answerIndex) => {
-    const updatedAnswerOptions =  answerOptions.filter((_, index) => index != answerIndex);
+    const updatedAnswerOptions =  answerOptions.filter((_, index) => index !== answerIndex);
 
     setAnswerOptions(updatedAnswerOptions);
   }
