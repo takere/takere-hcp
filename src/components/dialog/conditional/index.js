@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import { toast } from "react-toastify";
 import SuccessButton from "../../buttons/SuccessButton";
@@ -27,8 +27,8 @@ const ConditionalDialog = ({
   const [left, setLeft] = useState(loadStoredLeft(data, connections));
   const [operator, setOperator] = useState(loadStoredOperator(data, connections));
   const [right, setRight] = useState(loadStoredRight(data, connections));
-
-  console.log(connections)
+  const [operatorOptions, setOperatorOptions] = useState([]);
+  const [rightOptions, setRightOptions] = useState([]);
 
   const saveInputs = () => {
     const inputData = {
@@ -41,10 +41,21 @@ const ConditionalDialog = ({
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
-  const onSelectLeft = (operand, index) => {
+  const onSelectLeft = (operand, connection) => {
+    const newIndex = connection.data.results.findIndex(quiz => quiz.question === operand)
+
     setLeft(operand);
-    setCurrentIndex(index);
+    setCurrentIndex(newIndex);
+    setOperatorOptions(buildOperatorOptions(connection, newIndex));
+    setRightOptions(buildRightOptions(connection, newIndex));
   }
+
+  useEffect(() => {
+    setOperatorOptions(buildOperatorOptions(connections[0], 0));
+    setRightOptions(buildRightOptions(connections[0], 0));
+
+    console.log(connections[0])
+  }, []);
 
   return (
     <Dialog
@@ -62,7 +73,7 @@ const ConditionalDialog = ({
               label="Left"
               helperText="Left operand"
               value={left}
-              onChange={(operand) => onSelectLeft(operand, index)}
+              onChange={(operand) => onSelectLeft(operand, connection)}
               options={buildLeftOptions(connection)}
             />
             <MultiSelectionInput
@@ -70,15 +81,25 @@ const ConditionalDialog = ({
               helperText="Operator that will be applied in the left and right terms"
               value={operator}
               onChange={setOperator}
-              options={buildOperatorOptions(connection, currentIndex)}
+              options={operatorOptions}
             />
-            <MultiSelectionInput
-              label="Right"
-              helperText="Right operand"
-              value={right}
-              onChange={setRight}
-              options={buildRightOptions(connection, currentIndex)}
-            />
+            {rightOptions.length === 0 
+            ? 
+              <RawTextInput 
+                label="Right"
+                helperText="Right operand"
+                value={right}
+                onChange={setRight}
+              />
+            :
+              <MultiSelectionInput
+                label="Right"
+                helperText="Right operand"
+                value={right}
+                onChange={setRight}
+                options={rightOptions}
+              />
+            }
           </div>
         ))}
       </Body>
@@ -154,12 +175,12 @@ function buildOperatorOptions(connection, currentIndex) {
   }
 
   let options = [];
-  const currentResult = connection.data.results[currentIndex];
+  const quiz = connection.data.results[currentIndex];
   
-  if (currentResult.answer.type === 'number') {
+  if (quiz.answer.type === 'number') {
     options = numberOperatorOptions;
   }
-  else if (currentResult.answer.type === 'checkbox') {
+  else if (quiz.answer.type === 'checkbox') {
     options = selectionOperatorOptions;
   }
   else {
@@ -178,9 +199,12 @@ function buildRightOptions(connection, currentIndex) {
     return [{ label: 'Taken', value: 'taken' }];
   }
 
-  if (!connection.data.results[currentIndex].answer.options) {
-    return [];
+  const answer = connection.data.results[currentIndex].answer;
+  const options = [];
+  
+  for (let option of answer.options) {
+    options.push({ label: option, value: option });
   }
 
-  return connection.data.results[currentIndex].answer.options;
+  return options;
 }

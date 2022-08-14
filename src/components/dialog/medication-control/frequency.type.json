@@ -4,6 +4,10 @@
     "label": "Daily"
   },
   {
+    "value": "onlyOnce",
+    "label": "Only once"
+  },
+  {
     "value": "everyHours",
     "label": "Every x hours"
   },

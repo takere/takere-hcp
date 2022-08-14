@@ -255,7 +255,8 @@ function loadStoredSeverity(data) {
 }
 
 function hasFrequencyTypeSomeValue(type) {
-  return (type !== 'daily');
+  return  (type === 'everyHours')
+          || (type === 'everyDays');
 }
 
 function generateHelperTextForFrequency(type) {

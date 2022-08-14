@@ -4,12 +4,12 @@
     "label": "Daily"
   },
   {
-    "value": "everyHours",
-    "label": "Every x hours"
+    "value": "onlyOnce",
+    "label": "Only once"
   },
   {
-    "value": "weekly",
-    "label": "Weekly"
+    "value": "everyHours",
+    "label": "Every x hours"
   },
   {
     "value": "everyDays",

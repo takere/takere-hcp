@@ -313,7 +313,8 @@ function hasAnswerOptions(type) {
 }
 
 function hasFrequencyTypeSomeValue(type) {
-  return (type !== 'daily');
+  return  (type === 'everyHours')
+          || (type === 'everyDays');
 }
 
 function generateHelperTextForFrequency(type) {
