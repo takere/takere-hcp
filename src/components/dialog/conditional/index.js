@@ -156,7 +156,7 @@ function buildLeftOptions(connection) {
 
   const options = [];
 
-  connection.data.results.forEach(quiz => {
+  connection.data.results?.forEach(quiz => {
     options.push({ label: quiz.question, value: quiz.question });
   });
 
@@ -170,6 +170,10 @@ function buildOperatorOptions(connection, currentIndex) {
 
   if (connection.type === 'MEDICATION_CONTROL_NODE') {
     return selectionOperatorOptions;
+  }
+
+  if (!connection.data.results) {
+    return [];
   }
 
   let options = [];
@@ -195,6 +199,10 @@ function buildRightOptions(connection, currentIndex) {
 
   if (connection.type === 'MEDICATION_CONTROL_NODE') {
     return [{ label: 'Taken', value: 'taken' }];
+  }
+
+  if (!connection.data.results) {
+    return [];
   }
 
   const answer = connection.data.results[currentIndex].answer;
