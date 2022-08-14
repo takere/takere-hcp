@@ -110,6 +110,14 @@ const QuizDialog = ({
     setAnswerOptions(updatedAnswerOptions);
   }
 
+  const onChangeFrequencyValue = (newValue) => {
+    if (newValue < 0) {
+      return;
+    }
+
+    setFrequencyValue(newValue);
+  }
+
   useEffect(() => {
     const updatedQuestions = questions;
 
@@ -182,7 +190,7 @@ const QuizDialog = ({
             label="Frequency value"
             helperText={generateHelperTextForFrequency(frequencyType)}
             value={frequencyValue}
-            onChange={setFrequencyValue}
+            onChange={onChangeFrequencyValue}
           />
         }
       </Body>
@@ -301,7 +309,7 @@ function loadStoredFrequencyType(data) {
 
 function loadStoredFrequencyValue(data) {
   if (!hasResults(data) || !hasQuestions(data)) {
-    return frequencyTypeOptions[0].value;
+    return 0;
   }
 
   return data.data.results.questions[0].frequency.value;
