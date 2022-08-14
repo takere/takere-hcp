@@ -1,20 +1,20 @@
 import React from 'react';
 import { buttonStyle } from './style';
+import MaterialIcon from '../parts/MaterialIcon';
 import AbstractButton from '../parts/AbstractButton';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const DefaultButton = ({ title, onClick, type, style }) => (
+const AccentButton = ({ iconName, onClick, type, style }) => (
   <AbstractButton
-    style={{ ...buttonStyle, ...style}}
-    onClick={onClick}
+    style={{ ...buttonStyle, ...style }}
     type={type}
+    onClick={onClick}
   >
-    { title }
+    <MaterialIcon iconName={iconName} />
   </AbstractButton>
 );
 
-export default DefaultButton;
-
+export default AccentButton;
