@@ -11,7 +11,7 @@ import { nodeTypes } from "../nodes/nodes";
 import { ConnectionLine } from "../connectionLine/connectionLine";
 import { dialogFactory } from '../dialog';
 import connections from "./connections.json";
-import AccentSmallButton from "../buttons/AccentSmallButton";
+import AccentButton from "../buttons/AccentButton";
 import DotsBackground from "./DotsBackground";
 
 
@@ -187,7 +187,19 @@ const ReactFlowContent = ({
     >
       <DotsBackground />
       <Controls />
-      <AccentSmallButton iconName='save' onClick={handleClickOpenSaveDialog} />
+      <AccentButton 
+        iconName='save' 
+        type='small'
+        onClick={handleClickOpenSaveDialog} 
+        style={{
+          zIndex: "1000",
+          position: "absolute",
+          bottom: 0,
+          right: 0,
+          marginBottom: 20,
+          marginRight: 20,
+        }}
+      />
     </ReactFlow>
   </Styled.FlowArea>
 );

@@ -3,6 +3,8 @@ export const theme = {
         primary: {
             x1: '#ffb703'
         },
+        danger: '#db594f',
+        success: '#34a853',
         day: {
             x1: '#EEEEEE'
         },

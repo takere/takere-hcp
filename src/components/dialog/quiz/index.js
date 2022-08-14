@@ -9,6 +9,9 @@ import answerTypeOptions from './answer.type.json';
 import RawTextInput from "../../input/RawTextInput";
 import MultiSelectionInput from "../../input/MultiSelectionInput";
 import NumberInput from "../../input/NumberInput";
+import AccentButton from "../../buttons/AccentButton";
+import { Spacing } from "../../input/styled";
+import DangerButton from "../../buttons/DangerButton";
 
 
 //-----------------------------------------------------------------------------
@@ -38,6 +41,7 @@ const QuizDialog = ({
   const [answerType, setAnswerType] = useState(loadStoredAnswerType(data));
   const [frequencyType, setFrequencyType] = useState(loadStoredFrequencyType(data));
   const [frequencyValue, setFrequencyValue] = useState(loadStoredFrequencyValue(data));
+  const [answerOptions, setAnswerOptions] = useState(['']);
 
   const saveInputs = () => {
     onAddElementResultValue(data, questions);
@@ -75,6 +79,28 @@ const QuizDialog = ({
     setCurrentQuestion(value);
   };
 
+  const handleAnswerOptionChange = (newValue, index) => {
+    const updatedAnswerOptions =  [...answerOptions];
+
+    updatedAnswerOptions[index] = newValue;
+
+    setAnswerOptions(updatedAnswerOptions);
+  }
+
+  const handleNewOption = () => {
+    const updatedAnswerOptions =  [...answerOptions];
+
+    updatedAnswerOptions.push('');
+
+    setAnswerOptions(updatedAnswerOptions);
+  }
+
+  const handleRemoveOption = (answerIndex) => {
+    const updatedAnswerOptions =  answerOptions.filter((_, index) => index != answerIndex);
+
+    setAnswerOptions(updatedAnswerOptions);
+  }
+
   useEffect(() => {
     setCurrentQuestion(1);
   }, [totalQuestions]);
@@ -86,10 +112,11 @@ const QuizDialog = ({
       question,
       answerType,
       frequency: { type: frequencyType, value: frequencyValue },
+      answerOptions
     }
 
     setQuestions(updatedQuestions);
-  }, [question, answerType, frequencyType, frequencyValue]);
+  }, [question, answerType, frequencyType, frequencyValue, answerOptions]);
 
   useEffect(() => {
     setQuestion(questions[currentQuestion-1].question);
@@ -97,6 +124,10 @@ const QuizDialog = ({
     setFrequencyType(questions[currentQuestion-1].frequency.type);
     setFrequencyValue(questions[currentQuestion-1].frequency.value);
   }, [currentQuestion]);
+
+  useEffect(() => {
+    setAnswerOptions(questions[currentQuestion-1].answerOptions ?? []);
+  }, [currentQuestion, answerType]);
 
   return (
     <Dialog
@@ -133,6 +164,14 @@ const QuizDialog = ({
           onChange={setAnswerType}
           options={answerTypeOptions}
         />
+        {hasAnswerOptions(answerType) &&
+          <AnswerOptions 
+            handleNewOption={handleNewOption}
+            answerOptions={answerOptions}
+            onValueChange={handleAnswerOptionChange}
+            handleRemoveOption={handleRemoveOption}
+          />
+        }
         <MultiSelectionInput
           label="Frequency"
           helperText="How often this treatment should be performed?"
@@ -158,6 +197,39 @@ const QuizDialog = ({
 };
 
 export default QuizDialog;
+
+const AnswerOptions = ({ handleNewOption, answerOptions, onValueChange, handleRemoveOption }) => (
+  <div>
+    <AccentButton 
+      iconName='add' 
+      type='big'
+      onClick={handleNewOption} 
+      style={{
+        width: '100%'
+      }}
+    />
+    <Spacing />
+    {answerOptions.map((option, index) => (
+      <>
+        <div style={{display: "flex", flexDirection: "row", alignItems: 'center'}}>
+          <RawTextInput
+            label={`Option ${index+1}`}
+            helperText=""
+            value={option}
+            style={{marginRight: 5}}
+            onChange={(newValue) => onValueChange(newValue, index)}
+          />
+          <DangerButton 
+            iconName='remove' 
+            onClick={() => handleRemoveOption(index)} 
+          />
+        </div>
+        <Spacing />
+      </>
+    ))}
+  </div>
+);
+
 
 
 //-----------------------------------------------------------------------------
@@ -227,6 +299,10 @@ function loadStoredFrequencyValue(data) {
   }
 
   return data.data.results.questions[0].frequency.value;
+}
+
+function hasAnswerOptions(type) {
+  return (type === 'checkbox') || (type === 'radio');
 }
 
 function hasFrequencyTypeSomeValue(type) {
