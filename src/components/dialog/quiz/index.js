@@ -12,6 +12,15 @@ import NumberInput from "../../input/NumberInput";
 
 
 //-----------------------------------------------------------------------------
+//        Constants
+//-----------------------------------------------------------------------------
+const frequencyHelperText = {
+  everyHours: 'Skip interval (in hours). Example: every 2 hours...',
+  everyDays: 'Skip interval (in days). Example: every 2 days...',
+};
+
+
+//-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
 const QuizDialog = ({
@@ -27,7 +36,8 @@ const QuizDialog = ({
   const [question, setQuestion] = useState(loadStoredQuestion(data));
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [answerType, setAnswerType] = useState(loadStoredAnswerType(data));
-  const [frequency, setFrequency] = useState(loadStoredFrequency(data));
+  const [frequencyType, setFrequencyType] = useState(loadStoredFrequencyType(data));
+  const [frequencyValue, setFrequencyValue] = useState(loadStoredFrequencyValue(data));
 
   const saveInputs = () => {
     onAddElementResultValue(data, questions);
@@ -75,16 +85,17 @@ const QuizDialog = ({
     updatedQuestions[currentQuestion-1] = {
       question,
       answerType,
-      frequency
+      frequency: { type: frequencyType, value: frequencyValue },
     }
 
     setQuestions(updatedQuestions);
-  }, [question, answerType, frequency]);
+  }, [question, answerType, frequencyType, frequencyValue]);
 
   useEffect(() => {
     setQuestion(questions[currentQuestion-1].question);
     setAnswerType(questions[currentQuestion-1].answerType);
-    setFrequency(questions[currentQuestion-1].frequency);
+    setFrequencyType(questions[currentQuestion-1].frequency.type);
+    setFrequencyValue(questions[currentQuestion-1].frequency.value);
   }, [currentQuestion]);
 
   return (
@@ -125,10 +136,18 @@ const QuizDialog = ({
         <MultiSelectionInput
           label="Frequency"
           helperText="How often this treatment should be performed?"
-          value={frequency}
-          onChange={setFrequency}
+          value={frequencyType}
+          onChange={setFrequencyType}
           options={frequencyTypeOptions}
         />
+        {hasFrequencyTypeSomeValue(frequencyType) &&
+          <NumberInput 
+            label="Frequency value"
+            helperText={generateHelperTextForFrequency(frequencyType)}
+            value={frequencyValue}
+            onChange={setFrequencyValue}
+          />
+        }
       </Body>
       <Footer>
         <SuccessButton title="Salvar" onClick={saveInputs} />
@@ -194,10 +213,26 @@ function loadStoredAnswerType(data) {
   return data.data.results.questions[0].answerType;
 }
 
-function loadStoredFrequency(data) {
+function loadStoredFrequencyType(data) {
   if (!hasResults(data) || !hasQuestions(data)) {
-    return '';
+    return frequencyTypeOptions[0].value;
   }
 
-  return data.data.results.questions[0].frequency;
+  return data.data.results.questions[0].frequency.type;
+}
+
+function loadStoredFrequencyValue(data) {
+  if (!hasResults(data) || !hasQuestions(data)) {
+    return frequencyTypeOptions[0].value;
+  }
+
+  return data.data.results.questions[0].frequency.value;
+}
+
+function hasFrequencyTypeSomeValue(type) {
+  return (type !== 'daily');
+}
+
+function generateHelperTextForFrequency(type) {
+  return frequencyHelperText[type];
 }
