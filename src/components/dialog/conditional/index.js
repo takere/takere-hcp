@@ -4,7 +4,9 @@ import { toast } from "react-toastify";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
-import OperatorOptions from './operator.types.json';
+import numberOperatorOptions from './number-operator.types.json';
+import selectionOperatorOptions from './selection-operator.types.json';
+import textOperatorOptions from './text-operator.types.json';
 import RawTextInput from "../../input/RawTextInput";
 import MultiSelectionInput from "../../input/MultiSelectionInput";
 
@@ -21,9 +23,10 @@ const ConditionalDialog = ({
 }) => {
   const { data: payloadData } = data;
 
-  const [left, setLeft] = useState(loadStoredLeft(data));
-  const [operator, setOperator] = useState(loadStoredOperator(data));
-  const [right, setRight] = useState(loadStoredRight(data));
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [left, setLeft] = useState(loadStoredLeft(data, connections));
+  const [operator, setOperator] = useState(loadStoredOperator(data, connections));
+  const [right, setRight] = useState(loadStoredRight(data, connections));
 
   console.log(connections)
 
@@ -37,6 +40,11 @@ const ConditionalDialog = ({
     onAddElementResultValue(data, inputData);
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
+
+  const onSelectLeft = (operand, index) => {
+    setLeft(operand);
+    setCurrentIndex(index);
+  }
 
   return (
     <Dialog
@@ -54,7 +62,7 @@ const ConditionalDialog = ({
               label="Left"
               helperText="Left operand"
               value={left}
-              onChange={setLeft}
+              onChange={(operand) => onSelectLeft(operand, index)}
               options={buildLeftOptions(connection)}
             />
             <MultiSelectionInput
@@ -62,14 +70,14 @@ const ConditionalDialog = ({
               helperText="Operator that will be applied in the left and right terms"
               value={operator}
               onChange={setOperator}
-              options={buildOperatorOptions(connection)}
+              options={buildOperatorOptions(connection, currentIndex)}
             />
             <MultiSelectionInput
               label="Right"
               helperText="Right operand"
               value={right}
               onChange={setRight}
-              options={buildRightOptions(connection)}
+              options={buildRightOptions(connection, currentIndex)}
             />
           </div>
         ))}
@@ -94,7 +102,7 @@ function hasResults(data) {
           && data.data.results;
 }
 
-function loadStoredLeft(data) {
+function loadStoredLeft(data, connections) {
   if (!hasResults(data) || !data.data.results.left) {
     return '';
   }
@@ -102,7 +110,7 @@ function loadStoredLeft(data) {
   return data.data.results.left;
 }
 
-function loadStoredOperator(data) {
+function loadStoredOperator(data, connections) {
   if (!hasResults(data) || !data.data.results.operator) {
     return '';
   }
@@ -110,7 +118,7 @@ function loadStoredOperator(data) {
   return data.data.results.operator;
 }
 
-function loadStoredRight(data) {
+function loadStoredRight(data, connections) {
   if (!hasResults(data) || !data.data.results.right) {
     return '';
   }
@@ -120,7 +128,7 @@ function loadStoredRight(data) {
 
 function buildLeftOptions(connection) {
   if (!connection) {
-    return;
+    return [];
   }
 
   if (connection.type === 'MEDICATION_CONTROL_NODE') {
@@ -129,33 +137,50 @@ function buildLeftOptions(connection) {
 
   const options = [];
 
+  connection.data.results.forEach(quiz => {
+    options.push({ label: quiz.question, value: quiz.question });
+  });
+
   return options;
 }
 
-function buildOperatorOptions(connection) {
+function buildOperatorOptions(connection, currentIndex) {
   if (!connection) {
-    return;
+    return [];
   }
 
   if (connection.type === 'MEDICATION_CONTROL_NODE') {
-    return [{ label: 'Was', value: 'was' }, { label: 'Was not', value: 'was not' }];
+    return selectionOperatorOptions;
   }
 
-  const options = [];
+  let options = [];
+  const currentResult = connection.data.results[currentIndex];
+  
+  if (currentResult.answerType === 'number') {
+    options = numberOperatorOptions;
+  }
+  else if (currentResult.answerType === 'checkbox') {
+    options = selectionOperatorOptions;
+  }
+  else {
+    options = textOperatorOptions;
+  }
 
   return options;
 }
 
-function buildRightOptions(connection) {
+function buildRightOptions(connection, currentIndex) {
   if (!connection) {
-    return;
+    return [];
   }
 
   if (connection.type === 'MEDICATION_CONTROL_NODE') {
     return [{ label: 'Taken', value: 'taken' }];
   }
 
-  const options = [];
+  if (!connection.data.results[currentIndex].answerOptions) {
+    return [];
+  }
 
-  return options;
+  return connection.data.results[currentIndex].answerOptions;
 }

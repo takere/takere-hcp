@@ -1,0 +1,10 @@
+[
+  {
+    "value": "==",
+    "label": "Was"
+  },
+  {
+    "value": "!=",
+    "label": "Was not"
+  }
+]

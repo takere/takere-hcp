@@ -1,0 +1,14 @@
+[
+  {
+    "value": "==",
+    "label": "Equals to"
+  },
+  {
+    "value": "!=",
+    "label": "Not equals to"
+  },
+  {
+    "value": "contains",
+    "label": "Contains"
+  }
+]
