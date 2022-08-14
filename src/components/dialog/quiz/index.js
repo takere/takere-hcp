@@ -41,10 +41,11 @@ const QuizDialog = ({
   const [answerType, setAnswerType] = useState(loadStoredAnswerType(data));
   const [frequencyType, setFrequencyType] = useState(loadStoredFrequencyType(data));
   const [frequencyValue, setFrequencyValue] = useState(loadStoredFrequencyValue(data));
-  const [answerOptions, setAnswerOptions] = useState(['']);
+  const [answerOptions, setAnswerOptions] = useState(loadStoredAnswerOptions(data));
 
   const saveInputs = () => {
     onAddElementResultValue(data, questions);
+    console.log(questions)
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
@@ -110,9 +111,8 @@ const QuizDialog = ({
 
     updatedQuestions[currentQuestion-1] = {
       question,
-      answerType,
+      answer: { type: answerType, options: answerOptions },
       frequency: { type: frequencyType, value: frequencyValue },
-      answerOptions
     }
 
     setQuestions(updatedQuestions);
@@ -120,13 +120,13 @@ const QuizDialog = ({
 
   useEffect(() => {
     setQuestion(questions[currentQuestion-1].question);
-    setAnswerType(questions[currentQuestion-1].answerType);
+    setAnswerType(questions[currentQuestion-1].answer.type);
     setFrequencyType(questions[currentQuestion-1].frequency.type);
     setFrequencyValue(questions[currentQuestion-1].frequency.value);
   }, [currentQuestion]);
 
   useEffect(() => {
-    setAnswerOptions(questions[currentQuestion-1].answerOptions ?? []);
+    setAnswerOptions(questions[currentQuestion-1].answer.options);
   }, [currentQuestion, answerType]);
 
   return (
@@ -210,7 +210,7 @@ const AnswerOptions = ({ handleNewOption, answerOptions, onValueChange, handleRe
     />
     <Spacing />
     {answerOptions.map((option, index) => (
-      <>
+      <div key={index}>
         <div style={{display: "flex", flexDirection: "row", alignItems: 'center'}}>
           <RawTextInput
             label={`Option ${index+1}`}
@@ -225,7 +225,7 @@ const AnswerOptions = ({ handleNewOption, answerOptions, onValueChange, handleRe
           />
         </div>
         <Spacing />
-      </>
+      </div>
     ))}
   </div>
 );
@@ -264,7 +264,7 @@ function loadStoredQuestions(data) {
 function buildEmptyQuestion() {
   return { 
     question: '', 
-    answerType: answerTypeOptions[0].value, 
+    answer: { type: answerTypeOptions[0].value, options: [] },
     frequency: { type: frequencyTypeOptions[0].value, value: frequencyTypeOptions[0].value }
   };
 }
@@ -282,7 +282,15 @@ function loadStoredAnswerType(data) {
     return '';
   }
 
-  return data.data.results.questions[0].answerType;
+  return data.data.results.questions[0].answer.type;
+}
+
+function loadStoredAnswerOptions(data) {
+  if (!hasResults(data) || !hasQuestions(data)) {
+    return [];
+  }
+
+  return data.data.results.questions[0].answer.options;
 }
 
 function loadStoredFrequencyType(data) {
@@ -310,5 +318,5 @@ function hasFrequencyTypeSomeValue(type) {
 }
 
 function generateHelperTextForFrequency(type) {
-  return frequencyHelperText[type];
+  return frequencyHelperText[type] ?? '';
 }
