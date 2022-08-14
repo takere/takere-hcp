@@ -17,12 +17,15 @@ const ConditionalDialog = ({
   handleClose,
   data,
   onAddElementResultValue,
+  connections
 }) => {
   const { data: payloadData } = data;
 
   const [left, setLeft] = useState(loadStoredLeft(data));
   const [operator, setOperator] = useState(loadStoredOperator(data));
   const [right, setRight] = useState(loadStoredRight(data));
+
+  console.log(connections)
 
   const saveInputs = () => {
     const inputData = {
