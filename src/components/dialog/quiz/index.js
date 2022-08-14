@@ -67,6 +67,11 @@ const QuizDialog = ({
     }
 
     setTotalQuestions(value);
+    setCurrentQuestion(1);
+    setQuestion(questions[0].question);
+    setAnswerType(questions[0].answer.type);
+    setFrequencyType(questions[0].frequency.type);
+    setFrequencyValue(questions[0].frequency.value);
   };
 
   const onCurrentQuestionChange = (rawValue) => {
@@ -77,6 +82,10 @@ const QuizDialog = ({
     }
 
     setCurrentQuestion(value);
+    setQuestion(questions[value-1].question);
+    setAnswerType(questions[value-1].answer.type);
+    setFrequencyType(questions[value-1].frequency.type);
+    setFrequencyValue(questions[value-1].frequency.value);
   };
 
   const handleAnswerOptionChange = (newValue, index) => {
@@ -102,10 +111,6 @@ const QuizDialog = ({
   }
 
   useEffect(() => {
-    setCurrentQuestion(1);
-  }, [totalQuestions]);
-
-  useEffect(() => {
     const updatedQuestions = questions;
 
     updatedQuestions[currentQuestion-1] = {
@@ -115,18 +120,12 @@ const QuizDialog = ({
     }
 
     setQuestions(updatedQuestions);
-  }, [question, answerType, frequencyType, frequencyValue, answerOptions]);
+  }, [question, answerType, frequencyType, frequencyValue, answerOptions, currentQuestion, questions]);
 
-  useEffect(() => {
-    setQuestion(questions[currentQuestion-1].question);
-    setAnswerType(questions[currentQuestion-1].answer.type);
-    setFrequencyType(questions[currentQuestion-1].frequency.type);
-    setFrequencyValue(questions[currentQuestion-1].frequency.value);
-  }, [currentQuestion]);
 
   useEffect(() => {
     setAnswerOptions(questions[currentQuestion-1].answer.options);
-  }, [currentQuestion, answerType]);
+  }, [currentQuestion, answerType, questions]);
 
   return (
     <Dialog
@@ -278,7 +277,7 @@ function loadStoredQuestion(data) {
 
 function loadStoredAnswerType(data) {
   if (!hasResults(data) || !hasQuestions(data)) {
-    return '';
+    return answerTypeOptions[0].value;
   }
 
   return data.data.results.questions[0].answer.type;
