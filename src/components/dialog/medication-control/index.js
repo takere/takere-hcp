@@ -10,6 +10,16 @@ import BooleanInput from "../../input/BooleanInput";
 import RawTextInput from "../../input/RawTextInput";
 import MultiSelectionInput from "../../input/MultiSelectionInput";
 import DateInput from "../../input/DateInput";
+import NumberInput from "../../input/NumberInput";
+
+
+//-----------------------------------------------------------------------------
+//        Constants
+//-----------------------------------------------------------------------------
+const frequencyHelperText = {
+  everyHours: 'Skip interval (in hours). Example: every 2 hours...',
+  everyDays: 'Skip interval (in days). Example: every 2 days...',
+};
 
 
 //-----------------------------------------------------------------------------
@@ -28,9 +38,11 @@ const MedicationControlDialog = ({
   const [why, setWhy] = useState(loadStoredWhy(data));
   const [notes, setNotes] = useState(loadStoredNotes(data));
   const [dosage, setDosage] = useState(loadStoredDosage(data));
+  const [beginDate, setBeginDate] = useState(loadStoredBeginDate(data));
   const [endDate, setEndDate] = useState(loadStoredEndDate(data));
   const [undefinedEnd, setUndefinedEnd] = useState(loadStoredUndefinedEnd(data));
-  const [frequency, setFrequency] = useState(loadStoredFrequency(data));
+  const [frequencyType, setFrequencyType] = useState(loadStoredFrequencyType(data));
+  const [frequencyValue, setFrequencyValue] = useState(loadStoredFrequencyValue(data));
   const [severity, setSeverity] = useState(loadStoredSeverity(data));
 
   const saveInputs = () => {
@@ -40,9 +52,10 @@ const MedicationControlDialog = ({
       why,
       notes,
       dosage,
+      beginDate,
       endDate,
       undefinedEnd,
-      frequency,
+      frequency: { type: frequencyType, value: frequencyValue },
       severity
     };
 
@@ -90,10 +103,16 @@ const MedicationControlDialog = ({
           value={dosage}
           onChange={setDosage}
         />
+        <DateInput
+            label="Begin date"
+            helperText="The medication should be taken from..."
+            value={beginDate}
+            onChange={setBeginDate}
+          />
         {!undefinedEnd &&
           <DateInput
             label="End date"
-            helperText="Type care plan end date"
+            helperText="The medication should be taken until..."
             value={endDate}
             onChange={setEndDate}
           />
@@ -105,12 +124,20 @@ const MedicationControlDialog = ({
           onChange={setUndefinedEnd}
         />
         <MultiSelectionInput
-          label="Frequency"
+          label="Frequency type"
           helperText="How often this treatment should be performed?"
-          value={frequency}
-          onChange={setFrequency}
+          value={frequencyType}
+          onChange={setFrequencyType}
           options={frequencyOptions}
         />
+        {hasFrequencyTypeSomeValue(frequencyType) &&
+          <NumberInput 
+            label="Frequency value"
+            helperText={generateHelperTextForFrequency(frequencyType)}
+            value={frequencyValue}
+            onChange={setFrequencyValue}
+          />
+        }
         <MultiSelectionInput
           label="Severity"
           helperText="How critical is to use this medicine?"
@@ -179,6 +206,14 @@ function loadStoredDosage(data) {
   return data.data.results.dosage;
 }
 
+function loadStoredBeginDate(data) {
+  if (!hasResults(data) || !data.data.results.beginDate) {
+    return new Date();
+  }
+
+  return data.data.results.beginDate;
+}
+
 function loadStoredEndDate(data) {
   if (!hasResults(data) || !data.data.results.endDate) {
     return new Date();
@@ -195,12 +230,20 @@ function loadStoredUndefinedEnd(data) {
   return data.data.results.undefinedEnd;
 }
 
-function loadStoredFrequency(data) {
+function loadStoredFrequencyType(data) {
   if (!hasResults(data) || !data.data.results.frequency) {
     return frequencyOptions[0].value;
   }
 
-  return data.data.results.frequency;
+  return data.data.results.frequency.type;
+}
+
+function loadStoredFrequencyValue(data) {
+  if (!hasResults(data) || !data.data.results.frequency) {
+    return frequencyOptions[0].value;
+  }
+
+  return data.data.results.frequency.value;
 }
 
 function loadStoredSeverity(data) {
@@ -209,4 +252,12 @@ function loadStoredSeverity(data) {
   }
 
   return data.data.results.severity;
+}
+
+function hasFrequencyTypeSomeValue(type) {
+  return (type !== 'daily');
+}
+
+function generateHelperTextForFrequency(type) {
+  return frequencyHelperText[type];
 }

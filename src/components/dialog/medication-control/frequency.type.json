@@ -8,10 +8,6 @@
     "label": "Every x hours"
   },
   {
-    "value": "weekly",
-    "label": "Weekly"
-  },
-  {
     "value": "everyDays",
     "label": "Every x days"
   }
