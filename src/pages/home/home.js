@@ -27,14 +27,7 @@ export const Home = () => {
       history.push(`/dash/flow/${flow._id}`);
     }
   };
-
-  const handleDelete = (e, flow) => {
-    console.log("cheguei");
-    e.preventDefault();
-    console.log(flow, e);
-    // history.push(`/dash/flow/${flow._id}`);
-  };
-
+  
   const emojiGenerator = () => {
     const emojis = ["🎉", "🎊", "✨", "🥰", "😃", "🍀", "😊", "🙌🏻"];
     return emojis[Math.floor(Math.random() * emojis.length)];

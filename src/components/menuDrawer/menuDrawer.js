@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Styled from './menuDrawer.styled';
-import {Link, useHistory, useRouteMatch} from "react-router-dom";
-import {makeLogout} from "../../services/auth/auth";
+import { Link, useHistory } from "react-router-dom";
+import { makeLogout } from "../../services/auth/auth";
 
 const MENU = [
     {

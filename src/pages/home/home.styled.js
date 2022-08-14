@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import {theme} from "../../utils/colors";
 import Icon from "@material-ui/core/Icon";
