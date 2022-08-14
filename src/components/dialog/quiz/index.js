@@ -45,7 +45,6 @@ const QuizDialog = ({
 
   const saveInputs = () => {
     onAddElementResultValue(data, questions);
-    console.log(questions)
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
