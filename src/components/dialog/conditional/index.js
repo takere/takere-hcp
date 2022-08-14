@@ -9,6 +9,7 @@ import selectionOperatorOptions from './selection-operator.types.json';
 import textOperatorOptions from './text-operator.types.json';
 import RawTextInput from "../../input/RawTextInput";
 import MultiSelectionInput from "../../input/MultiSelectionInput";
+import * as Styled from './styled';
 
 
 //-----------------------------------------------------------------------------
@@ -66,7 +67,7 @@ const ConditionalDialog = ({
       <Header title={payloadData.label} subtitle={payloadData.description} />
       <Body>
         {connections.map((connection, index) => (
-          <div key={index}>
+          <Styled.InputArea key={index}>
             <MultiSelectionInput
               label="Left"
               helperText="Left operand"
@@ -98,7 +99,7 @@ const ConditionalDialog = ({
                 options={rightOptions}
               />
             }
-          </div>
+          </Styled.InputArea>
         ))}
       </Body>
       <Footer>

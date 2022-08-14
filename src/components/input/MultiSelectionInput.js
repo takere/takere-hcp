@@ -9,6 +9,7 @@ const MultiSelectionInput = ({ label, value, helperText, onChange, options }) =>
   <>
     <InputDefault
       label={label}
+      size="small"
       id="outlined-select-currency-native"
       select
       variant="outlined"
