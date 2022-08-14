@@ -5,6 +5,7 @@ export const theme = {
         },
         danger: '#db594f',
         success: '#34a853',
+        light: '#dddddd',
         day: {
             x1: '#EEEEEE'
         },
