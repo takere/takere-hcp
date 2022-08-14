@@ -48,25 +48,31 @@ const ConditionalDialog = ({
     >
       <Header title={payloadData.label} subtitle={payloadData.description} />
       <Body>
-        <RawTextInput
-          label="Left"
-          helperText="Left operand"
-          value={left}
-          onChange={setLeft}
-        />
-        <MultiSelectionInput
-          label="Operator"
-          helperText="Operator that will be applied in the left and right terms"
-          value={operator}
-          onChange={setOperator}
-          options={OperatorOptions}
-        />
-        <RawTextInput
-          label="Right"
-          helperText="Right operand"
-          value={right}
-          onChange={setRight}
-        />
+        {connections.map((connection, index) => (
+          <div key={index}>
+            <MultiSelectionInput
+              label="Left"
+              helperText="Left operand"
+              value={left}
+              onChange={setLeft}
+              options={buildLeftOptions(connection)}
+            />
+            <MultiSelectionInput
+              label="Operator"
+              helperText="Operator that will be applied in the left and right terms"
+              value={operator}
+              onChange={setOperator}
+              options={buildOperatorOptions(connection)}
+            />
+            <MultiSelectionInput
+              label="Right"
+              helperText="Right operand"
+              value={right}
+              onChange={setRight}
+              options={buildRightOptions(connection)}
+            />
+          </div>
+        ))}
       </Body>
       <Footer>
         <SuccessButton title="Save" onClick={saveInputs} />
@@ -110,4 +116,46 @@ function loadStoredRight(data) {
   }
 
   return data.data.results.right;
+}
+
+function buildLeftOptions(connection) {
+  if (!connection) {
+    return;
+  }
+
+  if (connection.type === 'MEDICATION_CONTROL_NODE') {
+    return [{ label: 'Medication', value: 'medication' }];
+  }
+
+  const options = [];
+
+  return options;
+}
+
+function buildOperatorOptions(connection) {
+  if (!connection) {
+    return;
+  }
+
+  if (connection.type === 'MEDICATION_CONTROL_NODE') {
+    return [{ label: 'Was', value: 'was' }, { label: 'Was not', value: 'was not' }];
+  }
+
+  const options = [];
+
+  return options;
+}
+
+function buildRightOptions(connection) {
+  if (!connection) {
+    return;
+  }
+
+  if (connection.type === 'MEDICATION_CONTROL_NODE') {
+    return [{ label: 'Taken', value: 'taken' }];
+  }
+
+  const options = [];
+
+  return options;
 }
