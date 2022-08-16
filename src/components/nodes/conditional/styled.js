@@ -39,3 +39,22 @@ export const NodeName = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
 `;
+
+export const FlowLabel = styled.p`
+  transform: rotate(-45deg);
+  position: absolute;
+  text-transform: uppercase;
+  font-size: 1vw;
+
+  &.false {
+    left: 0;
+    bottom: 0;
+    padding-left: 5px;
+  }
+
+  &.true {
+    right: 0;
+    top: 0;
+    padding-right: 5px;
+  }
+`;

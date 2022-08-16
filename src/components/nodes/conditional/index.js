@@ -19,6 +19,10 @@ const ConditionalNode = (data) => {
           {data.data.icon}
         </Icon>
       </Styled.NodeContainer>
+      <div>
+        <Styled.FlowLabel className="false">False</Styled.FlowLabel>
+        <Styled.FlowLabel className="true">True</Styled.FlowLabel>
+      </div>
       {data?.data?.handles &&
         data?.data?.handles.map((h, i) => {
           return (
