@@ -14,7 +14,7 @@ const DateInput = ({ label, value, onChange }) => (
         variant="outlined"
         label={label}
         value={value}
-        onChange={event => onChange(event.target.value)}
+        onChange={newValue => onChange(newValue.toISOString())}
       />
     </MuiPickersUtilsProvider>
     <Spacing />

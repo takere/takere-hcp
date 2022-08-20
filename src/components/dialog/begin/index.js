@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
+import { toast } from "react-toastify";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
@@ -38,6 +39,7 @@ const BeginDialog = ({ open, handleClose, data, onAddElementResultValue }) => {
     };
 
     onAddElementResultValue(data, inputData);
+    toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
   return (
