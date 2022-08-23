@@ -44,7 +44,10 @@ const QuizDialog = ({
   const [answerOptions, setAnswerOptions] = useState(loadStoredAnswerOptions(data));
 
   const saveInputs = () => {
-    onAddElementResultValue(data, questions);
+    onAddElementResultValue(data, {
+      questions,
+      frequency: { type: frequencyType, value: frequencyValue }
+    });
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
@@ -70,8 +73,6 @@ const QuizDialog = ({
     setCurrentQuestion(1);
     setQuestion(questions[0].question);
     setAnswerType(questions[0].answer.type);
-    setFrequencyType(questions[0].frequency.type);
-    setFrequencyValue(questions[0].frequency.value);
   };
 
   const onCurrentQuestionChange = (rawValue) => {
@@ -84,8 +85,6 @@ const QuizDialog = ({
     setCurrentQuestion(value);
     setQuestion(questions[value-1].question);
     setAnswerType(questions[value-1].answer.type);
-    setFrequencyType(questions[value-1].frequency.type);
-    setFrequencyValue(questions[value-1].frequency.value);
   };
 
   const handleAnswerOptionChange = (newValue, index) => {
@@ -123,12 +122,11 @@ const QuizDialog = ({
 
     updatedQuestions[currentQuestion-1] = {
       question,
-      answer: { type: answerType, options: answerOptions },
-      frequency: { type: frequencyType, value: frequencyValue },
+      answer: { type: answerType, options: answerOptions }
     }
 
     setQuestions(updatedQuestions);
-  }, [question, answerType, frequencyType, frequencyValue, answerOptions, currentQuestion, questions]);
+  }, [question, answerType, answerOptions, currentQuestion, questions]);
 
 
   useEffect(() => {
@@ -304,7 +302,7 @@ function loadStoredFrequencyType(data) {
     return frequencyTypeOptions[0].value;
   }
 
-  return data.data.results.questions[0].frequency.type;
+  return data.data.results.frequency.type;
 }
 
 function loadStoredFrequencyValue(data) {
@@ -312,7 +310,7 @@ function loadStoredFrequencyValue(data) {
     return 0;
   }
 
-  return data.data.results.questions[0].frequency.value;
+  return data.data.results.frequency.value;
 }
 
 function hasAnswerOptions(type) {
