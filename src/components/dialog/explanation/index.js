@@ -6,8 +6,8 @@ import { convertFromHTML, convertToHTML } from "draft-convert";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
-import NumberInput from "../../input/NumberInput";
-import RichTextInput from "../../input/RichTextInput";
+import NumberInput from "../../../parts/input/NumberInput";
+import RichTextInput from "../../../parts/input/RichTextInput";
 
 
 //-----------------------------------------------------------------------------

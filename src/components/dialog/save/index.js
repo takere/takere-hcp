@@ -4,7 +4,7 @@ import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Requests } from "../../../services/axios/requests";
 import { Header, Body, Footer } from "../";
-import RawTextInput from "../../input/RawTextInput";
+import RawTextInput from "../../../parts/input/RawTextInput";
 
 
 //-----------------------------------------------------------------------------

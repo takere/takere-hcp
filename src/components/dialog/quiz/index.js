@@ -4,23 +4,14 @@ import { toast } from "react-toastify";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
-import frequencyTypeOptions from './frequency.type.json';
 import answerTypeOptions from './answer.type.json';
-import RawTextInput from "../../input/RawTextInput";
-import MultiSelectionInput from "../../input/MultiSelectionInput";
-import NumberInput from "../../input/NumberInput";
+import RawTextInput from "../../../parts/input/RawTextInput";
+import MultiSelectionInput from "../../../parts/input/MultiSelectionInput";
+import NumberInput from "../../../parts/input/NumberInput";
 import AccentButton from "../../buttons/AccentButton";
-import { Spacing } from "../../input/styled";
+import { Spacing } from "../../../parts/input/styled";
 import DangerButton from "../../buttons/DangerButton";
-
-
-//-----------------------------------------------------------------------------
-//        Constants
-//-----------------------------------------------------------------------------
-const frequencyHelperText = {
-  everyHours: 'Skip interval (in hours). Example: every 2 hours...',
-  everyDays: 'Skip interval (in days). Example: every 2 days...',
-};
+import FrequencyInput from "../../../parts/frequency-input";
 
 
 //-----------------------------------------------------------------------------
@@ -176,21 +167,12 @@ const QuizDialog = ({
             handleRemoveOption={handleRemoveOption}
           />
         }
-        <MultiSelectionInput
-          label="Frequency"
-          helperText="How often this treatment should be performed?"
-          value={frequencyType}
-          onChange={setFrequencyType}
-          options={frequencyTypeOptions}
+        <FrequencyInput 
+          frequencyType={frequencyType}
+          setFrequencyType={setFrequencyType}
+          frequencyValue={frequencyValue}
+          setFrequencyValue={setFrequencyValue}
         />
-        {hasFrequencyTypeSomeValue(frequencyType) &&
-          <NumberInput 
-            label="Frequency value"
-            helperText={generateHelperTextForFrequency(frequencyType)}
-            value={frequencyValue}
-            onChange={onChangeFrequencyValue}
-          />
-        }
       </Body>
       <Footer>
         <SuccessButton title="Salvar" onClick={saveInputs} />
@@ -315,13 +297,4 @@ function loadStoredFrequencyValue(data) {
 
 function hasAnswerOptions(type) {
   return (type === 'checkbox') || (type === 'radio');
-}
-
-function hasFrequencyTypeSomeValue(type) {
-  return  (type === 'everyHours')
-          || (type === 'everyDays');
-}
-
-function generateHelperTextForFrequency(type) {
-  return frequencyHelperText[type] ?? '';
 }

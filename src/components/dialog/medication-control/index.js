@@ -6,20 +6,11 @@ import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
 import frequencyOptions from './frequency.type.json';
 import severityOptions from './severity.type.json';
-import BooleanInput from "../../input/BooleanInput";
-import RawTextInput from "../../input/RawTextInput";
-import MultiSelectionInput from "../../input/MultiSelectionInput";
-import DateInput from "../../input/DateInput";
-import NumberInput from "../../input/NumberInput";
-
-
-//-----------------------------------------------------------------------------
-//        Constants
-//-----------------------------------------------------------------------------
-const frequencyHelperText = {
-  everyHours: 'Skip interval (in hours). Example: every 2 hours...',
-  everyDays: 'Skip interval (in days). Example: every 2 days...',
-};
+import BooleanInput from "../../../parts/input/BooleanInput";
+import RawTextInput from "../../../parts/input/RawTextInput";
+import MultiSelectionInput from "../../../parts/input/MultiSelectionInput";
+import DateInput from "../../../parts/input/DateInput";
+import FrequencyInput from "../../../parts/frequency-input";
 
 
 //-----------------------------------------------------------------------------
@@ -123,21 +114,12 @@ const MedicationControlDialog = ({
           value={undefinedEnd}
           onChange={setUndefinedEnd}
         />
-        <MultiSelectionInput
-          label="Frequency type"
-          helperText="How often this treatment should be performed?"
-          value={frequencyType}
-          onChange={setFrequencyType}
-          options={frequencyOptions}
+        <FrequencyInput 
+          frequencyType={frequencyType}
+          setFrequencyType={setFrequencyType}
+          frequencyValue={frequencyValue}
+          setFrequencyValue={setFrequencyValue}
         />
-        {hasFrequencyTypeSomeValue(frequencyType) &&
-          <NumberInput 
-            label="Frequency value"
-            helperText={generateHelperTextForFrequency(frequencyType)}
-            value={frequencyValue}
-            onChange={setFrequencyValue}
-          />
-        }
         <MultiSelectionInput
           label="Severity"
           helperText="How critical is to use this medicine?"

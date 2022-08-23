@@ -5,8 +5,9 @@ import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
 import severityOptions from './severity.type.json';
-import RawTextInput from "../../input/RawTextInput";
-import MultiSelectionInput from "../../input/MultiSelectionInput";
+import RawTextInput from "../../../parts/input/RawTextInput";
+import MultiSelectionInput from "../../../parts/input/MultiSelectionInput";
+import FrequencyInput from "../../../parts/frequency-input";
 
 
 //-----------------------------------------------------------------------------
@@ -24,13 +25,16 @@ const ReminderDialog = ({
   const [description, setDescription] = useState(loadStoredDescription(data));
   const [content, setContent] = useState(loadStoredContent(data));
   const [severity, setSeverity] = useState(loadStoredSeverity(data));
+  const [frequencyType, setFrequencyType] = useState(loadStoredFrequencyType(data));
+  const [frequencyValue, setFrequencyValue] = useState(loadStoredFrequencyValue(data));
 
   const saveInputs = () => {
     const inputData = {
       name,
       description,
       content,
-      severity
+      severity,
+      frequency: { type: frequencyType, value: frequencyValue }
     };
 
     onAddElementResultValue(data, inputData);
@@ -71,6 +75,12 @@ const ReminderDialog = ({
           value={severity}
           onChange={setSeverity}
           options={severityOptions}
+        />
+        <FrequencyInput 
+          frequencyType={frequencyType}
+          setFrequencyType={setFrequencyType}
+          frequencyValue={frequencyValue}
+          setFrequencyValue={setFrequencyValue}
         />
       </Body>
       <Footer>
@@ -123,4 +133,20 @@ function loadStoredSeverity(data) {
   }
 
   return data.data.results.severity;
+}
+
+function loadStoredFrequencyType(data) {
+  if (!hasResults(data)) {
+    return frequencyTypeOptions[0].value;
+  }
+
+  return data.data.results.frequency.type;
+}
+
+function loadStoredFrequencyValue(data) {
+  if (!hasResults(data)) {
+    return 0;
+  }
+
+  return data.data.results.frequency.value;
 }
