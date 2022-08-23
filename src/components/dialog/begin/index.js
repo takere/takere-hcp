@@ -5,8 +5,6 @@ import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
 import BooleanInput from "../../input/BooleanInput";
-import RawTextInput from "../../input/RawTextInput";
-import NumberInput from "../../input/NumberInput";
 import DateInput from "../../input/DateInput";
 
 
@@ -20,22 +18,12 @@ const BeginDialog = ({ open, handleClose, data, onAddElementResultValue }) => {
   const [undefinedEnd, setUndefinedEnd] = useState(
     loadStoredUndefinedEnd(data)
   );
-  const [repeatInterval, setRepeatInterval] = useState(
-    loadStoredRepeatInterval(data)
-  );
-  const [skipDays, setSkipDays] = useState(loadStoredSkipDays(data));
-  const [skipImmediate, setSkipImmediate] = useState(
-    loadStoredSkipImmediate(data)
-  );
 
   const saveInputs = () => {
     const inputData = {
       startDate,
       endDate,
-      undefinedEnd,
-      repeatInterval,
-      skipDays,
-      skipImmediate,
+      undefinedEnd
     };
 
     onAddElementResultValue(data, inputData);
@@ -71,24 +59,6 @@ const BeginDialog = ({ open, handleClose, data, onAddElementResultValue }) => {
           helperText="Sets end date as undefined"
           value={undefinedEnd}
           onChange={setUndefinedEnd}
-        />
-        <RawTextInput
-          label="Repeat interval"
-          helperText="How often should it repeat? (2 weeks, 5 days...)"
-          value={repeatInterval}
-          onChange={setRepeatInterval}
-        />
-        <NumberInput
-          label="How often care plan should be executed?"
-          helperText="Spacing between executions (in days)"
-          value={skipDays}
-          onChange={setSkipDays}
-        />
-        <BooleanInput
-          label="Ignore immediate execution?"
-          helperText="Setting this option to true will bypass immediate execution. The first run will only take place at the configured interval."
-          value={skipImmediate}
-          onChange={setSkipImmediate}
         />
       </Body>
       <Footer>
@@ -137,43 +107,4 @@ function loadStoredUndefinedEnd(data) {
   }
 
   return data.data.results.undefinedEnd;
-}
-
-function loadStoredRepeatInterval(data) {
-  if (
-    !data ||
-    !data.data ||
-    !data.data.results ||
-    !data.data.results.repeatInterval
-  ) {
-    return "";
-  }
-
-  return data.data.results.repeatInterval;
-}
-
-function loadStoredSkipDays(data) {
-  if (
-    !data ||
-    !data.data ||
-    !data.data.results ||
-    !data.data.results.skipDays
-  ) {
-    return 0;
-  }
-
-  return data.data.results.skipDays;
-}
-
-function loadStoredSkipImmediate(data) {
-  if (
-    !data ||
-    !data.data ||
-    !data.data.results ||
-    !data.data.results.skipImmediate
-  ) {
-    return false;
-  }
-
-  return data.data.results.skipImmediate;
 }
