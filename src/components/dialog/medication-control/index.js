@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
-import frequencyOptions from './frequency.type.json';
 import severityOptions from './severity.type.json';
 import BooleanInput from "../../../parts/input/BooleanInput";
 import RawTextInput from "../../../parts/input/RawTextInput";
@@ -214,7 +213,7 @@ function loadStoredUndefinedEnd(data) {
 
 function loadStoredFrequencyType(data) {
   if (!hasResults(data) || !data.data.results.frequency) {
-    return frequencyOptions[0].value;
+    return 'daily';
   }
 
   return data.data.results.frequency.type;
@@ -222,7 +221,7 @@ function loadStoredFrequencyType(data) {
 
 function loadStoredFrequencyValue(data) {
   if (!hasResults(data) || !data.data.results.frequency) {
-    return frequencyOptions[0].value;
+    return 'daily';
   }
 
   return data.data.results.frequency.value;
@@ -234,13 +233,4 @@ function loadStoredSeverity(data) {
   }
 
   return data.data.results.severity;
-}
-
-function hasFrequencyTypeSomeValue(type) {
-  return  (type === 'everyHours')
-          || (type === 'everyDays');
-}
-
-function generateHelperTextForFrequency(type) {
-  return frequencyHelperText[type];
 }

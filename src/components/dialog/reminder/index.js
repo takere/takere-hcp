@@ -137,7 +137,7 @@ function loadStoredSeverity(data) {
 
 function loadStoredFrequencyType(data) {
   if (!hasResults(data)) {
-    return frequencyTypeOptions[0].value;
+    return 'daily';
   }
 
   return data.data.results.frequency.type;
@@ -145,7 +145,7 @@ function loadStoredFrequencyType(data) {
 
 function loadStoredFrequencyValue(data) {
   if (!hasResults(data)) {
-    return 0;
+    return 'daily';
   }
 
   return data.data.results.frequency.value;

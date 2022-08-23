@@ -100,14 +100,6 @@ const QuizDialog = ({
     setAnswerOptions(updatedAnswerOptions);
   }
 
-  const onChangeFrequencyValue = (newValue) => {
-    if (newValue < 0) {
-      return;
-    }
-
-    setFrequencyValue(newValue);
-  }
-
   useEffect(() => {
     const updatedQuestions = questions;
 
@@ -251,7 +243,7 @@ function buildEmptyQuestion() {
   return { 
     question: '', 
     answer: { type: answerTypeOptions[0].value, options: [] },
-    frequency: { type: frequencyTypeOptions[0].value, value: frequencyTypeOptions[0].value }
+    frequency: { type: 'daily', value: 'daily' }
   };
 }
 
@@ -281,7 +273,7 @@ function loadStoredAnswerOptions(data) {
 
 function loadStoredFrequencyType(data) {
   if (!hasResults(data) || !hasQuestions(data)) {
-    return frequencyTypeOptions[0].value;
+    return 'daily';
   }
 
   return data.data.results.frequency.type;
@@ -289,7 +281,7 @@ function loadStoredFrequencyType(data) {
 
 function loadStoredFrequencyValue(data) {
   if (!hasResults(data) || !hasQuestions(data)) {
-    return 0;
+    return 'daily';
   }
 
   return data.data.results.frequency.value;
