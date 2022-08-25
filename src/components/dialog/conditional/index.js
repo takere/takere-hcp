@@ -27,31 +27,37 @@ const ConditionalDialog = ({
   const [left, setLeft] = useState(loadStoredLeft(data, connection));
   const [operator, setOperator] = useState(loadStoredOperator(data, connection));
   const [right, setRight] = useState(loadStoredRight(data, connection));
+  const [leftOptions, setLeftOptions] = useState([]);
   const [operatorOptions, setOperatorOptions] = useState([]);
   const [rightOptions, setRightOptions] = useState([]);
 
   const saveInputs = () => {
     const inputData = {
-      left,
-      operator,
-      right
+      left: left,
+      operator: operatorOptions[operator].originalValue,
+      right: rightOptions[right]?.label ?? right
     };
 
     onAddElementResultValue(data, inputData);
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
-  const onSelectLeft = (operand) => {
-    const newIndex = connection.data.results.findIndex(quiz => quiz.question === operand)
+  const onSelectLeft = (index) => {
+    //const newIndex = connection.data.results.questions.findIndex(quiz => quiz.question === operand)
 
-    setLeft(operand);
-    setOperatorOptions(buildOperatorOptions(connection, newIndex));
-    setRightOptions(buildRightOptions(connection, newIndex));
+    setLeft(index);
+    setOperator(0);
+    setRight('');
+    setOperatorOptions(buildOperatorOptions(connection, index));
+    setRightOptions(buildRightOptions(connection, index));
   }
 
   useEffect(() => {
+    setLeftOptions(buildLeftOptions(connection));
     setOperatorOptions(buildOperatorOptions(connection, 0));
     setRightOptions(buildRightOptions(connection, 0));
+
+    console.log('c: ', connection)
   }, [connection]);
 
   return (
@@ -63,41 +69,43 @@ const ConditionalDialog = ({
       aria-labelledby="max-width-dialog-title"
     >
       <Header title={payloadData.label} subtitle={payloadData.description} />
-      <Body>
-        <Styled.InputArea>
-          <MultiSelectionInput
-            label="Left"
-            helperText="Left operand"
-            value={left}
-            onChange={onSelectLeft}
-            options={buildLeftOptions(connection)}
-          />
-          <MultiSelectionInput
-            label="Operator"
-            helperText="Operator that will be applied in the left and right terms"
-            value={operator}
-            onChange={setOperator}
-            options={operatorOptions}
-          />
-          {rightOptions.length === 0 
-          ? 
-            <RawTextInput 
-              label="Right"
-              helperText="Right operand"
-              value={right}
-              onChange={setRight}
-            />
-          :
+      {connection &&
+        <Body>
+          <Styled.InputArea>
             <MultiSelectionInput
-              label="Right"
-              helperText="Right operand"
-              value={right}
-              onChange={setRight}
-              options={rightOptions}
+              label="Left"
+              helperText="Left operand"
+              value={left}
+              onChange={onSelectLeft}
+              options={leftOptions}
             />
-          }
-        </Styled.InputArea>
-      </Body>
+            <MultiSelectionInput
+              label="Operator"
+              helperText="Operator that will be applied in the left and right terms"
+              value={operator}
+              onChange={setOperator}
+              options={operatorOptions}
+            />
+            {rightOptions.length === 0 
+            ? 
+              <RawTextInput 
+                label="Right"
+                helperText="Right operand"
+                value={right}
+                onChange={setRight}
+              />
+            :
+              <MultiSelectionInput
+                label="Right"
+                helperText="Right operand"
+                value={right}
+                onChange={setRight}
+                options={rightOptions}
+              />
+            }
+          </Styled.InputArea>
+        </Body>
+      }
       <Footer>
         <SuccessButton title="Save" onClick={saveInputs} />
         <DefaultButton title="Close" onClick={handleClose} />
@@ -118,25 +126,37 @@ function hasResults(data) {
           && data.data.results;
 }
 
-function loadStoredLeft(data, connections) {
+function loadStoredLeft(data, connection) {
+  if (!connection) {
+    return 0;
+  }
+
   if (!hasResults(data) || !data.data.results.left) {
-    return '';
+    return 0;
   }
 
   return data.data.results.left;
 }
 
-function loadStoredOperator(data, connections) {
+function loadStoredOperator(data, connection) {
+  if (!connection) {
+    return 0;
+  }
+
   if (!hasResults(data) || !data.data.results.operator) {
-    return '';
+    return 0;
   }
 
   return data.data.results.operator;
 }
 
-function loadStoredRight(data, connections) {
-  if (!hasResults(data) || !data.data.results.right) {
+function loadStoredRight(data, connection) {
+  if (!connection) {
     return '';
+  }
+
+  if (!hasResults(data) || !data.data.results.right) {
+    return buildRightOptions(connection, 0);
   }
 
   return data.data.results.right;
@@ -148,13 +168,13 @@ function buildLeftOptions(connection) {
   }
 
   if (connection.type === 'MEDICATION_CONTROL_NODE') {
-    return [{ label: 'Medication', value: 'medication' }];
+    return [{ label: 'Medication', value: 0 }];
   }
 
   const options = [];
 
-  connection.data.results?.forEach(quiz => {
-    options.push({ label: quiz.question, value: quiz.question });
+  connection.data.results.questions?.forEach((quiz, index) => {
+    options.push({ label: quiz.question, value: index });
   });
 
   return options;
@@ -165,26 +185,37 @@ function buildOperatorOptions(connection, currentIndex) {
     return [];
   }
 
+  let options = [];
+
   if (connection.type === 'MEDICATION_CONTROL_NODE') {
-    return selectionOperatorOptions;
+    return buildOptions(selectionOperatorOptions);;
   }
 
   if (!connection.data.results) {
     return [];
   }
-
-  let options = [];
-  const quiz = connection.data.results[currentIndex];
+  
+  const quiz = connection.data.results.questions[currentIndex];
   
   if (quiz.answer.type === 'number') {
-    options = numberOperatorOptions;
+    options = buildOptions(numberOperatorOptions);
   }
   else if (quiz.answer.type === 'checkbox') {
-    options = selectionOperatorOptions;
+    options = buildOptions(selectionOperatorOptions);
   }
   else {
-    options = textOperatorOptions;
+    options = buildOptions(textOperatorOptions);
   }
+
+  return options;
+}
+
+function buildOptions(optionList) {
+  let options = [];
+
+  optionList.forEach((option, index) => {
+    options.push({ label: option.label, value: index, originalValue: option.value });
+  });
 
   return options;
 }
@@ -195,19 +226,19 @@ function buildRightOptions(connection, currentIndex) {
   }
 
   if (connection.type === 'MEDICATION_CONTROL_NODE') {
-    return [{ label: 'Taken', value: 'taken' }];
+    return [{ label: 'Taken', value: 0 }];
   }
 
   if (!connection.data.results) {
     return [];
   }
 
-  const answer = connection.data.results[currentIndex].answer;
+  const answer = connection.data.results.questions[currentIndex].answer;
   const options = [];
   
-  for (let option of answer.options) {
-    options.push({ label: option, value: option });
-  }
+  answer.options.forEach((option, index) => {
+    options.push({ label: option, value: index });
+  });
 
   return options;
 }
