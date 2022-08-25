@@ -11,7 +11,7 @@ export class Requests {
     }
 
     async getMyFlows(){
-        const response = await remoteRequest.get('/tasks/mines');
+        const response = await remoteRequest.get('/flows/mines');
         return response.data;
     }
 
@@ -22,14 +22,14 @@ export class Requests {
 
     async getFlowById(id){
         const toastId = toast.loading("Buscando fluxo...");
-        const response = await remoteRequest.get(`/tasks/mine/${id}`);
+        const response = await remoteRequest.get(`/flows/mine/${id}`);
         toast.dismiss(toastId);
         return response.data;
     }
 
     async deleteFlowById(id){
         const toastId = toast.loading("Deletando fluxo...");
-        const response = await remoteRequest.delete(`/tasks/mine/${id}`);
+        const response = await remoteRequest.delete(`/flows/mine/${id}`);
         toast.dismiss(toastId);
         toast.success('Fluxo deletado com sucesso!')
         return response.data;
@@ -37,7 +37,7 @@ export class Requests {
 
     async createOrUpdateFlow(data){
         const toastId = toast.loading("Atualizando fluxo...");
-        const response = await remoteRequest.post(`/tasks/create`, data);
+        const response = await remoteRequest.post(`/flows/create`, data);
         toast.dismiss(toastId);
         toast.success('Fluxo criado com sucesso!')
         return response.data;
