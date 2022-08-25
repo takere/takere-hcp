@@ -5,6 +5,7 @@ import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
 import severityOptions from './severity.type.json';
+import notificationOptions from './notification.type.json';
 import RawTextInput from "../../../parts/input/RawTextInput";
 import MultiSelectionInput from "../../../parts/input/MultiSelectionInput";
 import FrequencyInput from "../../../parts/frequency-input";
@@ -25,6 +26,7 @@ const ReminderDialog = ({
   const [description, setDescription] = useState(loadStoredDescription(data));
   const [content, setContent] = useState(loadStoredContent(data));
   const [severity, setSeverity] = useState(loadStoredSeverity(data));
+  const [notification, setNotification] = useState(loadStoredNotification(data));
   const [frequencyType, setFrequencyType] = useState(loadStoredFrequencyType(data));
   const [frequencyValue, setFrequencyValue] = useState(loadStoredFrequencyValue(data));
 
@@ -34,6 +36,7 @@ const ReminderDialog = ({
       description,
       content,
       severity,
+      notification,
       frequency: { type: frequencyType, value: frequencyValue }
     };
 
@@ -75,6 +78,13 @@ const ReminderDialog = ({
           value={severity}
           onChange={setSeverity}
           options={severityOptions}
+        />
+        <MultiSelectionInput
+          label="Notification type"
+          helperText="How this reminder should be displayed for the patient?"
+          value={notification}
+          onChange={setNotification}
+          options={notificationOptions}
         />
         <FrequencyInput 
           frequencyType={frequencyType}
@@ -133,6 +143,14 @@ function loadStoredSeverity(data) {
   }
 
   return data.data.results.severity;
+}
+
+function loadStoredNotification(data) {
+  if (!hasResults(data) || !data.data.results.notification) {
+    return notificationOptions[0].value;
+  }
+
+  return data.data.results.notification;
 }
 
 function loadStoredFrequencyType(data) {

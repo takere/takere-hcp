@@ -1,0 +1,19 @@
+[
+    {
+      "value": "push",
+      "label": "Pop-up message"
+    },
+    {
+      "value": "email",
+      "label": "Email message"
+    },
+    {
+      "value": "sms",
+      "label": "SMS message"
+    },
+    {
+      "value": "alarm",
+      "label": "Alarm message"
+    }
+  ]
+  
