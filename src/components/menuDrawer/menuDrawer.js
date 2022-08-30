@@ -11,7 +11,11 @@ const MENU = [
     {
         icon: 'person',
         path: '/profile'
-    }
+    },
+    {
+        icon: 'healing',
+        path: '/patients'
+    },
 ]
 
 export const MenuDrawer = () => {

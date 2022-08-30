@@ -9,6 +9,8 @@ import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { Dashboard } from "../pages/dashboard/dashboard";
 import { Home } from "../pages/home/home";
+import { Patients } from "../pages/patients";
+import { Patient } from "../pages/patients/patient";
 import { Profile } from "../pages/profile/profile";
 
 
@@ -20,6 +22,8 @@ export const protectedRoutes = [
   { path: '/dash/flow/:id', component: Dashboard },
   { path: '/dash', component: Dashboard },
   { path: '/profile', component: Profile },
+  { path: '/patients/:id', component: Patient },
+  { path: '/patients', component: Patients },
 ];
 
 

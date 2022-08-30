@@ -10,6 +10,13 @@ export class Requests {
         return response.data.data;
     }
 
+    async getPatients() {
+        return [
+            { id: 1, firstName: 'William', lastName: 'Niemiec', email: 'william@email.com', profileUrl: '', flow: { id: 1, name: 'Flow name' } },
+            { id: 1, firstName: 'William', lastName: 'Niemiec', email: 'william@email.com', profileUrl: '', flow: { id: 1, name: 'Flow name' } },
+        ]
+    }
+
     async getMyFlows(){
         const response = await remoteRequest.get('/flows/mines');
         return response.data;
