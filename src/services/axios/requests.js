@@ -30,7 +30,7 @@ export class Requests {
                 description: 'Patient with diabetes',
                 completed: [
                     {
-                        node: { id: 2, name: 'QUIZ', icon: 'question_mark'  },
+                        node: { id: 2, type: 'QUIZ', icon: 'question_mark'  },
                         result: [
                             { id: 1, question: 'How are you?', answer: 'well' }
                         ],
@@ -39,7 +39,7 @@ export class Requests {
                 ],
                 ongoing: [
                     {
-                        node: { id: 2, name: 'QUIZ', icon: 'question_mark'  },
+                        node: { id: 2, type: 'QUIZ', icon: 'question_mark'  },
                         result: [
                             { id: 1, question: 'How are you?', answer: 'well' }
                         ],
@@ -48,7 +48,7 @@ export class Requests {
                 ],
                 late: [
                     {
-                        node: { id: 2, name: 'QUIZ', icon: 'question_mark'  },
+                        node: { id: 2, type: 'QUIZ', icon: 'question_mark'  },
                         result: [
                             { id: 1, question: 'How are you?', answer: 'well' }
                         ],
