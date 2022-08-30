@@ -8,6 +8,7 @@ export const makeLogin = async (email, password) => {
             email,
             password
         });
+        localStorage.setItem('user', JSON.stringify(response.data.userData))
         toast.dismiss(id);
         if(response.data.token) {
             toast.success("Login com sucesso!")

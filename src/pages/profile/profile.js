@@ -1,16 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import * as Styled from './profile.styled';
-import {Requests} from "../../services/axios/requests";
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
 
 export const Profile = () => {
-    const [userData, setUserData] = useState(null);
-
-    useEffect(() => {
-        new Requests().getMe().then(r => {
-            setUserData(r);
-        })
-    }, [])
+    const userData = JSON.parse(localStorage.getItem('user'));
 
     return (
         <Styled.PageWithDrawer>
