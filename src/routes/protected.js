@@ -22,7 +22,7 @@ export const protectedRoutes = [
   { path: '/dash/flow/:id', component: Dashboard },
   { path: '/dash', component: Dashboard },
   { path: '/profile', component: Profile },
-  { path: '/patients/:id', component: Patient },
+  { path: '/patients/:patientId/:flowId', component: Patient },
   { path: '/patients', component: Patients },
 ];
 

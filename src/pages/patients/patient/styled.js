@@ -18,6 +18,16 @@ export const NameTitle = styled.h1`
    color: ${theme.colors.night.x1};
 `;
 
+export const ContainerName = styled.h3`
+   color: ${theme.colors.night.x1};
+   margin: 0;
+`;
+
+export const ContainerHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const ItemBox = styled.div`
   background-color: ${theme.colors.night.x5};
   display: flex;
@@ -75,8 +85,11 @@ export const ItemDescription = styled.p`
 `;
 
 export const ContainerData = styled.div`
-  margin-top: 30px;
+  margin-top: 10px;
+  margin-bottom: 30px;
   min-height: 400px;
+  max-height: 400px;
+  overflow-y: auto;
   background-color: ${theme.colors.night.x5};
   padding: 30px;
   border-radius: 16px;
@@ -88,4 +101,34 @@ export const ItemContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-content: center;
+`;
+
+export const CardRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  margin: 10px 0;
+  padding-left: 10px;
+`;
+
+export const CardColumn = styled.div`
+  background-color: ${theme.colors.night.x5};
+  display: flex;
+  align-content: center;
+  border-radius: 16px;
+  border-left: 5px solid;
+  margin-bottom: 20px;
+  border-color: ${theme.colors.night.x5};
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const CardTitle = styled.p`
+  padding-left: 10px; 
+  margin: 0;
+  color: ${theme.colors.night.x1};
+  text-overflow: clip;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 23px;
 `;

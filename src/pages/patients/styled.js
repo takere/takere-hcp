@@ -77,6 +77,7 @@ export const ItemDescription = styled.p`
 export const ContainerData = styled.div`
   margin-top: 30px;
   min-height: 400px;
+  overflow-y: auto;
   background-color: ${theme.colors.night.x5};
   padding: 30px;
   border-radius: 16px;

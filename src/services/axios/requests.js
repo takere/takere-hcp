@@ -12,9 +12,28 @@ export class Requests {
 
     async getPatients() {
         return [
-            { id: 1, firstName: 'William', lastName: 'Niemiec', email: 'william@email.com', profileUrl: '', flow: { id: 1, name: 'Flow name' } },
+            { id: 1, firstName: 'William', lastName: 'Niemiec', email: 'william@email.com', profileUrl: '', flow: { id: 1, name: 'Diabetes' } },
             { id: 1, firstName: 'William', lastName: 'Niemiec', email: 'william@email.com', profileUrl: '', flow: { id: 1, name: 'Flow name' } },
         ]
+    }
+
+    async getPatient(idPatient, idFlow) {
+        return { 
+            id: 1, 
+            firstName: 'William', 
+            lastName: 'Niemiec', 
+            email: 'william@email.com', 
+            profileUrl: '', 
+            flow: { id: 1, name: 'Diabetes', description: 'Patient with diabetes' } ,
+            executed: [
+                {
+                    node: { id: 2, name: 'QUIZ_NODE', icon: 'question'  },
+                    result: [
+                        { id: 1, question: 'How are you?', answer: 'well' }
+                    ]
+                }
+            ]
+        }
     }
 
     async getMyFlows(){

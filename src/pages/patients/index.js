@@ -19,7 +19,7 @@ export const Patients = () => {
   }, []);
 
   const handleClick = (e, patient) => {
-    history.push(`/patients/${patient.id}`);
+    history.push(`/patients/${patient.id}/${patient.flow.id}`);
   };
 
   return (
