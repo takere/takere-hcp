@@ -24,15 +24,38 @@ export class Requests {
             lastName: 'Niemiec', 
             email: 'william@email.com', 
             profileUrl: '', 
-            flow: { id: 1, name: 'Diabetes', description: 'Patient with diabetes' } ,
-            executed: [
-                {
-                    node: { id: 2, name: 'QUIZ_NODE', icon: 'question'  },
-                    result: [
-                        { id: 1, question: 'How are you?', answer: 'well' }
-                    ]
-                }
-            ]
+            flow: { 
+                id: 1, 
+                name: 'Diabetes',
+                description: 'Patient with diabetes',
+                completed: [
+                    {
+                        node: { id: 2, name: 'QUIZ', icon: 'question_mark'  },
+                        result: [
+                            { id: 1, question: 'How are you?', answer: 'well' }
+                        ],
+                        date: new Date()
+                    }
+                ],
+                ongoing: [
+                    {
+                        node: { id: 2, name: 'QUIZ', icon: 'question_mark'  },
+                        result: [
+                            { id: 1, question: 'How are you?', answer: 'well' }
+                        ],
+                        deadline: undefined
+                    }
+                ],
+                late: [
+                    {
+                        node: { id: 2, name: 'QUIZ', icon: 'question_mark'  },
+                        result: [
+                            { id: 1, question: 'How are you?', answer: 'well' }
+                        ],
+                        deadline: new Date()
+                    }
+                ]
+            },
         }
     }
 

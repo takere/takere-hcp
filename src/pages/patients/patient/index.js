@@ -6,14 +6,17 @@ import { MenuDrawer } from "../../../components/menuDrawer/menuDrawer";
 import {
   useParams
 } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 export const Patient = () => {
-  const [patient, setPatient] = useState([]);
+  const [patient, setPatient] = useState({});
+  const [loading, setLoading] = useState(true);
   const { idPatient, idFlow } = useParams();
 
   const getPatientInfo = () => {
     new Requests().getPatient(idPatient, idFlow).then((r) => {
       setPatient(r);
+      setLoading(false);
     });
   };
 
@@ -28,61 +31,85 @@ export const Patient = () => {
         <Styled.NameTitle>
           Patient progress
         </Styled.NameTitle>
-        <ProfileCard 
-            name={'William Niemiec'}
-            email={'william@email.com'}
-            flowName={'Diabetes'}
-            flowDescription={'Patient with diabetes'}
-            onClick={() => {}}
+        {loading &&
+          <ClipLoader />
+        }
+        {!loading && 
+        <>
+          <ProfileCard 
+            name={`${patient.firstName} ${patient.lastName}`}
+            email={patient.email}
+            flowName={patient.flow.name}
+            flowDescription={patient.flow.description}
           />
-        <Styled.ContainerHeader>
-          <Styled.ItemContent>
-            <Styled.IconItem>
-              check_circle
-            </Styled.IconItem>
-          </Styled.ItemContent>
-          <Styled.ContainerName>
-            Completed
-          </Styled.ContainerName>
-        </Styled.ContainerHeader>
-        <Styled.ContainerData>
-          <Card 
-            title={'Medication control'}
-            description={'completed at 23/08/2022 14:23:04'}
-            icon={'healing'}
-            onClick={() => {}}
-          />
-        </Styled.ContainerData>
+          <Styled.ContainerHeader>
+            <Styled.ItemContent>
+              <Styled.IconItem>
+                check_circle
+              </Styled.IconItem>
+            </Styled.ItemContent>
+            <Styled.ContainerName>
+              Completed
+            </Styled.ContainerName>
+          </Styled.ContainerHeader>
+          <Styled.ContainerData>
+            {patient.flow.completed.map((item, index) => (
+              <Card
+                key={index}
+                title={item.node.name}
+                description={`completed at ${item.date}`}
+                icon={item.node.icon}
+                onClick={() => { console.log(item.result) }}
+              />
+            ))}
+          </Styled.ContainerData>
 
 
-        <Styled.ContainerHeader>
-          <Styled.ItemContent>
-            <Styled.IconItem>
-              pending
-            </Styled.IconItem>
-          </Styled.ItemContent>
-          <Styled.ContainerName>
-            Ongoing
-          </Styled.ContainerName>
-        </Styled.ContainerHeader>
-        <Styled.ContainerData>
-          
-        </Styled.ContainerData>
+          <Styled.ContainerHeader>
+            <Styled.ItemContent>
+              <Styled.IconItem>
+                pending
+              </Styled.IconItem>
+            </Styled.ItemContent>
+            <Styled.ContainerName>
+              Ongoing
+            </Styled.ContainerName>
+          </Styled.ContainerHeader>
+          <Styled.ContainerData>
+            {patient.flow.ongoing.map((item, index) => (
+              <Card
+                key={index}
+                title={item.node.name}
+                description={item.deadline ? `should be completed until ${item.deadline}` : 'deadline date is undefined'}
+                icon={item.node.icon}
+              />
+            ))}
+          </Styled.ContainerData>
 
 
-        <Styled.ContainerHeader>
-          <Styled.ItemContent>
-            <Styled.IconItem>
-              watch_later
-            </Styled.IconItem>
-          </Styled.ItemContent>
-          <Styled.ContainerName>
-            Late
-          </Styled.ContainerName>
-        </Styled.ContainerHeader>
-        <Styled.ContainerData>
-          
-        </Styled.ContainerData>
+          <Styled.ContainerHeader>
+            <Styled.ItemContent>
+              <Styled.IconItem>
+                watch_later
+              </Styled.IconItem>
+            </Styled.ItemContent>
+            <Styled.ContainerName>
+              Late
+            </Styled.ContainerName>
+          </Styled.ContainerHeader>
+          <Styled.ContainerData>
+            {patient.flow.late.map((item, index) => (
+              <Card
+                key={index}
+                title={item.node.name}
+                description={`should be completed until ${item.deadline}`}
+                icon={item.node.icon}
+              />
+            ))}
+          </Styled.ContainerData>
+        </>
+        }
+        
       </Styled.Container>
     </Styled.PageWithDrawer>
   );
