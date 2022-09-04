@@ -9,7 +9,10 @@ export const PageWithDrawer = styled.div`
 
 export const Container = styled.div`
   flex: 1;
-  background-color: ${theme.colors.day.x1};
+  background-image: url('/assets/images/profile.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 `
 
 export const NameTitle = styled.h1`

@@ -3,22 +3,24 @@ export const theme = {
         primary: {
             x1: '#0fab7a'
         },
-        danger: '#db594f',
         success: '#34a853',
+        danger: '#db594f',
+        warning: '#fbbc04',
+        cold: '#49a9ff',
         light: '#dddddd',
         day: {
             x1: '#EEEEEE'
         },
         night: {
             x1: '#222831',
-            x5: 'rgba(34,40,49,0.11)'
+            x5: 'rgba(15,171,122,0.4)'
         },
         feedback: {
             success: {
-                x1: '#90be6d'
+                x1: '#34a853'
             },
             error: {
-                x1: '#e07a5f'
+                x1: '#db594f'
             }
         }
 
