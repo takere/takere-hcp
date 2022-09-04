@@ -21,6 +21,12 @@ export const IconItem = styled(Icon)`
   text-align: center;
 `;
 
+export const IconHighlight = styled(Icon)`
+  font-size: 28px;
+  color: ${theme.colors.day.x1};
+  text-align: center;
+`;
+
 export const IconExit = styled(Icon)`
   font-size: 28px;
   color: ${theme.colors.night.x1};

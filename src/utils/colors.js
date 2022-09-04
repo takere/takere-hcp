@@ -1,7 +1,7 @@
 export const theme = {
     colors: {
         primary: {
-            x1: '#ffb703'
+            x1: '#0fab7a'
         },
         danger: '#db594f',
         success: '#34a853',

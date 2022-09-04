@@ -43,7 +43,7 @@ export const MenuDrawer = () => {
                 ))
             }
             <Styled.SideAddItem onClick={handleNew}>
-                <Styled.IconExit>add</Styled.IconExit>
+                <Styled.IconHighlight>add</Styled.IconHighlight>
             </Styled.SideAddItem>
             <Styled.ExitSideItem onClick={handleLogout}>
                 <Styled.IconExit>logout</Styled.IconExit>
