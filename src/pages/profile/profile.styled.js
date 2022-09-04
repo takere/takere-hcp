@@ -19,6 +19,7 @@ export const NameTitle = styled.h1`
    color: ${theme.colors.night.x1};
    padding-left: 30px;
    padding-top: 30px;
+   text-shadow: 0 0 5px  ${theme.colors.day.x1};
 `;
 
 export const TextDescription = styled.h4`

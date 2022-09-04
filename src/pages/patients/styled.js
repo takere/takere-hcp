@@ -20,6 +20,7 @@ export const Container = styled.div`
 
 export const NameTitle = styled.h1`
    color: ${theme.colors.night.x1};
+   text-shadow: 0 0 5px  ${theme.colors.day.x1};
 `;
 
 export const ItemBox = styled.div`
@@ -57,6 +58,7 @@ export const IconItem = styled(Icon)`
 export const ItemName = styled.h4`
    padding-left: 10px; 
    color: ${theme.colors.night.x1};
+   text-shadow: 0 0 3px  ${theme.colors.day.x1};
   text-overflow: clip;
   display: -webkit-box;
   -webkit-line-clamp: 2;

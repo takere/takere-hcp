@@ -20,10 +20,12 @@ export const Container = styled.div`
 
 export const NameTitle = styled.h1`
    color: ${theme.colors.night.x1};
+   text-shadow: 0 0 5px  ${theme.colors.day.x1};
 `;
 
 export const ContainerName = styled.h3`
    color: ${theme.colors.night.x1};
+   text-shadow: 0 0 5px  ${theme.colors.day.x1};
    margin: 0;
 `;
 
@@ -60,6 +62,7 @@ export const DeleteButton = styled.div`
 export const IconItem = styled(Icon)`
   font-size: 24px;
   color: ${theme.colors.night.x1};
+  text-shadow: 0 0 2px  ${theme.colors.day.x1};
   text-align: center;
   margin-right: 20px;
 `;
@@ -67,6 +70,7 @@ export const IconItem = styled(Icon)`
 export const ItemName = styled.h4`
    padding-left: 10px; 
    color: ${theme.colors.night.x1};
+   text-shadow: 0 0 3px  ${theme.colors.day.x1};
   text-overflow: clip;
   display: -webkit-box;
   -webkit-line-clamp: 2;
