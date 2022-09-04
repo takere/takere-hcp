@@ -1,13 +1,12 @@
 import React from 'react';
-import Icon from "@material-ui/core/Icon";
-import { iconStyle } from './style';
+import { Icon } from './styled';
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const MaterialIcon = ({ iconName }) => (
-  <Icon style={iconStyle}>
+const MaterialIcon = ({ iconName, color }) => (
+  <Icon color={color}>
     { iconName }
   </Icon>
 );

@@ -12,6 +12,10 @@ export const Container = styled.div`
   flex: 1;
   background-color: ${theme.colors.day.x1};
   padding: 30px;
+  background-image: url('/assets/images/empathy.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 `
 
 export const NameTitle = styled.h1`
