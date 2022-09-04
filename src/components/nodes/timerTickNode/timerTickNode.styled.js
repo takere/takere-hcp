@@ -8,7 +8,7 @@ export const Node = styled.div`
   height: 100px;
   align-content: center;
   align-items: center;
-  border-width: 1px;
+  border-width: 2px;
   border-color: #333;
   border-style:solid;
   border-radius: 12px;

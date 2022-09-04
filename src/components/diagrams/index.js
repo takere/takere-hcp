@@ -83,7 +83,7 @@ const Diagrams = ({ flowDb }) => {
       if (isConnectionAllowed(sourceNode.type, targetNode.type)) {
         const connectedNodes = nodes.filter(node => (!node.target) || (node.target !== targetId));
 
-        setNodes(addEdge({ ...params, animated: true }, connectedNodes));
+        setNodes(addEdge({ ...params, animated: true, style:{strokeWidth:3} }, connectedNodes));
       }
     }
   );
