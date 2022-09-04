@@ -37,10 +37,10 @@ export const Home = () => {
     <Styled.PageWithDrawer>
       <MenuDrawer />
       <Styled.Container>
-        <Styled.NameTitle>Ínicio</Styled.NameTitle>
+        <Styled.NameTitle>Home</Styled.NameTitle>
         <Styled.HelloBox>
           <p style={{ fontSize: 16, marginLeft: 10, paddingTop: 10 }}>
-            Bem vindo ao mflow {emojiGenerator()}
+            Welcome to Takere {emojiGenerator()}
             {emojiGenerator()}
           </p>
         </Styled.HelloBox>
