@@ -28,7 +28,6 @@ export const NodeName = styled.p`
   color: ${theme.colors.night.x1};
   text-align: center;
   margin: 5px;
-  font-size: 1vw;
 
   display: -webkit-box;
   max-width: 200px;

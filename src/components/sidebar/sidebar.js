@@ -39,21 +39,26 @@ export const Sidebar = () => {
     return (
         <Styled.SideContainer>
             <Styled.SideAside>
-                <Styled.NameTitle>Nodos</Styled.NameTitle>
+                <Styled.NameTitle>Elements</Styled.NameTitle>
                 <Styled.InputSearch
                     id="outlined-basic"
-                    label="Filtro"
+                    label="Filter"
                     variant="outlined"
                     type="search"
                     value={search}
                     onChange={filter}
                     size="small"
-                    placeholder="Filtro"
+                    placeholder="Filter"
                 />
                 <Styled.SideGraggAside>
                     {foundNodes && foundNodes.length > 0 ? (
                         foundNodes.map((node, index) => (
-                            <Styled.SideItem key={index} onDragStart={(event) => onDragStart(event, node)} draggable>
+                            <Styled.SideItem 
+                                key={index} 
+                                onDragStart={(event) => onDragStart(event, node)} 
+                                draggable
+                                bgColor={node.data.bgColor}
+                            >
                                 <Styled.TitleNodeItem>
                                     {node.data.label}
                                 </Styled.TitleNodeItem>

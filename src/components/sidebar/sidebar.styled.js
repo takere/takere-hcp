@@ -34,11 +34,12 @@ export const SideItem = styled.div`
   flex-direction: column;
   flex: 1;
   margin-bottom: 5px;
-  background-color: ${theme.colors.night.x1};
+  border: 2px solid ${theme.colors.night.x1};
+  background-color: ${(props) => props.bgColor};
   padding: 10px;
   text-align: center;
   border-radius: 8px;
-  color: ${theme.colors.day.x1};
+  color: ${theme.colors.night.x1};
   font-weight: 400;
 `;
 
@@ -56,6 +57,7 @@ export const TitleNodeItem = styled.p`
 
 export const DescriptionNodeItem = styled.p`
   text-align: left;
+  font-size: 13px;
 `;
 
 export const NameTitle = styled.h2`

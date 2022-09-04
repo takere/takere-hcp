@@ -31,7 +31,6 @@ export const NodeName = styled.p`
   color: ${theme.colors.night.x1};
   text-align: center;
   margin: 5px;
-  font-size: 1vw;
 
   display: -webkit-box;
   max-width: 200px;
@@ -44,7 +43,7 @@ export const FlowLabel = styled.p`
   transform: rotate(-45deg);
   position: absolute;
   text-transform: uppercase;
-  font-size: 1vw;
+  font-size: 10px;
 
   &.false {
     left: 0;
