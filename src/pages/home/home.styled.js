@@ -18,20 +18,39 @@ export const Container = styled.div`
   background-size: cover;
 `
 
+export const Logo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+`;
+
+export const ContainerHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+`;
+
+export const ContainerName = styled.h3`
+   color: ${theme.colors.night.x1};
+   text-shadow: 0 0 5px  ${theme.colors.day.x1};
+   margin: 0;
+`;
+
+export const ItemContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+`;
+
+export const LogoImage = styled.img`
+  height: 80px;
+`;
+
 export const NameTitle = styled.h1`
    color: ${theme.colors.night.x1};
    text-shadow: 0 0 5px  ${theme.colors.day.x1};
-`;
-
-export const HelloBox = styled.div`
-  background-color: ${theme.colors.night.x5};
-  width: 450px;
-  height: 50px;
-  justify-content: center;
-  align-content: center;
-  border-radius: 16px;
-  border-left: 5px solid;
-  border-color: ${theme.colors.night.x5};
 `;
 
 export const ItemBox = styled.div`
@@ -94,7 +113,6 @@ export const ItemDescription = styled.p`
 `;
 
 export const ContainerData = styled.div`
-  margin-top: 30px;
   min-height: 400px;
   background-color: ${theme.colors.night.x5};
   padding: 30px;

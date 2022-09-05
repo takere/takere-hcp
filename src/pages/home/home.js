@@ -28,22 +28,18 @@ export const Home = () => {
     }
   };
   
-  const emojiGenerator = () => {
-    const emojis = ["🎉", "🎊", "✨", "🥰", "😃", "🍀", "😊", "🙌🏻"];
-    return emojis[Math.floor(Math.random() * emojis.length)];
-  };
-
   return (
     <Styled.PageWithDrawer>
       <MenuDrawer />
       <Styled.Container>
-        <Styled.NameTitle>Home</Styled.NameTitle>
-        <Styled.HelloBox>
-          <p style={{ fontSize: 16, marginLeft: 10, paddingTop: 10 }}>
-            Welcome to Takere {emojiGenerator()}
-            {emojiGenerator()}
-          </p>
-        </Styled.HelloBox>
+        <Styled.Logo>
+          <Styled.LogoImage src='/assets/images/logo.png' alt='takere logo' />
+        </Styled.Logo>
+        <Styled.ContainerHeader>
+            <Styled.ContainerName>
+              Care plans
+            </Styled.ContainerName>
+          </Styled.ContainerHeader>
         <Styled.ContainerData>
           {flows.map((f) => {
             return (
