@@ -19,23 +19,25 @@ export const Container = styled.div`
 `
 
 export const NameTitle = styled.h1`
-   color: ${theme.colors.night.x1};
-   text-shadow: 0 0 5px  ${theme.colors.day.x1};
+   color: ${theme.colors.day.x1};
+   text-shadow: 0 0 4px  ${theme.colors.day.x1};
+   margin: 0;
+   margin-bottom: 20px;
 `;
 
 export const ContainerName = styled.h3`
-   color: ${theme.colors.night.x1};
-   text-shadow: 0 0 5px  ${theme.colors.day.x1};
+   color: ${theme.colors.day.x1};
    margin: 0;
 `;
 
 export const ContainerHeader = styled.div`
   display: flex;
   flex-direction: row;
+  margin-bottom: 20px;
 `;
 
 export const ItemBox = styled.div`
-  background-color: ${theme.colors.night.x5};
+  background-color: ${theme.colors.night.x2};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -43,7 +45,7 @@ export const ItemBox = styled.div`
   border-radius: 16px;
   border-left: 5px solid;
   margin-bottom: 20px;
-  border-color: ${theme.colors.night.x5};
+  border-color: ${theme.colors.night.x2};
   cursor: pointer;
 `;
 
@@ -61,16 +63,14 @@ export const DeleteButton = styled.div`
 
 export const IconItem = styled(Icon)`
   font-size: 24px;
-  color: ${theme.colors.night.x1};
-  text-shadow: 0 0 2px  ${theme.colors.day.x1};
+  color: ${theme.colors.day.x1};
   text-align: center;
   margin-right: 20px;
 `;
 
 export const ItemName = styled.h4`
    padding-left: 10px; 
-   color: ${theme.colors.night.x1};
-   text-shadow: 0 0 3px  ${theme.colors.day.x1};
+   color: ${theme.colors.day.x1};
   text-overflow: clip;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -83,7 +83,7 @@ export const ItemDescription = styled.p`
   padding-left: 10px;
   margin-top: -10px;
   padding-right: 5px;
-  color: ${theme.colors.night.x1};
+  color: ${theme.colors.day.x1};
   text-overflow: clip;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -91,6 +91,16 @@ export const ItemDescription = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
+
+export const MainContainer = styled.div`
+  margin-top: 20px;
+  margin-bottom: 30px;
+  background-color: ${theme.colors.night.x5};
+  padding: 30px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+`
 
 export const ContainerData = styled.div`
   margin-top: 10px;
@@ -134,7 +144,7 @@ export const CardColumn = styled.div`
 export const CardTitle = styled.p`
   padding-left: 10px; 
   margin: 0;
-  color: ${theme.colors.night.x1};
+  color: ${theme.colors.day.x1};
   text-overflow: clip;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -154,7 +164,7 @@ export const Field = styled.div`
 
 export const FieldTitle = styled.h4`
   margin: 0;
-  color: ${theme.colors.night.x1};
+  color: ${theme.colors.day.x1};
   text-overflow: clip;
   overflow: hidden;
   text-overflow: ellipsis;

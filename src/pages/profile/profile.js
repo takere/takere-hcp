@@ -9,8 +9,8 @@ export const Profile = () => {
         <Styled.PageWithDrawer>
         <MenuDrawer />
             <Styled.Container>
-                <Styled.NameTitle>Profile</Styled.NameTitle>
                 <Styled.ContainerData>
+                <Styled.NameTitle>Profile</Styled.NameTitle>
                     {
                         userData ? (
                             <>

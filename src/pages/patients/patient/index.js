@@ -48,86 +48,89 @@ export const Patient = () => {
     <Styled.PageWithDrawer>
       <MenuDrawer />
       <Styled.Container>
-        <Styled.NameTitle>
-          Patient progress
-        </Styled.NameTitle>
         {loading &&
           <ClipLoader />
         }
         {!loading && 
-        <>
+        <Styled.MainContainer>
+          <Styled.NameTitle>
+            Patient progress
+          </Styled.NameTitle>
           <ProfileCard 
             name={`${patient.firstName} ${patient.lastName}`}
             email={patient.email}
             flowName={patient.flow.name}
             flowDescription={patient.flow.description}
           />
-          <Styled.ContainerHeader>
-            <Styled.ItemContent>
-              <Styled.IconItem>
-                check_circle
-              </Styled.IconItem>
-            </Styled.ItemContent>
-            <Styled.ContainerName>
-              Completed
-            </Styled.ContainerName>
-          </Styled.ContainerHeader>
           <Styled.ContainerData>
+            <Styled.ContainerHeader>
+              <Styled.ItemContent>
+                <Styled.IconItem>
+                  check_circle
+                </Styled.IconItem>
+              </Styled.ItemContent>
+              <Styled.ContainerName>
+                Completed
+              </Styled.ContainerName>
+            </Styled.ContainerHeader>
             {patient.flow.completed.map((item, index) => (
               <Card
                 key={index}
                 title={item.node.type}
                 description={`completed at ${item.date}`}
                 icon={item.node.icon}
+                color={item.node.bgColor}
                 onClick={() => handleOpenCompletedItem(item.node.type, item.result, item.date)}
               />
             ))}
           </Styled.ContainerData>
 
 
-          <Styled.ContainerHeader>
-            <Styled.ItemContent>
-              <Styled.IconItem>
-                pending
-              </Styled.IconItem>
-            </Styled.ItemContent>
-            <Styled.ContainerName>
-              Ongoing
-            </Styled.ContainerName>
-          </Styled.ContainerHeader>
           <Styled.ContainerData>
+            <Styled.ContainerHeader>
+              <Styled.ItemContent>
+                <Styled.IconItem>
+                  pending
+                </Styled.IconItem>
+              </Styled.ItemContent>
+              <Styled.ContainerName>
+                Ongoing
+              </Styled.ContainerName>
+            </Styled.ContainerHeader>
             {patient.flow.ongoing.map((item, index) => (
               <Card
                 key={index}
-                title={item.node.name}
+                title={item.node.type}
                 description={item.deadline ? `should be completed until ${item.deadline}` : 'deadline date is undefined'}
                 icon={item.node.icon}
+                color={item.node.bgColor}
               />
             ))}
           </Styled.ContainerData>
 
 
-          <Styled.ContainerHeader>
-            <Styled.ItemContent>
-              <Styled.IconItem>
-                watch_later
-              </Styled.IconItem>
-            </Styled.ItemContent>
-            <Styled.ContainerName>
-              Late
-            </Styled.ContainerName>
-          </Styled.ContainerHeader>
           <Styled.ContainerData>
+            <Styled.ContainerHeader>
+              <Styled.ItemContent>
+                <Styled.IconItem>
+                  watch_later
+                </Styled.IconItem>
+              </Styled.ItemContent>
+              <Styled.ContainerName>
+                Late
+              </Styled.ContainerName>
+            </Styled.ContainerHeader>
             {patient.flow.late.map((item, index) => (
               <Card
                 key={index}
-                title={item.node.name}
+                title={item.node.type}
                 description={`should be completed until ${item.deadline}`}
                 icon={item.node.icon}
+                color={item.node.bgColor}
               />
             ))}
           </Styled.ContainerData>
-        </>
+        </Styled.MainContainer>
         }
         <Dialog 
           open={openDialog}
@@ -174,8 +177,8 @@ const ProfileCard = ({ name, email, flowName, flowDescription }) => (
   </Styled.CardColumn>
 );
 
-const Card = ({ title, description, icon, onClick }) => (
-  <Styled.ItemBox onClick={onClick}>
+const Card = ({ title, description, icon, onClick, color }) => (
+  <Styled.ItemBox onClick={onClick} color={color}>
     <Styled.ItemContent>
       <Styled.ItemName>
         { title }

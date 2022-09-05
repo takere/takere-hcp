@@ -28,13 +28,13 @@ export const Logo = styled.div`
 export const ContainerHeader = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 20px 0;
 `;
 
-export const ContainerName = styled.h3`
-   color: ${theme.colors.night.x1};
-   text-shadow: 0 0 5px  ${theme.colors.day.x1};
-   margin: 0;
+export const ContainerName = styled.h1`
+color: ${theme.colors.day.x1};
+text-shadow: 0 0 4px  ${theme.colors.day.x1};
+margin: 0;
+margin-bottom: 20px;
 `;
 
 export const ItemContent = styled.div`
@@ -49,8 +49,7 @@ export const LogoImage = styled.img`
 `;
 
 export const NameTitle = styled.h1`
-   color: ${theme.colors.night.x1};
-   text-shadow: 0 0 5px  ${theme.colors.day.x1};
+   color: ${theme.colors.day.x1};
 `;
 
 export const ItemBox = styled.div`
@@ -89,8 +88,7 @@ export const IconItem = styled(Icon)`
 
 export const ItemName = styled.h4`
    padding-left: 10px; 
-   color: ${theme.colors.night.x1};
-   text-shadow: 0 0 3px  ${theme.colors.day.x1};
+   color: ${theme.colors.day.x1};
   text-overflow: clip;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -103,7 +101,7 @@ export const ItemDescription = styled.p`
   padding-left: 10px;
   margin-top: -10px;
   padding-right: 5px;
-  color: ${theme.colors.night.x1};
+  color: ${theme.colors.day.x1};
   text-overflow: clip;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -112,13 +110,21 @@ export const ItemDescription = styled.p`
   text-overflow: ellipsis;
 `;
 
-export const ContainerData = styled.div`
+export const Flow = styled.div`
   min-height: 400px;
-  background-color: ${theme.colors.night.x5};
-  padding: 30px;
   border-radius: 16px;
   display: grid;
   grid-gap: 15px;
   grid-template-columns: repeat(5, 5fr);
   grid-auto-rows: 100px 100px;
+`
+
+export const ContainerData = styled.div`
+  margin-top: 20px;
+  margin-bottom: 30px;
+  background-color: ${theme.colors.night.x5};
+  padding: 30px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
 `

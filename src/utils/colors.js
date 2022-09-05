@@ -14,7 +14,8 @@ export const theme = {
         },
         night: {
             x1: '#222831',
-            x5: 'rgba(15,171,122,0.3)'
+            x2: 'rgba(0,0,0,0.3)',
+            x5: 'rgba(15,171,122,0.7)'
         },
         feedback: {
             success: {

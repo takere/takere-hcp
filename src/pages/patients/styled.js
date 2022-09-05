@@ -19,8 +19,10 @@ export const Container = styled.div`
 `
 
 export const NameTitle = styled.h1`
-   color: ${theme.colors.night.x1};
-   text-shadow: 0 0 5px  ${theme.colors.day.x1};
+   color: ${theme.colors.day.x1};
+   text-shadow: 0 0 4px  ${theme.colors.day.x1};
+   margin: 0;
+   margin-bottom: 20px;
 `;
 
 export const ItemBox = styled.div`
@@ -50,15 +52,14 @@ export const DeleteButton = styled.div`
 
 export const IconItem = styled(Icon)`
   font-size: 24px;
-  color: ${theme.colors.night.x1};
+  color: ${theme.colors.day.x1};
   text-align: center;
   margin-right: 20px;
 `;
 
 export const ItemName = styled.h4`
    padding-left: 10px; 
-   color: ${theme.colors.night.x1};
-   text-shadow: 0 0 3px  ${theme.colors.day.x1};
+   color: ${theme.colors.day.x1};
   text-overflow: clip;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -71,7 +72,7 @@ export const ItemDescription = styled.p`
   padding-left: 10px;
   margin-top: -10px;
   padding-right: 5px;
-  color: ${theme.colors.night.x1};
+  color: ${theme.colors.day.x1};
   text-overflow: clip;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -81,7 +82,7 @@ export const ItemDescription = styled.p`
 `;
 
 export const ContainerData = styled.div`
-  margin-top: 30px;
+  margin-top: 20px;
   min-height: 400px;
   overflow-y: auto;
   background-color: ${theme.colors.night.x5};

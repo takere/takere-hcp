@@ -26,10 +26,10 @@ export const Patients = () => {
     <Styled.PageWithDrawer>
       <MenuDrawer />
       <Styled.Container>
-        <Styled.NameTitle>
-          Patients
-        </Styled.NameTitle>
         <Styled.ContainerData>
+          <Styled.NameTitle>
+            Patients
+          </Styled.NameTitle>
           {patients.map((patient, index) => (
             <Patient 
               key={index}

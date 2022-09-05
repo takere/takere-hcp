@@ -30,7 +30,7 @@ export class Requests {
                 description: 'Patient with diabetes',
                 completed: [
                     {
-                        node: { id: 2, type: 'QUIZ', icon: 'question_mark'  },
+                        node: { id: 2, type: 'QUIZ', icon: 'help', bgColor: '#be96fb'  },
                         result: [
                             { id: 1, question: 'How are you?', answer: 'well' }
                         ],
@@ -39,16 +39,16 @@ export class Requests {
                 ],
                 ongoing: [
                     {
-                        node: { id: 2, type: 'QUIZ', icon: 'question_mark'  },
+                        node: { id: 2, type: 'MEDICATION_CONTROL', icon: 'healing', bgColor:'#db594f'  },
                         result: [
-                            { id: 1, question: 'How are you?', answer: 'well' }
+                            
                         ],
                         deadline: undefined
                     }
                 ],
                 late: [
                     {
-                        node: { id: 2, type: 'QUIZ', icon: 'question_mark'  },
+                        node: { id: 2, type: 'QUIZ', icon: 'help', bgColor:'#be96fb'  },
                         result: [
                             { id: 1, question: 'How are you?', answer: 'well' }
                         ],

@@ -35,12 +35,13 @@ export const Home = () => {
         <Styled.Logo>
           <Styled.LogoImage src='/assets/images/logo.png' alt='takere logo' />
         </Styled.Logo>
-        <Styled.ContainerHeader>
-            <Styled.ContainerName>
-              Care plans
-            </Styled.ContainerName>
-          </Styled.ContainerHeader>
         <Styled.ContainerData>
+          <Styled.ContainerHeader>
+              <Styled.ContainerName>
+                Care plans
+              </Styled.ContainerName>
+            </Styled.ContainerHeader>
+            <Styled.Flow>
           {flows.map((f) => {
             return (
               <Styled.ItemBox
@@ -58,6 +59,7 @@ export const Home = () => {
               </Styled.ItemBox>
             );
           })}
+          </Styled.Flow>
         </Styled.ContainerData>
       </Styled.Container>
     </Styled.PageWithDrawer>
