@@ -3,13 +3,12 @@ import ConditionalNode from "./conditional";
 import {TimerTickNode} from "./timerTickNode/timerTickNode";
 
 export const nodeTypes = {
-    TIME_TICKER: TimerTickNode,
-    BEGIN_NODE: TimerTickNode,
-    GENERIC_NODE: GenericNode,
-    CONDITIONAL_NODE: ConditionalNode,
-    EXPLANATION_NODE: GenericNode,
-    INFORMATION_NODE: GenericNode,
-    MEDICATION_CONTROL_NODE: GenericNode,
-    QUIZ_NODE: GenericNode,
-    REMINDER_NODE: GenericNode
+    TIME: TimerTickNode,
+    BEGIN: TimerTickNode,
+    CONDITIONAL: ConditionalNode,
+    EXPLANATION: GenericNode,
+    ORIENTATION: GenericNode,
+    MEDICATION_CONTROL: GenericNode,
+    QUIZ: GenericNode,
+    REMINDER: GenericNode
 }
