@@ -4,11 +4,16 @@ import Icon from "@material-ui/core/Icon";
 import * as Styled from "./genericNode.styled";
 import { theme } from "../../../utils/colors";
 
-export const GenericNode = (data) => {
+export const GenericNode = (props) => {
   return (
-    <Styled.Node bgColor={ data?.data?.bgColor}>
+    <Styled.Node bgColor={ props?.data?.bgColor}>
       <Styled.NodeContainer>
-        <Styled.NodeName>{data.data.label}</Styled.NodeName>
+      <Styled.DeleteButton id={"close"} onClick={() => {props?.data?.onRemove(props?.data?.id)}}>
+          <Styled.IconItem id={"close"} fontSize="inherit">close</Styled.IconItem>
+        </Styled.DeleteButton>
+        <Styled.NodeName>
+          {props.data.label}
+        </Styled.NodeName>
         <Icon
           style={{
             textAlign: "center",
@@ -16,11 +21,11 @@ export const GenericNode = (data) => {
             color: theme.colors.night.x1,
           }}
         >
-          {data.data.icon}
+          {props.data.icon}
         </Icon>
       </Styled.NodeContainer>
-      {data?.data?.handles &&
-        data?.data?.handles.map((h, i) => {
+      {props?.data?.handles &&
+        props?.data?.handles.map((h, i) => {
           return (
             <Handle
               key={i}

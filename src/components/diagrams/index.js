@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -122,7 +122,7 @@ const Diagrams = ({ flowDb }) => {
       id: `dndnode_${index}`,
       type: node.type,
       position,
-      data: node.data,
+      data: { ...node.data, onRemove: remModelData}
     };
 
     setIndex(index + 1);
@@ -130,9 +130,27 @@ const Diagrams = ({ flowDb }) => {
     return newNode;
   }
 
+  const remModelData = useCallback((id) => {
+    let arr = nodes
+    let idx = arr.indexOf(id);
+
+    if (idx > -1) {
+      arr.splice(idx, 1);
+    }
+    arr = arr.filter(function (obj) {
+      return obj.id !== id;
+    });
+    setNodes(arr);
+  }, []);
+
   useEffect(() => {
     if (flowDb?.data) {
-      setNodes(flowDb.data);
+      const rawNodes = flowDb.data;
+
+      for (let i = 0; i < rawNodes.length; i++) {
+        rawNodes[i].data = { ...rawNodes[i].data, onRemove: remModelData };
+      }
+      setNodes(rawNodes);
       setFlow(flowDb);
     } else {
       setNodes([]);

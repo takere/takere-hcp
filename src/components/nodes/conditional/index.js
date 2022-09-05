@@ -4,11 +4,14 @@ import Icon from "@material-ui/core/Icon";
 import * as Styled from "./styled";
 import { theme } from "../../../utils/colors";
 
-const ConditionalNode = (data) => {
+const ConditionalNode = (props) => {
   return (
-    <Styled.Node bgColor={ data?.data?.bgColor}>
+    <Styled.Node bgColor={ props?.data?.bgColor}>
       <Styled.NodeContainer>
-        <Styled.NodeName>{data.data.label}</Styled.NodeName>
+      <Styled.DeleteButton id={"close"} onClick={() => {props?.data?.onRemove(props?.data?.id)}}>
+          <Styled.IconItem id={"close"} fontSize="inherit">close</Styled.IconItem>
+        </Styled.DeleteButton>
+        <Styled.NodeName>{props.data.label}</Styled.NodeName>
         <Icon
           style={{
             textAlign: "center",
@@ -16,15 +19,15 @@ const ConditionalNode = (data) => {
             color: theme.colors.night.x1,
           }}
         >
-          {data.data.icon}
+          {props.data.icon}
         </Icon>
       </Styled.NodeContainer>
       <div>
         <Styled.FlowLabel className="false">False</Styled.FlowLabel>
         <Styled.FlowLabel className="true">True</Styled.FlowLabel>
       </div>
-      {data?.data?.handles &&
-        data?.data?.handles.map((h, i) => {
+      {props?.data?.handles &&
+        props?.data?.handles.map((h, i) => {
           return (
             <Handle
               key={i}

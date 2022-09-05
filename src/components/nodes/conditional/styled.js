@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {theme} from "../../../utils/colors";
+import Icon from "@material-ui/core/Icon";
 
 export const Node = styled.div`
   background: ${props => props.bgColor ?? 'transparent'};
@@ -56,4 +57,29 @@ export const FlowLabel = styled.p`
     top: 0;
     padding-right: 5px;
   }
+`;
+
+export const DeleteButton = styled.div`
+  background-color: ${theme.colors.danger};
+  width: 20px;
+  height: 20px;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  position: absolute;
+  right: -0px;
+  top: -15px;
+  z-index: 999999;
+
+`;
+
+export const IconItem = styled(Icon)`
+  &.MuiIcon-fontSizeInherit {
+    font-size: 15px;
+    line-height: 20px;
+  }
+
+  color: ${theme.colors.day.x1};
 `;
