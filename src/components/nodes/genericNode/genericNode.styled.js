@@ -60,5 +60,4 @@ export const IconItem = styled(Icon)`
   }
 
   color: ${theme.colors.day.x1};
-  
 `;
