@@ -9,7 +9,7 @@ import SaveFlowDialog from './save';
 import QuizDialog from './quiz';
 import MedicationControlDialog from './medication-control';
 import ReminderDialog from './reminder';
-import InformationDialog from './information';
+import OrientationDialog from './orientation';
 import ConditionalDialog from './conditional';
 import DialogFactoryException from './exception/DialogFactoryException';
 
@@ -24,7 +24,7 @@ const dialogs = {
   QUIZ: QuizDialog,
   MEDICATION_CONTROL: MedicationControlDialog,
   REMINDER: ReminderDialog,
-  INFORMATION: InformationDialog,
+  ORIENTATION: OrientationDialog,
   CONDITIONAL: ConditionalDialog
 };
 
