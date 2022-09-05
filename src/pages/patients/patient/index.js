@@ -199,6 +199,7 @@ const Card = ({ title, description, icon, onClick, color }) => (
 const Dialog = ({ open, onClose, data }) => (
   <DialogMaterialUI
     fullWidth={true}
+    style={{backgroundColor: 'rgba(0,0,0,0.7)'}}
     maxWidth={"md"}
     open={open}
     onClose={onClose}

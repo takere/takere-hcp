@@ -10,7 +10,7 @@ import RawTextInput from "../../../parts/input/RawTextInput";
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const InformationDialog = ({
+const OrientationDialog = ({
   open,
   handleClose,
   data,
@@ -70,7 +70,7 @@ const InformationDialog = ({
   );
 };
 
-export default InformationDialog;
+export default OrientationDialog;
 
 
 //-----------------------------------------------------------------------------

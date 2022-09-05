@@ -164,7 +164,7 @@ export const Field = styled.div`
 
 export const FieldTitle = styled.h4`
   margin: 0;
-  color: ${theme.colors.day.x1};
+  color: ${theme.colors.night.x1};
   text-overflow: clip;
   overflow: hidden;
   text-overflow: ellipsis;

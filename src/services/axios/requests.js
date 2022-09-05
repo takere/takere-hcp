@@ -39,7 +39,7 @@ export class Requests {
                 ],
                 ongoing: [
                     {
-                        node: { id: 2, type: 'MEDICATION_CONTROL', icon: 'healing', bgColor:'#db594f'  },
+                        node: { id: 2, type: 'MEDICATION CONTROL', icon: 'healing', bgColor:'#db594f'  },
                         result: [
                             
                         ],
