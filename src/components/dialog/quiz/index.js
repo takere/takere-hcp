@@ -25,6 +25,8 @@ const QuizDialog = ({
 }) => {
   const { data: payloadData } = data;
 
+  const [name, setName] = useState(loadStoredName(data));
+  const [description, setDescription] = useState(loadStoredDescription(data));
   const [totalQuestions, setTotalQuestions] = useState(loadStoredTotalQuestions(data));
   const [questions, setQuestions] = useState(loadStoredQuestions(data));
   const [question, setQuestion] = useState(loadStoredQuestion(data));
@@ -36,6 +38,8 @@ const QuizDialog = ({
 
   const saveInputs = () => {
     onAddElementResultValue(data, {
+      name,
+      description,
       questions,
       frequency: { type: frequencyType, value: frequencyValue }
     });
@@ -126,6 +130,18 @@ const QuizDialog = ({
     >
       <Header title={payloadData.label} subtitle={payloadData.description} />
       <Body>
+        <RawTextInput
+          label="Name"
+          helperText="What's the subject?"
+          value={name}
+          onChange={setName}
+        />
+        <RawTextInput
+          label="Description"
+          helperText="These questions are about..."
+          value={description}
+          onChange={setDescription}
+        />
         <NumberInput
           label="Total questions"
           helperText="How many questions?"
@@ -213,6 +229,22 @@ const AnswerOptions = ({ handleNewOption, answerOptions, onValueChange, handleRe
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
+function loadStoredName(data) {
+  if (!hasResults(data) || !data.data.results.name) {
+    return '';
+  }
+
+  return data.data.results.name;
+}
+
+function loadStoredDescription(data) {
+  if (!hasResults(data) || !data.data.results.description) {
+    return '';
+  }
+
+  return data.data.results.description;
+}
+
 function hasResults(data) {
   return  data
           && data.data 
