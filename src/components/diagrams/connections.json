@@ -15,6 +15,12 @@
     "CONDITIONAL"
   ],
   "REMINDER": [
+    "QUIZ", 
+    "EXPLANATION", 
+    "ORIENTATION", 
+    "MEDICATION_CONTROL", 
+    "REMINDER", 
+    "CONDITIONAL"
   ],
   "CONDITIONAL": [
     "QUIZ", 
@@ -31,6 +37,12 @@
     "MEDICATION_CONTROL"
   ],
   "ORIENTATION": [
+    "QUIZ", 
+    "EXPLANATION", 
+    "ORIENTATION", 
+    "MEDICATION_CONTROL", 
+    "REMINDER", 
+    "CONDITIONAL"
   ],
   "QUIZ": [
     "QUIZ", 
