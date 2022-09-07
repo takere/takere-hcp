@@ -18,7 +18,7 @@ export const Home = () => {
     getFlows();
   }, []);
 
-  const handleClick = (e, flow) => {
+  const handleClick = (e: any, flow: any) => {
     if (e.target.id === "close") {
       new Requests().deleteFlowById(flow._id).then(() => {
         getFlows();
@@ -42,12 +42,12 @@ export const Home = () => {
               </Styled.ContainerName>
             </Styled.ContainerHeader>
             <Styled.Flow>
-          {flows.map((f) => {
+          {flows.map((f: any) => {
             return (
               <Styled.ItemBox
                 id={"box"}
                 key={f.id}
-                onClick={(e) => handleClick(e, f)}
+                onClick={(e: any) => handleClick(e, f)}
               >
                 <Styled.DeleteButton id={"close"}>
                   <Styled.IconItem id={"close"}>close</Styled.IconItem>
