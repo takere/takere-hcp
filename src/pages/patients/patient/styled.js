@@ -105,7 +105,6 @@ export const MainContainer = styled.div`
 export const ContainerData = styled.div`
   margin-top: 10px;
   margin-bottom: 30px;
-  min-height: 400px;
   max-height: 400px;
   overflow-y: auto;
   background-color: ${theme.colors.night.x5};

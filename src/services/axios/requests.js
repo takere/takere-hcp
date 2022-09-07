@@ -32,7 +32,7 @@ export class Requests {
                     {
                         node: { id: 2, type: 'QUIZ', icon: 'help', bgColor: '#be96fb'  },
                         result: [
-                            { id: 1, question: 'How are you?', answer: 'well' }
+                            { id: 1, question: 'How are you?', answer: 'I\'m always tired and I don\'t feel hungry' }
                         ],
                         date: new Date()
                     }
