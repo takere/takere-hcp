@@ -8,6 +8,7 @@ import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
 import NumberInput from "../../../parts/input/NumberInput";
 import RichTextInput from "../../../parts/input/RichTextInput";
+import RawTextInput from "../../../parts/input/RawTextInput";
 
 
 //-----------------------------------------------------------------------------
@@ -21,6 +22,8 @@ const ExplanationDialog = ({
 }) => {
   const { data: payloadData } = data;
 
+  const [name, setName] = useState(loadStoredName(data));
+  const [description, setDescription] = useState(loadStoredDescription(data));
   const [dataForm, setDataForm] = useState(loadStoredFields(data));
   const [totalPages, setTotalPages] = useState(loadStoredTotalPages(data));
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,6 +33,8 @@ const ExplanationDialog = ({
   const saveInputs = () => {
     const newDataForm = {
       ...dataForm,
+      name,
+      description,
       pages: convertPagesToHtml(pages),
     };
 
@@ -82,6 +87,18 @@ const ExplanationDialog = ({
     >
       <Header title={payloadData.label} subtitle={payloadData.description} />
       <Body>
+        <RawTextInput
+          label="Name"
+          helperText="What's the subject?"
+          value={name}
+          onChange={setName}
+        />
+        <RawTextInput
+          label="Description"
+          helperText="This explanation is about..."
+          value={description}
+          onChange={setDescription}
+        />
         <NumberInput
           label="Total pages"
           helperText="Explanation total pages"
@@ -114,6 +131,28 @@ export default ExplanationDialog;
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
+function loadStoredName(data) {
+  if (!hasResults(data) || !data.data.results.name) {
+    return '';
+  }
+
+  return data.data.results.name;
+}
+
+function hasResults(data) {
+  return  data
+          && data.data 
+          && data.data.results;
+}
+
+function loadStoredDescription(data) {
+  if (!hasResults(data) || !data.data.results.description) {
+    return '';
+  }
+
+  return data.data.results.description;
+}
+
 function loadStoredFields(data) {
   if (!data || !data.data || !data.data.results) {
     return {};
