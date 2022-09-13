@@ -12,27 +12,27 @@ export class Requests {
 
     async getPatients() {
         return [
-            { id: 1, firstName: 'William', lastName: 'Niemiec', email: 'william@email.com', profileUrl: '', flow: { id: 1, name: 'Diabetes' } },
-            { id: 1, firstName: 'William', lastName: 'Niemiec', email: 'william@email.com', profileUrl: '', flow: { id: 1, name: 'Flow name' } },
+            { id: 1, firstName: 'U1', lastName: '', email: 'u1@email.com', profileUrl: '', flow: { id: 1, name: 'Urolithiasis' } },
+            { id: 1, firstName: 'C1', lastName: '', email: 'c1@email.com', profileUrl: '', flow: { id: 1, name: 'Cancer' } },
         ]
     }
 
     async getPatient(idPatient, idFlow) {
         return { 
             id: 1, 
-            firstName: 'William', 
-            lastName: 'Niemiec', 
-            email: 'william@email.com', 
+            firstName: 'U1', 
+            lastName: '', 
+            email: 'u1@email.com', 
             profileUrl: '', 
             flow: { 
                 id: 1, 
-                name: 'Diabetes',
-                description: 'Patient with diabetes',
+                name: 'Urolithiasis',
+                description: 'Fluid monitoring',
                 completed: [
                     {
                         node: { id: 2, type: 'QUIZ', icon: 'help', bgColor: '#be96fb'  },
                         result: [
-                            { id: 1, question: 'How are you?', answer: 'I\'m always tired and I don\'t feel hungry' }
+                            { id: 1, question: 'How much fluid did you intake in the last 24 hours? (in liters)', answer: 'Around 2 liters' }
                         ],
                         date: new Date()
                     }
