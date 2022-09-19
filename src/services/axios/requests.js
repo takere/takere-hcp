@@ -69,6 +69,11 @@ export class Requests {
         return response.data;
     }
 
+    async getNodeConnections() {
+        const response = await remoteRequest.get('/nodes/connections');
+        return response.data;
+    }
+
     async getFlowById(id){
         const toastId = toast.loading("Buscando fluxo...");
         const response = await remoteRequest.get(`/flows/mine/${id}`);

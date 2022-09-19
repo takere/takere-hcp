@@ -9,25 +9,30 @@ import * as Styled from "./dashboard.styled";
 
 export const Dashboard = () => {
     const [flow, setFlow] = useState(null);
+    const [nodeConnections, setNodeConnections] = useState([]);
     const { id } = useParams();
 
 
     useEffect(() => {
-        console.log(id)
         if(id) {
             new Requests().getFlowById(id).then(r => {
-                console.log(r)
                 setFlow(r);
             })
         } else {
             setFlow(null)
         }
-    }, [id])
+    }, [id]);
+
+    useEffect(() => {
+        new Requests().getNodeConnections().then(r => {
+            setNodeConnections(r);
+        });
+    }, []);
 
     return (
         <Styled.PageWithDrawer>
             <MenuDrawer />
-            <Diagrams flowDb={flow}/>
+            <Diagrams flowDb={flow} nodeConnections={nodeConnections}/>
         </Styled.PageWithDrawer>
     );
 }

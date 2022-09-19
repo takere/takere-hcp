@@ -10,7 +10,6 @@ import { Sidebar } from "../sidebar/sidebar";
 import { nodeTypes } from "../nodes/nodes";
 import { ConnectionLine } from "../connectionLine/connectionLine";
 import { dialogFactory } from '../dialog';
-import connections from "./connections.json";
 import AccentButton from "../buttons/AccentButton";
 import DotsBackground from "./DotsBackground";
 
@@ -18,7 +17,7 @@ import DotsBackground from "./DotsBackground";
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const Diagrams = ({ flowDb }) => {
+const Diagrams = ({ flowDb, nodeConnections }) => {
   const [openNodeDialog, setOpenNodeDialog] = useState(false);
   const [openSaveDialog, setOpenSaveDialog] = useState(false);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
@@ -80,7 +79,7 @@ const Diagrams = ({ flowDb }) => {
       const sourceNode = nodes.filter(element => element.id === sourceId)[0];
       const targetNode = nodes.filter(element => element.id === targetId)[0];
 
-      if (isConnectionAllowed(sourceNode.type, targetNode.type)) {
+      if (isConnectionAllowed(sourceNode.slug, targetNode.slug, nodeConnections)) {
         const connectedNodes = nodes.filter(node => (!node.target) || (node.target !== targetId));
 
         setNodes(addEdge({ ...params, animated: true, style:{strokeWidth:3} }, connectedNodes));
@@ -229,16 +228,16 @@ const ReactFlowContent = ({
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
-function isConnectionAllowed(sourceNodeType, targetNodeType) {
-  if (connections[sourceNodeType] === undefined) {
+function isConnectionAllowed(sourceNodeSlug, targetNodeSlug, nodeConnections) {
+  if (nodeConnections[sourceNodeSlug] === undefined) {
     return false;
   }
 
-  if (connections[targetNodeType] === undefined) {
+  if (nodeConnections[targetNodeSlug] === undefined) {
     return false;
   }
 
-  return connections[sourceNodeType].includes(targetNodeType);
+  return nodeConnections[sourceNodeSlug].includes(targetNodeSlug);
 }
 
 
