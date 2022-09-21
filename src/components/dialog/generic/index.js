@@ -11,11 +11,12 @@ import DateInput from "../../../parts/input/DateInput";
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
-  const [startDate, setStartDate] = useState(loadStoredStartDate(node));
-  const [endDate, setEndDate] = useState(loadStoredEndDate(node));
+const GenericDialog = ({ open, handleClose, data, onAddElementResultValue }) => {
+  const { data: payloadData } = data;
+  const [startDate, setStartDate] = useState(loadStoredStartDate(data));
+  const [endDate, setEndDate] = useState(loadStoredEndDate(data));
   const [undefinedEnd, setUndefinedEnd] = useState(
-    loadStoredUndefinedEnd(node)
+    loadStoredUndefinedEnd(data)
   );
 
   const saveInputs = () => {
@@ -25,8 +26,8 @@ const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
       undefinedEnd
     };
 
-    onAddElementResultValue(node, inputData);
-    toast.success(`Dados de ${node.name} salvos`);
+    onAddElementResultValue(data, inputData);
+    toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
   return (
@@ -37,7 +38,7 @@ const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
       onClose={handleClose}
       aria-labelledby="max-width-dialog-title"
     >
-      <Header title={node.name} subtitle={node.description} />
+      <Header title={payloadData.label} subtitle={payloadData.description} />
       <Body>
         <DateInput
           label="Begin date"
@@ -68,7 +69,7 @@ const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
   );
 };
 
-export default BeginDialog;
+export default GenericDialog;
 
 
 //-----------------------------------------------------------------------------

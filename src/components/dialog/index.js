@@ -4,14 +4,10 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import BeginDialog from "./begin";
-import ExplanationDialog from "./explanation";
 import SaveFlowDialog from './save';
-import QuizDialog from './quiz';
-import MedicationControlDialog from './medication-control';
-import ReminderDialog from './reminder';
-import OrientationDialog from './orientation';
 import ConditionalDialog from './conditional';
 import DialogFactoryException from './exception/DialogFactoryException';
+import GenericDialog from './generic';
 
 
 //-----------------------------------------------------------------------------
@@ -19,13 +15,10 @@ import DialogFactoryException from './exception/DialogFactoryException';
 //-----------------------------------------------------------------------------
 const dialogs = {
   BEGIN: BeginDialog,
-  EXPLANATION: ExplanationDialog,
+  CONDITIONAL: ConditionalDialog,
+  PERIODIC: GenericDialog,
+  NON_PERIODIC: GenericDialog,
   SAVE_FLOW: SaveFlowDialog,
-  QUIZ: QuizDialog,
-  MEDICATION_CONTROL: MedicationControlDialog,
-  REMINDER: ReminderDialog,
-  ORIENTATION: OrientationDialog,
-  CONDITIONAL: ConditionalDialog
 };
 
 

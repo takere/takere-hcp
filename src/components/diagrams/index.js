@@ -269,11 +269,11 @@ function buildNodeDialog(
   }
 
   return dialogFactory(
-    selectedElement.type.replace("_NODE", ""),
+    selectedElement.type,
     {
       open: openDialog,
       handleClose: handleCloseDialog,
-      data: selectedElement,
+      node: selectedElement,
       onAddElementResultValue: onAddElementResultValue,
       connection: selectedNodeConnection
     }
