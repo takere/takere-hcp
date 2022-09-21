@@ -121,7 +121,8 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
       id: `dndnode_${index}`,
       type: node.type,
       position,
-      data: { ...node.data, onRemove: remModelData}
+      data: node.data, 
+      onRemove: remModelData
     };
 
     setIndex(index + 1);
@@ -147,7 +148,7 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
       const rawNodes = flowDb.data;
 
       for (let i = 0; i < rawNodes.length; i++) {
-        rawNodes[i].data = { ...rawNodes[i].data, onRemove: remModelData };
+        rawNodes[i] = { ...rawNodes[i], onRemove: remModelData };
       }
       setNodes(rawNodes);
       setFlow(flowDb);

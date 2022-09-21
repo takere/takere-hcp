@@ -4,14 +4,16 @@ import Icon from "@material-ui/core/Icon";
 import * as Styled from "./styled";
 import { theme } from "../../../utils/colors";
 
-const ConditionalNode = (props) => {
+const GenericNode = (props) => {
   return (
     <Styled.Node bgColor={ props?.color}>
       <Styled.NodeContainer>
       <Styled.DeleteButton id={"close"} onClick={() => {props?.onRemove(props?.id)}}>
           <Styled.IconItem id={"close"} fontSize="inherit">close</Styled.IconItem>
         </Styled.DeleteButton>
-        <Styled.NodeName>{props.name}</Styled.NodeName>
+        <Styled.NodeName>
+          {props.name}
+        </Styled.NodeName>
         <Icon
           style={{
             textAlign: "center",
@@ -22,17 +24,13 @@ const ConditionalNode = (props) => {
           {props.icon}
         </Icon>
       </Styled.NodeContainer>
-      <div>
-        <Styled.FlowLabel className="false">False</Styled.FlowLabel>
-        <Styled.FlowLabel className="true">True</Styled.FlowLabel>
-      </div>
       <InputHandler inputList={props.input_list} />
       <OutputHandler outputList={props.output_list} />
     </Styled.Node>
   );
 };
 
-export default ConditionalNode;
+export default GenericNode;
 
 const InputHandler = ({ inputList }) => {
   if (!inputList) {
@@ -68,7 +66,6 @@ const OutputHandler = ({ outputList }) => {
 
 function buildStyleForDirection(direction) {
   let style = {
-    transform: "rotate(-45deg)",
     borderRadius: 8,
     width: ["top", "bottom"].includes(direction) ? 20 : 12,
     height: ["left", "right"].includes(direction) ? 12 : 20,
@@ -76,14 +73,8 @@ function buildStyleForDirection(direction) {
     backgroundColor: theme.colors.night.x1,
   };
 
-  if (direction === 'top') {
-    style['left'] = '-8%';
-  }
-  else if (direction === 'right') {
-    style['top'] = '-8%';
-  }
-  else if (direction === 'left') {
-    style['top'] = '90%';
+  if ((direction === 'top') || (direction === 'bottom')) {
+    style['left'] = '50%';
   }
 
   return style;

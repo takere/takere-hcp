@@ -1,10 +1,9 @@
-import {GenericNode} from "./genericNode/genericNode";
+import GenericNode from "./generic";
 import ConditionalNode from "./conditional";
-import {TimerTickNode} from "./timerTickNode/timerTickNode";
+import BeginNode from "./begin";
 
 export const nodeTypes = {
-    TIME: TimerTickNode,
-    BEGIN: TimerTickNode,
+    BEGIN: BeginNode,
     CONDITIONAL: ConditionalNode,
     EXPLANATION: GenericNode,
     ORIENTATION: GenericNode,
