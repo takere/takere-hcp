@@ -57,13 +57,13 @@ export const Sidebar = () => {
                                 key={index} 
                                 onDragStart={(event) => onDragStart(event, node)} 
                                 draggable
-                                bgColor={node.data.bgColor}
+                                bgColor={node.color}
                             >
                                 <Styled.TitleNodeItem>
-                                    {node.data.label}
+                                    {node.name}
                                 </Styled.TitleNodeItem>
                                 <Styled.DescriptionNodeItem>
-                                    {node.data.description}
+                                    {node.description}
                                 </Styled.DescriptionNodeItem>
                             </Styled.SideItem>
                         ))
