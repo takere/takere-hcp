@@ -26,7 +26,7 @@ export const Sidebar = () => {
 
         if (keyword !== '') {
             const results = nodes.filter((node) => {
-                return node.data.label.toLowerCase().startsWith(keyword.toLowerCase());
+                return node.label.toLowerCase().startsWith(keyword.toLowerCase());
             });
             setFoundNodes(results);
         } else {
