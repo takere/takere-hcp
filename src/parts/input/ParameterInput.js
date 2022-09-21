@@ -71,11 +71,12 @@ const ParameterInput = ({parameter, value, onChange}) => {
             options={parameter.options}
           />
         );
+      case "form":
       case "checkbox":
       case "radio": 
           return (
             <OptionInputBuilder 
-              
+              options={parameter.options}
             />
           );
     }
@@ -85,7 +86,7 @@ export default ParameterInput;
 
 const OptionInputBuilder = ({ 
   handleNewOption, 
-  answerOptions, 
+  options, // option: {label, type, options}
   onValueChange, 
   handleRemoveOption 
 }) => (
@@ -99,13 +100,13 @@ const OptionInputBuilder = ({
       }}
     />
     <Spacing />
-    {answerOptions.map((option, index) => (
+    {options.map((option, index) => (
       <div key={index}>
         <div style={{display: "flex", flexDirection: "row", alignItems: 'center'}}>
           <RawTextInput
             label={`Option ${index+1}`}
             helperText=""
-            value={option}
+            value={option.label}
             style={{marginRight: 5}}
             onChange={(newValue) => onValueChange(newValue, index)}
           />
