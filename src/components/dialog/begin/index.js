@@ -6,28 +6,34 @@ import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
 import BooleanInput from "../../../parts/input/BooleanInput";
 import DateInput from "../../../parts/input/DateInput";
+import ParameterInput from "../../../parts/input/ParameterInput";
 
 
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
 const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
-  const [startDate, setStartDate] = useState(loadStoredStartDate(node));
-  const [endDate, setEndDate] = useState(loadStoredEndDate(node));
-  const [undefinedEnd, setUndefinedEnd] = useState(
-    loadStoredUndefinedEnd(node)
-  );
+  const [parameters, setParameters] = useState(node.parameters);
 
   const saveInputs = () => {
-    const inputData = {
-      startDate,
-      endDate,
-      undefinedEnd
-    };
+    // const inputData = {
+    //   startDate,
+    //   endDate,
+    //   undefinedEnd
+    // };
 
-    onAddElementResultValue(node, inputData);
+    // onAddElementResultValue(node, inputData);
     toast.success(`Dados de ${node.name} salvos`);
+    console.log(parameters)
   };
+
+  const handleParameterChange = (newValue, parameterIndex) => {
+    const updatedParameters = [ ...parameters ];
+
+    updatedParameters[parameterIndex] = newValue;
+
+    setParameters(updatedParameters);
+  }
 
   return (
     <Dialog
@@ -39,26 +45,14 @@ const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
     >
       <Header title={node.name} subtitle={node.description} />
       <Body>
-        <DateInput
-          label="Begin date"
-          helperText="Type care plan begin date"
-          value={startDate}
-          onChange={setStartDate}
-        />
-        {!undefinedEnd &&
-          <DateInput
-            label="End date"
-            helperText="Type care plan end date"
-            value={endDate}
-            onChange={setEndDate}
+        {node.parameters.map((parameter, index) => (
+          <ParameterInput 
+            key={index}
+            parameter={parameter}
+            value={parameters[index]}
+            onChange={(newValue) => handleParameterChange(newValue, index)}
           />
-        }
-        <BooleanInput
-          label="Is end date undefined?"
-          helperText="Sets end date as undefined"
-          value={undefinedEnd}
-          onChange={setUndefinedEnd}
-        />
+        ))}
       </Body>
       <Footer>
         <SuccessButton title="Save" onClick={saveInputs} />

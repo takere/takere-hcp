@@ -51,7 +51,7 @@ export const Footer = ({ children }) => (
 //        Functions
 //-----------------------------------------------------------------------------
 export function dialogFactory(type, props) {
-  if (dialogs[type] === undefined) {
+  if (dialogs[type.toUpperCase()] === undefined) {
     throw new DialogFactoryException(`There is no support for ${type}`);
   }
 
