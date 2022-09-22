@@ -26,6 +26,7 @@ const ConditionalDialog = ({
   
   const [options, setOptions] = useState([left, operator, right]);
   const [parameters, setParameters] = useState(parseParameters(node.parameters, options));
+  const [parameterValues, setParameterValues] = useState([0, 0, undefined]);
 
   // const [left, setLeft] = useState(loadStoredLeft(node, connection));
   // const [operator, setOperator] = useState(loadStoredOperator(node, connection));
@@ -36,14 +37,19 @@ const ConditionalDialog = ({
   
 
   const saveInputs = () => {
-    const inputData = {
-      left: left,
-      operator: operatorOptions[operator].originalValue,
-      right: rightOptions[right]?.label ?? right
-    };
+    // const inputData = {
+    //   left: left,
+    //   operator: operatorOptions[operator].originalValue,
+    //   right: rightOptions[right]?.label ?? right
+    // };
 
-    onAddElementResultValue(node, inputData);
+    // onAddElementResultValue(node, inputData);
     toast.success(`Dados de ${payloadData.label} salvos`);
+
+    console.log('Parameters:');
+    console.log(parameters);
+    console.log('Parameter values:');
+    console.log(parameterValues);
   };
 
   const onSelectLeft = (index) => {
@@ -54,6 +60,14 @@ const ConditionalDialog = ({
     setRight('');
     setOperatorOptions(buildOperatorOptions(connection, index));
     setRightOptions(buildRightOptions(connection, index));
+  }
+
+  const handleParameterChange = (newValue, parameterIndex) => {
+    const updatedParameters = [ ...parameterValues ];
+
+    updatedParameters[parameterIndex] = newValue;
+
+    setParameterValues(updatedParameters);
   }
 
   useEffect(() => {
@@ -79,7 +93,7 @@ const ConditionalDialog = ({
             <ParameterInput 
               key={index}
               parameter={parameter}
-              value={options[index]}
+              value={parameterValues[index]}
               onChange={(newValue) => handleParameterChange(newValue, index)}
             />
           ))}
