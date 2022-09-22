@@ -74,6 +74,27 @@ const ParameterInput = ({parameter, value, onChange}) => {
             onChange={onChange}
           />
         );
+      case "select|text":
+        if (parameter.options.length === 0) {
+          return (
+            <RawTextInput 
+              label={parameter.name}
+              helperText={parameter.description}
+              value={value}
+              onChange={onChange}
+            />
+          );
+        }
+
+        return (
+          <MultiSelectionInput
+            label={parameter.name}
+            helperText={parameter.description}
+            value={value}
+            onChange={onChange}
+            options={parameter.options}
+          />
+        );
       case "number":
         return (
           <NumberInput

@@ -24,16 +24,16 @@ const ConditionalDialog = ({
 }) => {
   const { data: payloadData } = node;
   
-  const [options, setOptions] = useState([left, operator, right]);
-  const [parameters, setParameters] = useState(parseParameters(node.parameters, options));
+  // const [options, setOptions] = useState([left, operator, right]);
+  const [parameters, setParameters] = useState(parseParameters(node.parameters, [buildLeftOptions(connection), buildOperatorOptions(connection, 0), buildRightOptions(connection, 0)]));
   const [parameterValues, setParameterValues] = useState([0, 0, undefined]);
 
   // const [left, setLeft] = useState(loadStoredLeft(node, connection));
   // const [operator, setOperator] = useState(loadStoredOperator(node, connection));
   // const [right, setRight] = useState(loadStoredRight(node, connection));
-  const [leftOptions, setLeftOptions] = useState([]);
-  const [operatorOptions, setOperatorOptions] = useState([]);
-  const [rightOptions, setRightOptions] = useState([]);
+  // const [leftOptions, setLeftOptions] = useState([]);
+  // const [operatorOptions, setOperatorOptions] = useState([]);
+  // const [rightOptions, setRightOptions] = useState([]);
   
 
   const saveInputs = () => {
@@ -54,12 +54,24 @@ const ConditionalDialog = ({
 
   const onSelectLeft = (index) => {
     //const newIndex = connection.data.results.questions.findIndex(quiz => quiz.question === operand)
+    const left = index;
+    const operator = 0;
+    const right = '';
+    const updatedParameters = [ left, operator, right ];
+    const options = [
+      parameters[0].options[index],
+      buildOperatorOptions(connection, index),
+      buildRightOptions(connection, index)
+    ];
 
-    setLeft(index);
-    setOperator(0);
-    setRight('');
-    setOperatorOptions(buildOperatorOptions(connection, index));
-    setRightOptions(buildRightOptions(connection, index));
+    setParameterValues(updatedParameters);
+    setParameters(parseParameters(parameters, options));
+
+    // setLeft(index);
+    // setOperator(0);
+    // setRight('');
+    // setOperatorOptions(buildOperatorOptions(connection, index));
+    // setRightOptions(buildRightOptions(connection, index));
   }
 
   const handleParameterChange = (newValue, parameterIndex) => {
@@ -68,14 +80,26 @@ const ConditionalDialog = ({
     updatedParameters[parameterIndex] = newValue;
 
     setParameterValues(updatedParameters);
+
+    if (parameterIndex === 0) {
+      onSelectLeft(parameterIndex);
+    }
   }
 
   useEffect(() => {
-    setLeftOptions(buildLeftOptions(connection));
-    setOperatorOptions(buildOperatorOptions(connection, 0));
-    setRightOptions(buildRightOptions(connection, 0));
+    const options = [
+      buildLeftOptions(connection), 
+      buildOperatorOptions(connection, 0), 
+      buildRightOptions(connection, 0)
+    ];
 
-    console.log('c: ', connection)
+    setParameters(parseParameters(node.parameters, options));
+
+    // setLeftOptions(buildLeftOptions(connection));
+    // setOperatorOptions(buildOperatorOptions(connection, 0));
+    // setRightOptions(buildRightOptions(connection, 0));
+
+    //console.log('c: ', connection)
   }, [connection]);
 
   return (
