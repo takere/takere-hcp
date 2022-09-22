@@ -11,6 +11,28 @@ const ParameterInput = ({parameter, value, onChange}) => {
     onChange(null);
   }
 
+  const handleFieldChange = (newValue, index) => {
+    const updatedFields =  [ ...value ];
+
+    updatedFields[index] = newValue;
+
+    onChange(updatedFields);
+  }
+
+  const handleNewField = () => {
+    const updatedFields =  [ ...value ];
+
+    updatedFields.push('');
+
+    onChange(updatedFields);
+  }
+
+  const handleRemoveField = (fieldIndex) => {
+    const updatedFields =  value.filter((_, index) => index !== fieldIndex);
+
+    onChange(updatedFields);
+  }
+
     switch (parameter.type) {
       case "date":
         if (parameter.required) {
@@ -71,12 +93,15 @@ const ParameterInput = ({parameter, value, onChange}) => {
             options={parameter.options}
           />
         );
-      case "form":
-      case "checkbox":
-      case "radio": 
+        case "checkbox":
+        case "radio": 
+        case "form":
           return (
-            <OptionInputBuilder 
-              options={parameter.options}
+            <OptionInputBuilder
+              options={value}
+              onValueChange={handleFieldChange}
+              handleRemoveOption={handleRemoveField}
+              handleNewOption={handleNewField}
             />
           );
     }
