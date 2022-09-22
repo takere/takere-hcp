@@ -18,18 +18,22 @@ import * as Styled from './styled';
 const ConditionalDialog = ({
   open,
   handleClose,
-  data,
+  node,
   onAddElementResultValue,
   connection
 }) => {
-  const { data: payloadData } = data;
+  const { data: payloadData } = node;
+  
+  const [options, setOptions] = useState([left, operator, right]);
+  const [parameters, setParameters] = useState(parseParameters(node.parameters, options));
 
-  const [left, setLeft] = useState(loadStoredLeft(data, connection));
-  const [operator, setOperator] = useState(loadStoredOperator(data, connection));
-  const [right, setRight] = useState(loadStoredRight(data, connection));
+  // const [left, setLeft] = useState(loadStoredLeft(node, connection));
+  // const [operator, setOperator] = useState(loadStoredOperator(node, connection));
+  // const [right, setRight] = useState(loadStoredRight(node, connection));
   const [leftOptions, setLeftOptions] = useState([]);
   const [operatorOptions, setOperatorOptions] = useState([]);
   const [rightOptions, setRightOptions] = useState([]);
+  
 
   const saveInputs = () => {
     const inputData = {
@@ -38,7 +42,7 @@ const ConditionalDialog = ({
       right: rightOptions[right]?.label ?? right
     };
 
-    onAddElementResultValue(data, inputData);
+    onAddElementResultValue(node, inputData);
     toast.success(`Dados de ${payloadData.label} salvos`);
   };
 
@@ -71,7 +75,15 @@ const ConditionalDialog = ({
       <Header title={payloadData.label} subtitle={payloadData.description} />
       {connection &&
         <Body>
-          <Styled.InputArea>
+          {parameters.map((parameter, index) => (
+            <ParameterInput 
+              key={index}
+              parameter={parameter}
+              value={options[index]}
+              onChange={(newValue) => handleParameterChange(newValue, index)}
+            />
+          ))}
+          {/* <Styled.InputArea>
             <MultiSelectionInput
               label="Left"
               helperText="Left operand"
@@ -103,7 +115,7 @@ const ConditionalDialog = ({
                 options={rightOptions}
               />
             }
-          </Styled.InputArea>
+          </Styled.InputArea> */}
         </Body>
       }
       <Footer>
@@ -115,6 +127,17 @@ const ConditionalDialog = ({
 };
 
 export default ConditionalDialog;
+
+
+function parseParameters(parameters, options) {
+  let parsedParameters = [];
+
+  parameters.forEach((parameter, index) => {
+    parsedParameters.push({ ...parameter, options: options[index] });
+  })
+
+  return parsedParameters;
+}
 
 
 //-----------------------------------------------------------------------------
@@ -167,7 +190,7 @@ function buildLeftOptions(connection) {
     return [];
   }
 
-  if (connection.type === 'MEDICATION_CONTROL_NODE') {
+  if (connection.slug === 'medication_control') {
     return [{ label: 'Medication', value: 0 }];
   }
 
@@ -187,7 +210,7 @@ function buildOperatorOptions(connection, currentIndex) {
 
   let options = [];
 
-  if (connection.type === 'MEDICATION_CONTROL_NODE') {
+  if (connection.slug === 'medication_control') {
     return buildOptions(selectionOperatorOptions);;
   }
 
@@ -225,7 +248,7 @@ function buildRightOptions(connection, currentIndex) {
     return [];
   }
 
-  if (connection.type === 'MEDICATION_CONTROL_NODE') {
+  if (connection.slug === 'medication_control') {
     return [{ label: 'Taken', value: 0 }];
   }
 

@@ -29,7 +29,7 @@ const GenericDialog = ({ open, handleClose, node, onAddElementResultValue }) => 
   const handleParameterChange = (newValue, parameterIndex) => {
     const updatedParameters = [ ...parameters ];
 
-    updatedParameters[parameterIndex] = newValue;
+    updatedParameters[parameterIndex].content = newValue;
 
     setParameters(updatedParameters);
   }
@@ -48,7 +48,7 @@ const GenericDialog = ({ open, handleClose, node, onAddElementResultValue }) => 
           <ParameterInput 
             key={index}
             parameter={parameter}
-            value={parameters[index]}
+            value={parameters[index].content}
             onChange={(newValue) => handleParameterChange(newValue, index)}
           />
         ))}
