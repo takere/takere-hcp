@@ -58,18 +58,19 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
   };
 
   const onAddElementResultValue = (e, result) => {
-    const newElements = nodes.map((element) =>
-      element.id === e.id
-        ? {
-            ...element,
-            data: {
-              ...element.data,
-              results: result,
-            },
-          }
-        : element
-    );
-    setNodes(newElements);
+    // TODO: Adaptar para funcionar com nova estrutura
+    // const newElements = nodes.map((element) =>
+    //   element.id === e.id
+    //     ? {
+    //         ...element,
+    //         data: {
+    //           ...element.data,
+    //           results: result,
+    //         },
+    //       }
+    //     : element
+    // );
+    // setNodes(newElements);
   };
 
   const onConnect = (
@@ -117,11 +118,12 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
       y: event.clientY - reactFlowBounds.top,
     });
     const newNode = {
+      ...node,
       key: index,
       id: `dndnode_${index}`,
-      type: node.type,
+      // type: node.type,
       position,
-      data: node.data, 
+      //data: node.data, 
       onRemove: remModelData
     };
 
