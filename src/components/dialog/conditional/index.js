@@ -225,7 +225,7 @@ function buildLeftOptions(connection) {
     return [];
   }
 
-  if (connection.slug === 'medication_control') {
+  if (connection.data.slug === 'medication_control') {
     return [{ label: 'Medication', value: 0 }];
   }
 
@@ -245,7 +245,7 @@ function buildOperatorOptions(connection, currentIndex) {
 
   let options = [];
 
-  if (connection.slug === 'medication_control') {
+  if (connection.data.slug === 'medication_control') {
     return buildOptions(selectionOperatorOptions);;
   }
 
@@ -283,7 +283,7 @@ function buildRightOptions(connection, currentIndex) {
     return [];
   }
 
-  if (connection.slug === 'medication_control') {
+  if (connection.data.slug === 'medication_control') {
     return [{ label: 'Taken', value: 0 }];
   }
 
