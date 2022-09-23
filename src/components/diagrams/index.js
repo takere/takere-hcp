@@ -59,18 +59,18 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
 
   const onAddElementResultValue = (e, result) => {
     // TODO: Adaptar para funcionar com nova estrutura
-    // const newElements = nodes.map((element) =>
-    //   element.id === e.id
-    //     ? {
-    //         ...element,
-    //         data: {
-    //           ...element.data,
-    //           results: result,
-    //         },
-    //       }
-    //     : element
-    // );
-    // setNodes(newElements);
+    const newElements = nodes.map((element) =>
+      element.id === e.id
+        ? {
+            ...element,
+            data: {
+              ...element.data,
+              arguments: result,
+            },
+          }
+        : element
+    );
+    setNodes(newElements);
   };
 
   const onConnect = (

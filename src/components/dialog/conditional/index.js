@@ -42,11 +42,7 @@ const ConditionalDialog = ({
 
     // onAddElementResultValue(node, inputData);
     toast.success(`Dados de ${node.data.name} salvos`);
-
-    console.log('Parameters:');
-    console.log(parameters);
-    console.log('Parameter values:');
-    console.log(parameterValues);
+    onAddElementResultValue(node, parameterValues);
   };
 
   const onSelectLeft = (index) => {

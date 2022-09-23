@@ -16,16 +16,8 @@ const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
   const [parameterValues, setParameterValues] = useState(initializeParameterValues(node.data.parameters));
 
   const saveInputs = () => {
-    // const inputData = {
-    //   startDate,
-    //   endDate,
-    //   undefinedEnd
-    // };
-
-    // onAddElementResultValue(node, inputData);
+    onAddElementResultValue(node, parameterValues);
     toast.success(`Dados de ${node.data.name} salvos`);
-    console.log(parameters)
-    console.log(parameterValues)
   };
 
   const handleParameterChange = (newValue, parameterIndex) => {
