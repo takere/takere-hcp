@@ -11,8 +11,7 @@ import ParameterInput from "../../../parts/input/ParameterInput";
 //        Components
 //-----------------------------------------------------------------------------
 const GenericDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
-  const [parameters, setParameters] = useState(node.data.parameters);
-  const [parameterValues, setParameterValues] = useState(initializeParameterValues(node.data.parameters));
+  const [parameterValues, setParameterValues] = useState(initializeParameterValues(node.data));
 
   const saveInputs = () => {
     onAddElementResultValue(node, parameterValues);
@@ -61,20 +60,29 @@ export default GenericDialog;
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
-function initializeParameterValues(parameters) {
+function initializeParameterValues(nodeData) {
   let initializedValues = [];
 
-  parameters.forEach(parameter => {
-    initializedValues.push(initializeParameter(parameter));
-  })
+  nodeData.parameters.forEach((parameter, index) => {
+    let value = null;
 
+    if (nodeData.arguments?.length > 0) {
+      value = nodeData.arguments[index];
+    }
+    else {
+      value = initializeParameter(parameter);
+    }
+    
+    initializedValues.push(value);
+  })
+  
   return initializedValues;
 }
 
 function initializeParameter(parameter) {
   switch (parameter.type) {
     case 'date':
-      return new Date();
+      return null;
     case 'text':
     case 'rich_text':
     case 'radio':
