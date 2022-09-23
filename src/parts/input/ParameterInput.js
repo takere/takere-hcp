@@ -152,17 +152,16 @@ const ParameterInput = ({parameter, value, onChange}) => {
   }
 
   useEffect(() => {
-    const updatedQuestions = questions;
-
-    updatedQuestions[currentQuestion-1] = {
-      label: question,
-      type: answerType, 
-      options: answerOptions
-    }
-
-    setQuestions(updatedQuestions);
-
     if (parameter.type === 'form') {
+      const updatedQuestions = questions;
+  
+      updatedQuestions[currentQuestion-1] = {
+        label: question,
+        type: answerType, 
+        options: answerOptions
+      }
+  
+      setQuestions(updatedQuestions);
       onChange(updatedQuestions)
     }
   }, [question, answerType, answerOptions, currentQuestion, questions]);
@@ -170,11 +169,15 @@ const ParameterInput = ({parameter, value, onChange}) => {
     switch (parameter.type) {
       case "date":
         if (parameter.required) {
+          if (!value) {
+            onChange(new Date())
+          }
+
           return (
             <DateInput
               label={parameter.name}
               helperText={parameter.description}
-              value={value ?? new Date()}
+              value={value}
               onChange={onChange}
             />
           );

@@ -70,6 +70,8 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
         : element
     );
     setNodes(newElements);
+
+    console.log(result)
   };
 
   const onConnect = (

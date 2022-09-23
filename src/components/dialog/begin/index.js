@@ -85,8 +85,9 @@ function initializeParameter(parameter) {
     case 'text':
     case 'radio':
     case 'checkbox':
-    case 'select':
       return '';
+    case 'select':
+      return parameter.options[0];
     case 'rich_text':
       return '<p></p>';
     case 'number':
