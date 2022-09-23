@@ -18,12 +18,12 @@ const ParameterInput = ({parameter, value, onChange}) => {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState([]);
-  const [questions, setQuestions] = useState([buildEmptyQuestion(parameter.options)]);
-  const [totalQuestions, setTotalQuestions] = useState(1);
-  const [question, setQuestion] = useState('');
+  const [questions, setQuestions] = useState(loadQuestions(parameter, value));
+  const [totalQuestions, setTotalQuestions] = useState(loadTotalQuestions(value));
+  const [question, setQuestion] = useState(loadQuestion(value));
   const [currentQuestion, setCurrentQuestion] = useState(1);
-  const [answerType, setAnswerType] = useState([]);
-  const [answerOptions, setAnswerOptions] = useState([]);
+  const [answerType, setAnswerType] = useState(loadAnswerType(value));
+  const [answerOptions, setAnswerOptions] = useState(loadAnswerOptions(value));
 
   const onChangeUndefinedValue = (newValue) => {
     setUndefinedValue(newValue);
@@ -163,6 +163,7 @@ const ParameterInput = ({parameter, value, onChange}) => {
   
       setQuestions(updatedQuestions);
       onChange(updatedQuestions)
+      console.log(value)
     }
   }, [question, answerType, answerOptions, currentQuestion, questions]);
 
@@ -370,6 +371,46 @@ const OptionInputBuilder = ({
     ))}
   </div>
 );
+
+function loadQuestions(parameter, value) {
+  if (!value || value.length === 0) {
+    return [buildEmptyQuestion(parameter.options)];
+  }
+
+  return value;
+}
+
+function loadTotalQuestions(value) {
+  if (!value || value.length === 0) {
+    return 1;
+  }
+
+  return value.length;
+}
+
+function loadQuestion(value) {
+  if (!value || value.length === 0) {
+    return '';
+  }
+
+  return value[0].label;
+}
+
+function loadAnswerType(value) {
+  if (!value || value.length === 0) {
+    return [];
+  }
+
+  return value[0].type;
+}
+
+function loadAnswerOptions(value) {
+  if (!value || value.length === 0) {
+    return [];
+  }
+
+  return value[0].options;
+}
 
 function buildEmptyQuestion(answerTypes) {
   if (!answerTypes) {

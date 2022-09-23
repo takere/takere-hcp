@@ -21,17 +21,8 @@ const ConditionalDialog = ({
   connection
 }) => {
   
-  // const [options, setOptions] = useState([left, operator, right]);
   const [parameters, setParameters] = useState(parseParameters(node.data.parameters, [buildLeftOptions(connection), buildOperatorOptions(connection, 0), buildRightOptions(connection, 0)]));
   const [parameterValues, setParameterValues] = useState([0, 0, undefined]);
-
-  // const [left, setLeft] = useState(loadStoredLeft(node, connection));
-  // const [operator, setOperator] = useState(loadStoredOperator(node, connection));
-  // const [right, setRight] = useState(loadStoredRight(node, connection));
-  // const [leftOptions, setLeftOptions] = useState([]);
-  // const [operatorOptions, setOperatorOptions] = useState([]);
-  // const [rightOptions, setRightOptions] = useState([]);
-  
 
   const saveInputs = () => {
     // const inputData = {
@@ -109,7 +100,7 @@ const ConditionalDialog = ({
       <Header title={node.data.name} subtitle={node.data.description} />
       {connection &&
         <Body>
-          {parameters.map((parameter, index) => (
+          {node.data.arguments && node.data.arguments.length > 0 && parameters.map((parameter, index) => (
             <ParameterInput 
               key={index}
               parameter={parameter}
@@ -117,39 +108,6 @@ const ConditionalDialog = ({
               onChange={(newValue) => handleParameterChange(newValue, index)}
             />
           ))}
-          {/* <Styled.InputArea>
-            <MultiSelectionInput
-              label="Left"
-              helperText="Left operand"
-              value={left}
-              onChange={onSelectLeft}
-              options={leftOptions}
-            />
-            <MultiSelectionInput
-              label="Operator"
-              helperText="Operator that will be applied in the left and right terms"
-              value={operator}
-              onChange={setOperator}
-              options={operatorOptions}
-            />
-            {rightOptions.length === 0 
-            ? 
-              <RawTextInput 
-                label="Right"
-                helperText="Right operand"
-                value={right}
-                onChange={setRight}
-              />
-            :
-              <MultiSelectionInput
-                label="Right"
-                helperText="Right operand"
-                value={right}
-                onChange={setRight}
-                options={rightOptions}
-              />
-            }
-          </Styled.InputArea> */}
         </Body>
       }
       <Footer>
@@ -177,48 +135,6 @@ function parseParameters(parameters, options) {
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
-function hasResults(data) {
-  return  data
-          && data.data 
-          && data.data.results;
-}
-
-function loadStoredLeft(data, connection) {
-  if (!connection) {
-    return 0;
-  }
-
-  if (!hasResults(data) || !data.data.results.left) {
-    return 0;
-  }
-
-  return data.data.results.left;
-}
-
-function loadStoredOperator(data, connection) {
-  if (!connection) {
-    return 0;
-  }
-
-  if (!hasResults(data) || !data.data.results.operator) {
-    return 0;
-  }
-
-  return data.data.results.operator;
-}
-
-function loadStoredRight(data, connection) {
-  if (!connection) {
-    return '';
-  }
-
-  if (!hasResults(data) || !data.data.results.right) {
-    return buildRightOptions(connection, 0);
-  }
-
-  return data.data.results.right;
-}
-
 function buildLeftOptions(connection) {
   if (!connection) {
     return [];
@@ -230,8 +146,8 @@ function buildLeftOptions(connection) {
 
   const options = [];
 
-  connection.data.results.questions?.forEach((quiz, index) => {
-    options.push({ label: quiz.question, value: index });
+  connection.data.arguments?.forEach((arg, index) => {
+    options.push({ label: arg, value: index });
   });
 
   return options;
@@ -248,16 +164,16 @@ function buildOperatorOptions(connection, currentIndex) {
     return buildOptions(selectionOperatorOptions);;
   }
 
-  if (!connection.data.results) {
+  if (!connection.data.arguments) {
     return [];
   }
   
-  const quiz = connection.data.results.questions[currentIndex];
+  const parameter = connection.data.parameters[currentIndex];
   
-  if (quiz.answer.type === 'number') {
+  if (parameter.type === 'number') {
     options = buildOptions(numberOperatorOptions);
   }
-  else if (quiz.answer.type === 'checkbox') {
+  else if (parameter.type === 'checkbox') {
     options = buildOptions(selectionOperatorOptions);
   }
   else {
@@ -286,14 +202,14 @@ function buildRightOptions(connection, currentIndex) {
     return [{ label: 'Taken', value: 0 }];
   }
 
-  if (!connection.data.results) {
+  if (!connection.data.arguments || !connection.data.arguments[currentIndex]) {
     return [];
   }
 
-  const answer = connection.data.results.questions[currentIndex].answer;
+  const form = connection.data.arguments[currentIndex];
   const options = [];
   
-  answer.options.forEach((option, index) => {
+  form.options.forEach((option, index) => {
     options.push({ label: option, value: index });
   });
 
