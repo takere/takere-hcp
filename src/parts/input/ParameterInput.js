@@ -15,6 +15,9 @@ const ParameterInput = ({parameter, value, onChange}) => {
   
   const [undefinedValue, setUndefinedValue] = useState(false);
   const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromText("")));
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pages, setPages] = useState([]);
 
   const onChangeUndefinedValue = (newValue) => {
     setUndefinedValue(newValue);
@@ -43,9 +46,43 @@ const ParameterInput = ({parameter, value, onChange}) => {
     onChange(updatedFields);
   }
 
+  const onTotalPagesChange = (rawValue) => {
+    let newTotalPages = parseInt(rawValue);
+
+    if (newTotalPages <= 0) {
+      return;
+    }
+
+    const newPages = updatePagesBasedOnTotalPages(newTotalPages, totalPages, pages);
+
+    setTotalPages(newTotalPages);
+    setCurrentPage(1);
+    setPages(newPages);
+    setEditorState(pages[0]);
+    onChange(convertPagesToHtml(newPages));
+  };
+
+  const onChangeCurrentPage = (rawValue) => {
+    let newCurrentPage = parseInt(rawValue);
+
+    if (isPageNumberOutOfBounds(newCurrentPage, totalPages)) {
+      return;
+    }
+
+    setCurrentPage(newCurrentPage);
+    setEditorState(pages[newCurrentPage - 1]);
+  };
+
   const onChangeEditorState = (newState) => {
     setEditorState(newState);
-    onChange(convertToHTML(newState.getCurrentContent()));
+
+    const updatedPages = pages;
+
+    updatedPages[currentPage - 1] = newState;
+
+    setPages(updatedPages);
+
+    onChange(convertPagesToHtml(updatedPages));
   };
 
     switch (parameter.type) {
@@ -96,6 +133,28 @@ const ParameterInput = ({parameter, value, onChange}) => {
             value={editorState}
             onChange={onChangeEditorState}
           />
+        );
+      case "book":
+        return (
+          <>
+            <NumberInput
+              label="Total pages"
+              helperText="Explanation total pages"
+              value={totalPages}
+              onChange={onTotalPagesChange}
+            />
+            <NumberInput
+              label="Current page"
+              helperText="Page to be edited"
+              value={currentPage}
+              onChange={onChangeCurrentPage}
+            />
+            <RichTextInput
+              label={parameter.name}
+              value={editorState}
+              onChange={onChangeEditorState}
+            />
+          </>
         );
       case "select|text":
         if (parameter.options.length === 0) {
@@ -189,3 +248,34 @@ const OptionInputBuilder = ({
     ))}
   </div>
 );
+
+function convertPagesToHtml(pages) {
+  const parsedPages = [];
+
+  pages.forEach((page) => {
+    parsedPages.push(convertToHTML(page.getCurrentContent()));
+  });
+
+  return parsedPages;
+}
+
+
+function updatePagesBasedOnTotalPages(newTotalPages, oldTotalPages, pages) {
+  let updatedPages = pages;
+
+  if (newTotalPages > oldTotalPages) {
+    let totalNewPages = newTotalPages - oldTotalPages;
+
+    for (let i = 0; i < totalNewPages; i++) {
+      updatedPages.push(EditorState.createWithContent(ContentState.createFromText("")));
+    }
+  } else if (newTotalPages > 1) {
+    updatedPages = updatedPages.slice(0, newTotalPages);
+  }
+
+  return updatedPages;
+}
+
+function isPageNumberOutOfBounds(value, total) {
+  return value <= 0 || value > total;
+}
