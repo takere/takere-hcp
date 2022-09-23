@@ -111,8 +111,9 @@ const ParameterInput = ({parameter, value, onChange}) => {
 
     setTotalQuestions(value);
     setCurrentQuestion(1);
-    setQuestion(questions[0].question);
-    setAnswerType(questions[0].answer.type);
+    setAnswerOptions(questions[0].options ?? []);
+    setQuestion(questions[0].label);
+    setAnswerType(questions[0].type);
   };
 
   const onCurrentQuestionChange = (rawValue) => {
@@ -123,8 +124,9 @@ const ParameterInput = ({parameter, value, onChange}) => {
     }
 
     setCurrentQuestion(value);
-    setQuestion(questions[value-1].question);
-    setAnswerType(questions[value-1].answer.type);
+    setAnswerOptions(questions[value-1].options ?? []);
+    setQuestion(questions[value-1].label);
+    setAnswerType(questions[value-1].type);
   };
 
   const handleAnswerOptionChange = (newValue, index) => {
@@ -153,11 +155,13 @@ const ParameterInput = ({parameter, value, onChange}) => {
     const updatedQuestions = questions;
 
     updatedQuestions[currentQuestion-1] = {
-      question,
-      answer: { type: answerType, options: answerOptions }
+      label: question,
+      type: answerType, 
+      options: answerOptions
     }
 
     setQuestions(updatedQuestions);
+    onChange(updatedQuestions)
   }, [question, answerType, answerOptions, currentQuestion, questions]);
 
     switch (parameter.type) {
@@ -346,7 +350,7 @@ const OptionInputBuilder = ({
           <RawTextInput
             label={`Option ${index+1}`}
             helperText=""
-            value={option.label}
+            value={option.label ?? option}
             style={{marginRight: 5}}
             onChange={(newValue) => onValueChange(newValue, index)}
           />
@@ -367,9 +371,9 @@ function buildEmptyQuestion(answerTypes) {
   }
   
   return { 
-    question: '', 
-    answer: { type: answerTypes[0].value, options: [] },
-    frequency: { type: 'daily', value: 'daily' }
+    label: '', 
+    type: answerTypes[0].value, 
+    options: []
   };
 }
 
