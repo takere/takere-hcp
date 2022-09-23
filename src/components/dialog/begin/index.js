@@ -11,7 +11,9 @@ import ParameterInput from "../../../parts/input/ParameterInput";
 //        Components
 //-----------------------------------------------------------------------------
 const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
-  const [parameters, setParameters] = useState(node.parameters);
+  
+  const [parameters, setParameters] = useState(node.data.parameters);
+  const [parameterValues, setParameterValues] = useState(initializeParameterValues(node.data.parameters));
 
   const saveInputs = () => {
     // const inputData = {
@@ -21,16 +23,17 @@ const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
     // };
 
     // onAddElementResultValue(node, inputData);
-    toast.success(`Dados de ${node.name} salvos`);
+    toast.success(`Dados de ${node.data.name} salvos`);
     console.log(parameters)
+    console.log(parameterValues)
   };
 
   const handleParameterChange = (newValue, parameterIndex) => {
-    const updatedParameters = [ ...parameters ];
+    const updatedParameters = [ ...parameterValues ];
 
     updatedParameters[parameterIndex] = newValue;
 
-    setParameters(updatedParameters);
+    setParameterValues(updatedParameters);
   }
 
   return (
@@ -41,13 +44,13 @@ const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
       onClose={handleClose}
       aria-labelledby="max-width-dialog-title"
     >
-      <Header title={node.name} subtitle={node.description} />
+      <Header title={node.data.name} subtitle={node.data.description} />
       <Body>
-        {node.parameters.map((parameter, index) => (
+        {node.data.parameters.map((parameter, index) => (
           <ParameterInput 
             key={index}
             parameter={parameter}
-            value={parameters[index]}
+            value={parameterValues[index]}
             onChange={(newValue) => handleParameterChange(newValue, index)}
           />
         ))}
@@ -66,6 +69,34 @@ export default BeginDialog;
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
+function initializeParameterValues(parameters) {
+  let initializedValues = [];
+
+  parameters.forEach(parameter => {
+    initializedValues.push(initializeParameter(parameter));
+  })
+
+  return initializedValues;
+}
+
+function initializeParameter(parameter) {
+  switch (parameter.type) {
+    case 'date':
+      return new Date();
+    case 'text':
+    case 'radio':
+    case 'checkbox':
+    case 'select':
+      return '';
+    case 'number':
+      return 0;
+    case 'boolean':
+      return false;
+    default:
+      return null;
+  }
+}
+
 function loadStoredStartDate(data) {
   if (
     !data ||

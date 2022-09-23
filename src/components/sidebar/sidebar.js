@@ -10,7 +10,6 @@ export const Sidebar = () => {
 
     useEffect(() => {
         new Requests().getNodes().then(r => {
-            console.log(r)
             setNodes(r);
             setFoundNodes(r);
         })
