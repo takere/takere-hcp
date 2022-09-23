@@ -30,4 +30,5 @@ fieldset {
   border-color: rgba(0, 0, 0, 0.23);
   border-radius: 4px;
   margin: 0;
+  margin-bottom: 30px;
 }
