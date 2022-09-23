@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BooleanInput from "./BooleanInput";
 import DateInput from "./DateInput";
 import RawTextInput from "./RawTextInput";
@@ -18,6 +18,12 @@ const ParameterInput = ({parameter, value, onChange}) => {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState([]);
+  const [questions, setQuestions] = useState([buildEmptyQuestion(parameter.options)]);
+  const [totalQuestions, setTotalQuestions] = useState(1);
+  const [question, setQuestion] = useState('');
+  const [currentQuestion, setCurrentQuestion] = useState(1);
+  const [answerType, setAnswerType] = useState([]);
+  const [answerOptions, setAnswerOptions] = useState([]);
 
   const onChangeUndefinedValue = (newValue) => {
     setUndefinedValue(newValue);
@@ -84,6 +90,75 @@ const ParameterInput = ({parameter, value, onChange}) => {
 
     onChange(convertPagesToHtml(updatedPages));
   };
+
+  const onTotalQuestionsChange = (rawValue) => {
+    const value = parseInt(rawValue);
+
+    if (value < 1) {
+      return;
+    }
+
+    if (value > totalQuestions) {
+      const updatedQuestions = questions;
+
+      updatedQuestions.push(buildEmptyQuestion(parameter.options));
+      
+      setQuestions(updatedQuestions);
+    }
+    else if (value > 1) {
+      setQuestions(questions.slice(0, value));
+    }
+
+    setTotalQuestions(value);
+    setCurrentQuestion(1);
+    setQuestion(questions[0].question);
+    setAnswerType(questions[0].answer.type);
+  };
+
+  const onCurrentQuestionChange = (rawValue) => {
+    const value = parseInt(rawValue);
+
+    if ((value < 1) || (value > totalQuestions)) {
+      return;
+    }
+
+    setCurrentQuestion(value);
+    setQuestion(questions[value-1].question);
+    setAnswerType(questions[value-1].answer.type);
+  };
+
+  const handleAnswerOptionChange = (newValue, index) => {
+    const updatedAnswerOptions =  [...answerOptions];
+
+    updatedAnswerOptions[index] = newValue;
+
+    setAnswerOptions(updatedAnswerOptions);
+  }
+
+  const handleNewOption = () => {
+    const updatedAnswerOptions =  [...answerOptions];
+
+    updatedAnswerOptions.push('');
+
+    setAnswerOptions(updatedAnswerOptions);
+  }
+
+  const handleRemoveOption = (answerIndex) => {
+    const updatedAnswerOptions =  answerOptions.filter((_, index) => index !== answerIndex);
+
+    setAnswerOptions(updatedAnswerOptions);
+  }
+
+  useEffect(() => {
+    const updatedQuestions = questions;
+
+    updatedQuestions[currentQuestion-1] = {
+      question,
+      answer: { type: answerType, options: answerOptions }
+    }
+
+    setQuestions(updatedQuestions);
+  }, [question, answerType, answerOptions, currentQuestion, questions]);
 
     switch (parameter.type) {
       case "date":
@@ -209,12 +284,39 @@ const ParameterInput = ({parameter, value, onChange}) => {
         case "form":
           return (
             <>
-              <OptionInputBuilder
-                options={value}
-                onValueChange={handleFieldChange}
-                handleRemoveOption={handleRemoveField}
-                handleNewOption={handleNewField}
+              <NumberInput
+                label="Total questions"
+                helperText="How many questions?"
+                value={totalQuestions}
+                onChange={onTotalQuestionsChange}
               />
+              <NumberInput
+                label="Current question"
+                helperText="You're editing question..."
+                value={currentQuestion}
+                onChange={onCurrentQuestionChange}
+              />
+              <RawTextInput
+                label="Question"
+                helperText="What's the question?"
+                value={question}
+                onChange={setQuestion}
+              />
+              <MultiSelectionInput
+                label="Answer type"
+                helperText="How do you expect the answer?"
+                value={answerType}
+                onChange={setAnswerType}
+                options={parameter.options}
+              />
+              {hasAnswerOptions(answerType) &&
+                <OptionInputBuilder 
+                  handleNewOption={handleNewOption}
+                  options={answerOptions}
+                  onValueChange={handleAnswerOptionChange}
+                  handleRemoveOption={handleRemoveOption}
+                />
+              }
             </>
           );
     }
@@ -258,6 +360,22 @@ const OptionInputBuilder = ({
     ))}
   </div>
 );
+
+function buildEmptyQuestion(answerTypes) {
+  if (!answerTypes) {
+    return {}
+  }
+  
+  return { 
+    question: '', 
+    answer: { type: answerTypes[0].value, options: [] },
+    frequency: { type: 'daily', value: 'daily' }
+  };
+}
+
+function hasAnswerOptions(type) {
+  return (type === 'checkbox') || (type === 'radio');
+}
 
 function convertPagesToHtml(pages) {
   const parsedPages = [];
