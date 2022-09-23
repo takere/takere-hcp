@@ -52,7 +52,8 @@ const ConditionalDialog = ({
 
     setParameterValues(updatedParameters);
     setParameters(parseParameters(parameters, options));
-
+    
+    
     // setLeft(index);
     // setOperator(0);
     // setRight('');
@@ -170,12 +171,12 @@ function buildOperatorOptions(connection, currentIndex) {
   }
 
   const fields = connection.data.arguments?.find(arg => arg.length > 0);
-  const parameter = fields[currentIndex];
+  const field = fields[currentIndex];
   
-  if (parameter.type === 'number') {
+  if (field.type === 'number') {
     options = buildOptions(numberOperatorOptions);
   }
-  else if (parameter.type === 'checkbox') {
+  else if (['checkbox', 'radio', 'select'].includes(field.type)) {
     options = buildOptions(selectionOperatorOptions);
   }
   else {
@@ -204,7 +205,7 @@ function buildRightOptions(connection, currentIndex) {
     return [{ label: 'Taken', value: 0 }];
   }
 
-  if (!connection.data.arguments || !connection.data.arguments[currentIndex]) {
+  if (!connection.data.arguments) {
     return [];
   }
 
@@ -215,6 +216,7 @@ function buildRightOptions(connection, currentIndex) {
   form.options.forEach((option, index) => {
     options.push({ label: option, value: index });
   });
+
 
   return options;
 }
