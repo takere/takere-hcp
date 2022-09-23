@@ -4,8 +4,6 @@ import { toast } from "react-toastify";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
-import BooleanInput from "../../../parts/input/BooleanInput";
-import DateInput from "../../../parts/input/DateInput";
 import ParameterInput from "../../../parts/input/ParameterInput";
 
 

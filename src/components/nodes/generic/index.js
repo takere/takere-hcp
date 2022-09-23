@@ -5,14 +5,16 @@ import * as Styled from "./styled";
 import { theme } from "../../../utils/colors";
 
 const GenericNode = (props) => {
+  const nodeData = props.data;
+  
   return (
-    <Styled.Node bgColor={ props?.color}>
+    <Styled.Node bgColor={ nodeData?.color}>
       <Styled.NodeContainer>
       <Styled.DeleteButton id={"close"} onClick={() => {props?.onRemove(props?.id)}}>
           <Styled.IconItem id={"close"} fontSize="inherit">close</Styled.IconItem>
         </Styled.DeleteButton>
         <Styled.NodeName>
-          {props.name}
+          {nodeData?.name}
         </Styled.NodeName>
         <Icon
           style={{
@@ -21,11 +23,11 @@ const GenericNode = (props) => {
             color: theme.colors.night.x1,
           }}
         >
-          {props.icon}
+          {nodeData?.icon}
         </Icon>
       </Styled.NodeContainer>
-      <InputHandler inputList={props.input_list} />
-      <OutputHandler outputList={props.output_list} />
+      <InputHandler inputList={nodeData?.input_list} />
+      <OutputHandler outputList={nodeData?.output_list} />
     </Styled.Node>
   );
 };
@@ -68,7 +70,7 @@ function buildStyleForDirection(direction) {
   let style = {
     borderRadius: 8,
     width: ["top", "bottom"].includes(direction) ? 20 : 12,
-    height: ["left", "right"].includes(direction) ? 12 : 20,
+    height: ["top", "bottom"].includes(direction) ? 12 : 20,
     borderColor: theme.colors.night.x1,
     backgroundColor: theme.colors.night.x1,
   };

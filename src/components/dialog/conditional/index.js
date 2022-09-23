@@ -7,9 +7,7 @@ import { Header, Body, Footer } from "../";
 import numberOperatorOptions from './number-operator.types.json';
 import selectionOperatorOptions from './selection-operator.types.json';
 import textOperatorOptions from './text-operator.types.json';
-import RawTextInput from "../../../parts/input/RawTextInput";
-import MultiSelectionInput from "../../../parts/input/MultiSelectionInput";
-import * as Styled from './styled';
+import ParameterInput from "../../../parts/input/ParameterInput";
 
 
 //-----------------------------------------------------------------------------

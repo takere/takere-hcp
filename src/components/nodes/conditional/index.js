@@ -5,13 +5,15 @@ import * as Styled from "./styled";
 import { theme } from "../../../utils/colors";
 
 const ConditionalNode = (props) => {
+  const nodeData = props.data;
+
   return (
-    <Styled.Node bgColor={ props?.color}>
+    <Styled.Node bgColor={ nodeData?.color}>
       <Styled.NodeContainer>
       <Styled.DeleteButton id={"close"} onClick={() => {props?.onRemove(props?.id)}}>
           <Styled.IconItem id={"close"} fontSize="inherit">close</Styled.IconItem>
         </Styled.DeleteButton>
-        <Styled.NodeName>{props.name}</Styled.NodeName>
+        <Styled.NodeName>{nodeData?.name}</Styled.NodeName>
         <Icon
           style={{
             textAlign: "center",
@@ -19,15 +21,15 @@ const ConditionalNode = (props) => {
             color: theme.colors.night.x1,
           }}
         >
-          {props.icon}
+          {nodeData?.icon}
         </Icon>
       </Styled.NodeContainer>
       <div>
         <Styled.FlowLabel className="false">False</Styled.FlowLabel>
         <Styled.FlowLabel className="true">True</Styled.FlowLabel>
       </div>
-      <InputHandler inputList={props.input_list} />
-      <OutputHandler outputList={props.output_list} />
+      <InputHandler inputList={nodeData?.input_list} />
+      <OutputHandler outputList={nodeData?.output_list} />
     </Styled.Node>
   );
 };
@@ -71,7 +73,7 @@ function buildStyleForDirection(direction) {
     transform: "rotate(-45deg)",
     borderRadius: 8,
     width: ["top", "bottom"].includes(direction) ? 20 : 12,
-    height: ["left", "right"].includes(direction) ? 12 : 20,
+    height: ["top", "bottom"].includes(direction) ? 12 : 20,
     borderColor: theme.colors.night.x1,
     backgroundColor: theme.colors.night.x1,
   };

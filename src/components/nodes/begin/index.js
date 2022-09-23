@@ -5,14 +5,15 @@ import * as Styled from "./styled";
 import { theme } from "../../../utils/colors";
 
 const BeginNode = (props) => {
+  const nodeData = props.data;
   
   return (
-    <Styled.Node bgColor={ props?.color}>
+    <Styled.Node bgColor={ nodeData?.color}>
       <Styled.NodeContainer>
       <Styled.DeleteButton id={"close"} onClick={() => {props?.onRemove(props?.id)}}>
           <Styled.IconItem id={"close"} fontSize="inherit">close</Styled.IconItem>
         </Styled.DeleteButton>
-        <Styled.NodeName>{props.name}</Styled.NodeName>
+        <Styled.NodeName>{nodeData?.name}</Styled.NodeName>
         <Icon
           style={{
             textAlign: "center",
@@ -20,10 +21,10 @@ const BeginNode = (props) => {
             color: theme.colors.night.x1,
           }}
         >
-          {props.icon}
+          {nodeData?.icon}
         </Icon>
       </Styled.NodeContainer>
-      <OutputHandler outputList={props.output_list} />
+      <OutputHandler outputList={nodeData?.output_list} />
     </Styled.Node>
   );
 };
@@ -49,10 +50,12 @@ const OutputHandler = ({ outputList }) => {
 
 function buildStyle() {
   return {
-    "left": "50%",
-    "borderRadius": 8,
-    "width": 20,
-    "height": 12
+    left: "50%",
+    borderRadius: 8,
+    width: 20,
+    height: 12,
+    borderColor: theme.colors.night.x1,
+    backgroundColor: theme.colors.night.x1,
   };
 }
 

@@ -4,8 +4,7 @@ import { toast } from "react-toastify";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
-import BooleanInput from "../../../parts/input/BooleanInput";
-import DateInput from "../../../parts/input/DateInput";
+import ParameterInput from "../../../parts/input/ParameterInput";
 
 
 //-----------------------------------------------------------------------------
@@ -22,7 +21,7 @@ const GenericDialog = ({ open, handleClose, node, onAddElementResultValue }) => 
     // };
 
     // onAddElementResultValue(data, inputData);
-    toast.success(`Dados de ${payloadData.label} salvos`);
+    toast.success(`Dados de ${node.name} salvos`);
     console.log(parameters)
   };
 
@@ -42,7 +41,7 @@ const GenericDialog = ({ open, handleClose, node, onAddElementResultValue }) => 
       onClose={handleClose}
       aria-labelledby="max-width-dialog-title"
     >
-      <Header title={payloadData.label} subtitle={payloadData.description} />
+      <Header title={node.name} subtitle={node.description} />
       <Body>
         {node.parameters.map((parameter, index) => (
           <ParameterInput 

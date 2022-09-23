@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-import BooleanInput from "../../../parts/input/BooleanInput";
-import DateInput from "../../../parts/input/DateInput";
+import BooleanInput from "./BooleanInput";
+import DateInput from "./DateInput";
+import RawTextInput from "./RawTextInput";
+import { Spacing } from "./styled";
+import AccentButton from "../../components/buttons/AccentButton";
+import MultiSelectionInput from "./MultiSelectionInput";
+import NumberInput from "./NumberInput";
+import DangerButton from "../../components/buttons/DangerButton";
 
 const ParameterInput = ({parameter, value, onChange}) => {
   

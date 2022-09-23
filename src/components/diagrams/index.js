@@ -118,12 +118,11 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
       y: event.clientY - reactFlowBounds.top,
     });
     const newNode = {
-      ...node,
       key: index,
       id: `dndnode_${index}`,
-      // type: node.type,
+      type: node.type,
       position,
-      //data: node.data, 
+      data: node, 
       onRemove: remModelData
     };
 
