@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { theme } from "../../../utils/colors";
+import theme from "../../../assets/themes";
 import TextField from '@material-ui/core/TextField';
 
 export const SideContainer = styled.div`

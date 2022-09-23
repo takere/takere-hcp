@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as Styled from './login.styled';
 import Button from "@material-ui/core/Button";
-import {theme} from "../../utils/colors";
+import theme from "../../assets/themes";
 import {makeLogin} from "../../services/auth/auth";
 import {useHistory} from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import IconUI from "@material-ui/core/Icon";
-import { theme } from "../../../../utils/colors";
+import theme from "../../../../assets/themes";
 
 export const Icon = styled(IconUI)`
   text-align: center;

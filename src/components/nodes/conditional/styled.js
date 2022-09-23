@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {theme} from "../../../utils/colors";
+import theme from "../../../assets/themes";
 import Icon from "@material-ui/core/Icon";
 
 export const Node = styled.div`

@@ -2,7 +2,7 @@ import React from "react";
 import { Handle } from "react-flow-renderer";
 import Icon from "@material-ui/core/Icon";
 import * as Styled from "./styled";
-import { theme } from "../../../utils/colors";
+import theme from "../../../assets/themes";
 
 const GenericNode = (props) => {
   const nodeData = props.data;
