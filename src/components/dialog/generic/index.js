@@ -89,6 +89,8 @@ function initializeParameter(parameter) {
       return '';
     case 'number':
       return 0;
+    case 'form':
+      return []
     case 'boolean':
       return false;
     default:

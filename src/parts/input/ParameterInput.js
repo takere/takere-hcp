@@ -198,7 +198,6 @@ const ParameterInput = ({parameter, value, onChange}) => {
         );
         case "checkbox":
         case "radio": 
-        case "form":
           return (
             <OptionInputBuilder
               options={value}
@@ -206,6 +205,17 @@ const ParameterInput = ({parameter, value, onChange}) => {
               handleRemoveOption={handleRemoveField}
               handleNewOption={handleNewField}
             />
+          );
+        case "form":
+          return (
+            <>
+              <OptionInputBuilder
+                options={value}
+                onValueChange={handleFieldChange}
+                handleRemoveOption={handleRemoveField}
+                handleNewOption={handleNewField}
+              />
+            </>
           );
     }
   }
