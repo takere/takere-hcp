@@ -6,13 +6,13 @@ import { TextName, Spacing } from './styled';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const BooleanInput = ({ label, checked, onChange }) => (
+const BooleanInput = ({ label, value, onChange }) => (
   <>
     <TextName>
       { label }
     </TextName>
     <Checkbox
-      checked={checked}
+      checked={value}
       onChange={event => onChange(event.target.checked)}
       inputProps={{ "aria-label": "controlled" }}
     />

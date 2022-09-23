@@ -13,7 +13,7 @@ import { convertFromHTML, convertToHTML } from "draft-convert";
 
 const ParameterInput = ({parameter, value, onChange}) => {
   
-  const [undefinedValue, setUndefinedValue] = useState(false);
+  const [undefinedValue, setUndefinedValue] = useState(value === null);
   const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromText("")));
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,7 +27,7 @@ const ParameterInput = ({parameter, value, onChange}) => {
 
   const onChangeUndefinedValue = (newValue) => {
     setUndefinedValue(newValue);
-    onChange(null);
+    onChange(newValue ? null : new Date().toISOString());
   }
 
   const handleFieldChange = (newValue, index) => {
@@ -161,7 +161,10 @@ const ParameterInput = ({parameter, value, onChange}) => {
     }
 
     setQuestions(updatedQuestions);
-    onChange(updatedQuestions)
+
+    if (parameter.type === 'form') {
+      onChange(updatedQuestions)
+    }
   }, [question, answerType, answerOptions, currentQuestion, questions]);
 
     switch (parameter.type) {
@@ -171,7 +174,7 @@ const ParameterInput = ({parameter, value, onChange}) => {
             <DateInput
               label={parameter.name}
               helperText={parameter.description}
-              value={value}
+              value={value ?? new Date()}
               onChange={onChange}
             />
           );
