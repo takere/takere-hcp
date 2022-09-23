@@ -86,7 +86,7 @@ const ConditionalDialog = ({
     // setOperatorOptions(buildOperatorOptions(connection, 0));
     // setRightOptions(buildRightOptions(connection, 0));
 
-    //console.log('c: ', connection)
+    console.log('c: ', connection)
   }, [connection]);
 
   return (
@@ -100,7 +100,7 @@ const ConditionalDialog = ({
       <Header title={node.data.name} subtitle={node.data.description} />
       {connection &&
         <Body>
-          {node.data.arguments && node.data.arguments.length > 0 && parameters.map((parameter, index) => (
+          {connection.data.arguments && connection.data.arguments.length > 0 && parameters.map((parameter, index) => (
             <ParameterInput 
               key={index}
               parameter={parameter}
@@ -145,9 +145,10 @@ function buildLeftOptions(connection) {
   }
 
   const options = [];
+  const fields = connection.data.arguments?.find(arg => arg.length > 0);
 
-  connection.data.arguments?.forEach((arg, index) => {
-    options.push({ label: arg, value: index });
+  fields?.forEach((field, index) => {
+    options.push({ label: field.label, value: index });
   });
 
   return options;
@@ -167,8 +168,9 @@ function buildOperatorOptions(connection, currentIndex) {
   if (!connection.data.arguments) {
     return [];
   }
-  
-  const parameter = connection.data.parameters[currentIndex];
+
+  const fields = connection.data.arguments?.find(arg => arg.length > 0);
+  const parameter = fields[currentIndex];
   
   if (parameter.type === 'number') {
     options = buildOptions(numberOperatorOptions);
@@ -206,7 +208,8 @@ function buildRightOptions(connection, currentIndex) {
     return [];
   }
 
-  const form = connection.data.arguments[currentIndex];
+  const fields = connection.data.arguments?.find(arg => arg.length > 0);
+  const form = fields[currentIndex];
   const options = [];
   
   form.options.forEach((option, index) => {

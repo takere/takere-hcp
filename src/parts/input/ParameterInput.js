@@ -19,11 +19,11 @@ const ParameterInput = ({parameter, value, onChange}) => {
   const [totalPages, setTotalPages] = useState(loadTotalPages(parameter, value));
   const [editorState, setEditorState] = useState(loadEditorContentFromLoadedPages(parameter, value));
   const [questions, setQuestions] = useState(loadQuestions(parameter, value));
-  const [totalQuestions, setTotalQuestions] = useState(loadTotalQuestions(value));
-  const [question, setQuestion] = useState(loadQuestion(value));
+  const [totalQuestions, setTotalQuestions] = useState(loadTotalQuestions(parameter, value));
+  const [question, setQuestion] = useState(loadQuestion(parameter, value));
   const [currentQuestion, setCurrentQuestion] = useState(1);
-  const [answerType, setAnswerType] = useState(loadAnswerType(value));
-  const [answerOptions, setAnswerOptions] = useState(loadAnswerOptions(value));
+  const [answerType, setAnswerType] = useState(loadAnswerType(parameter, value));
+  const [answerOptions, setAnswerOptions] = useState(loadAnswerOptions(parameter, value));
 
   const onChangeUndefinedValue = (newValue) => {
     setUndefinedValue(newValue);
@@ -397,6 +397,10 @@ function loadEditorContentFromLoadedPages(parameter, value) {
 }
 
 function loadQuestions(parameter, value) {
+  if (parameter.type !== 'form') {
+    return [];
+  }
+
   if (!value || value.length === 0) {
     return [buildEmptyQuestion(parameter.options)];
   }
@@ -404,32 +408,32 @@ function loadQuestions(parameter, value) {
   return value;
 }
 
-function loadTotalQuestions(value) {
-  if (!value || value.length === 0) {
+function loadTotalQuestions(parameter, value) {
+  if (!value || value.length === 0 || parameter.type !== 'form') {
     return 1;
   }
 
   return value.length;
 }
 
-function loadQuestion(value) {
-  if (!value || value.length === 0) {
+function loadQuestion(parameter, value) {
+  if (!value || value.length === 0 || parameter.type !== 'form') {
     return '';
   }
 
   return value[0].label;
 }
 
-function loadAnswerType(value) {
-  if (!value || value.length === 0) {
-    return [];
+function loadAnswerType(parameter, value) {
+  if (!value || value.length === 0 || parameter.type !== 'form') {
+    return 'text';
   }
 
   return value[0].type;
 }
 
-function loadAnswerOptions(value) {
-  if (!value || value.length === 0) {
+function loadAnswerOptions(parameter, value) {
+  if (!value || value.length === 0 || parameter.type !== 'form') {
     return [];
   }
 
