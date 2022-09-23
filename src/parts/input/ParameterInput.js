@@ -7,10 +7,14 @@ import AccentButton from "../../components/buttons/AccentButton";
 import MultiSelectionInput from "./MultiSelectionInput";
 import NumberInput from "./NumberInput";
 import DangerButton from "../../components/buttons/DangerButton";
+import RichTextInput from "./RichTextInput";
+import { EditorState, ContentState } from "draft-js";
+import { convertFromHTML, convertToHTML } from "draft-convert";
 
 const ParameterInput = ({parameter, value, onChange}) => {
   
   const [undefinedValue, setUndefinedValue] = useState(false);
+  const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromText("")));
 
   const onChangeUndefinedValue = (newValue) => {
     setUndefinedValue(newValue);
@@ -38,6 +42,11 @@ const ParameterInput = ({parameter, value, onChange}) => {
 
     onChange(updatedFields);
   }
+
+  const onChangeEditorState = (newState) => {
+    setEditorState(newState);
+    onChange(convertToHTML(newState.getCurrentContent()));
+  };
 
     switch (parameter.type) {
       case "date":
@@ -78,6 +87,14 @@ const ParameterInput = ({parameter, value, onChange}) => {
             helperText={parameter.description}
             value={value}
             onChange={onChange}
+          />
+        );
+      case "rich_text":
+        return (
+          <RichTextInput
+            label={parameter.name}
+            value={editorState}
+            onChange={onChangeEditorState}
           />
         );
       case "select|text":

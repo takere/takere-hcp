@@ -82,12 +82,11 @@ function initializeParameter(parameter) {
     case 'date':
       return new Date();
     case 'text':
+    case 'rich_text':
     case 'radio':
     case 'checkbox':
     case 'select':
       return '';
-    case 'rich_text':
-      return '<p></p>';
     case 'number':
       return 0;
     case 'boolean':
