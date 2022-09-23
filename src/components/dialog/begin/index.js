@@ -88,6 +88,8 @@ function initializeParameter(parameter) {
     case 'checkbox':
     case 'select':
       return '';
+    case 'rich_text':
+      return '<p></p>';
     case 'number':
       return 0;
     case 'boolean':

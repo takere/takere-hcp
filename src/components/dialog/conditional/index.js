@@ -20,10 +20,9 @@ const ConditionalDialog = ({
   onAddElementResultValue,
   connection
 }) => {
-  const { data: payloadData } = node;
   
   // const [options, setOptions] = useState([left, operator, right]);
-  const [parameters, setParameters] = useState(parseParameters(node.parameters, [buildLeftOptions(connection), buildOperatorOptions(connection, 0), buildRightOptions(connection, 0)]));
+  const [parameters, setParameters] = useState(parseParameters(node.data.parameters, [buildLeftOptions(connection), buildOperatorOptions(connection, 0), buildRightOptions(connection, 0)]));
   const [parameterValues, setParameterValues] = useState([0, 0, undefined]);
 
   // const [left, setLeft] = useState(loadStoredLeft(node, connection));
@@ -42,7 +41,7 @@ const ConditionalDialog = ({
     // };
 
     // onAddElementResultValue(node, inputData);
-    toast.success(`Dados de ${payloadData.label} salvos`);
+    toast.success(`Dados de ${node.data.name} salvos`);
 
     console.log('Parameters:');
     console.log(parameters);
@@ -91,7 +90,7 @@ const ConditionalDialog = ({
       buildRightOptions(connection, 0)
     ];
 
-    setParameters(parseParameters(node.parameters, options));
+    setParameters(parseParameters(node.data.parameters, options));
 
     // setLeftOptions(buildLeftOptions(connection));
     // setOperatorOptions(buildOperatorOptions(connection, 0));
@@ -108,7 +107,7 @@ const ConditionalDialog = ({
       onClose={handleClose}
       aria-labelledby="max-width-dialog-title"
     >
-      <Header title={payloadData.label} subtitle={payloadData.description} />
+      <Header title={node.data.name} subtitle={node.data.description} />
       {connection &&
         <Body>
           {parameters.map((parameter, index) => (
