@@ -14,10 +14,10 @@ import { convertFromHTML, convertToHTML } from "draft-convert";
 const ParameterInput = ({parameter, value, onChange}) => {
   
   const [undefinedValue, setUndefinedValue] = useState(value === null);
-  const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromText("")));
-  const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pages, setPages] = useState([]);
+  const [pages, setPages] = useState(loadPages(parameter, value));
+  const [totalPages, setTotalPages] = useState(loadTotalPages(parameter, value));
+  const [editorState, setEditorState] = useState(loadEditorContentFromLoadedPages(parameter, value));
   const [questions, setQuestions] = useState(loadQuestions(parameter, value));
   const [totalQuestions, setTotalQuestions] = useState(loadTotalQuestions(value));
   const [question, setQuestion] = useState(loadQuestion(value));
@@ -371,6 +371,30 @@ const OptionInputBuilder = ({
     ))}
   </div>
 );
+
+function loadPages(parameter, value) {
+  if (!value || value.length === 0 || parameter.type !== 'book') {
+    return [];
+  }
+
+  return value;
+}
+
+function loadTotalPages(parameter, value) {
+  if (!value || value.length === 0 || parameter.type !== 'book') {
+    return 1;
+  }
+
+  return value.length;
+}
+
+function loadEditorContentFromLoadedPages(parameter, value) {
+  if (!value || value.length === 0 || parameter.type !== 'book') {
+    return EditorState.createWithContent(ContentState.createFromText(""));
+  }
+
+  return EditorState.createWithContent(convertFromHTML(value[0]));
+}
 
 function loadQuestions(parameter, value) {
   if (!value || value.length === 0) {
