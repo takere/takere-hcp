@@ -29,7 +29,6 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
   const reactFlowWrapper = useRef(null);
 
   const handleClickOpenDialog = () => {
-    console.log(nodes);
     setOpenNodeDialog(true);
   };
 
