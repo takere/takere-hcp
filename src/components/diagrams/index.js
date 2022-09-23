@@ -80,7 +80,7 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
       const sourceNode = nodes.filter(element => element.id === sourceId)[0];
       const targetNode = nodes.filter(element => element.id === targetId)[0];
 
-      if (isConnectionAllowed(sourceNode.slug, targetNode.slug, nodeConnections)) {
+      if (isConnectionAllowed(sourceNode.data.slug, targetNode.data.slug, nodeConnections)) {
         const connectedNodes = nodes.filter(node => (!node.target) || (node.target !== targetId));
 
         setNodes(addEdge({ ...params, animated: true, style:{strokeWidth:3} }, connectedNodes));
@@ -231,15 +231,13 @@ const ReactFlowContent = ({
 //        Functions
 //-----------------------------------------------------------------------------
 function isConnectionAllowed(sourceNodeSlug, targetNodeSlug, nodeConnections) {
-  if (nodeConnections[sourceNodeSlug] === undefined) {
+  const sourceNodeConnections = nodeConnections.find(connection => connection.slug === sourceNodeSlug)?.connections;
+  
+  if (sourceNodeConnections === undefined) {
     return false;
   }
 
-  if (nodeConnections[targetNodeSlug] === undefined) {
-    return false;
-  }
-
-  return nodeConnections[sourceNodeSlug].includes(targetNodeSlug);
+  return sourceNodeConnections.includes(targetNodeSlug);
 }
 
 
