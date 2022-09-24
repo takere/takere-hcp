@@ -20,8 +20,8 @@ const SaveFlowDialog = ({ open, handleClose, data }) => {
     const payload = {
       name,
       description,
-      userEmail,
-      data: dataFlow,
+      patientEmail:userEmail,
+      flow: dataFlow,
     };
 
     console.log('Sending flow...', payload)
