@@ -25,9 +25,9 @@ const SaveFlowDialog = ({ open, handleClose, data }) => {
     };
 
     console.log('Sending flow...', payload)
-    // new Requests().createOrUpdateFlow(payload).then((r) => {
-    //   handleClose();
-    // });
+    new Requests().createOrUpdateFlow(payload).then((r) => {
+      handleClose();
+    });
   };
 
   useEffect(() => {

@@ -20,7 +20,6 @@ const ConditionalDialog = ({
   onAddElementResultValue,
   connection
 }) => {
-  
   const [parameters, setParameters] = useState(parseParameters(node.data.parameters, [buildLeftOptions(connection), buildOperatorOptions(connection, 0), buildRightOptions(connection, 0)]));
   const [parameterValues, setParameterValues] = useState([0, 0, undefined]);
 
@@ -64,7 +63,13 @@ const ConditionalDialog = ({
     ];
 
     setParameters(parseParameters(node.data.parameters, options));
-    setParameterValues([0, 0, options[2]?.length > 0 ? 0 : '']);
+
+    if (node.data.arguments) {
+      setParameterValues(node.data.arguments);
+    }
+    else {
+      setParameterValues([0, 0, options[2]?.length > 0 ? 0 : '']);
+    }
   }, [connection]);
 
   return (
