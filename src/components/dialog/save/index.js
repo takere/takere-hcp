@@ -21,7 +21,7 @@ const SaveFlowDialog = ({ open, handleClose, data }) => {
       name,
       description,
       patientEmail:userEmail,
-      flow: dataFlow,
+      graph: dataFlow,
     };
 
     console.log('Sending flow...', payload)
@@ -32,16 +32,16 @@ const SaveFlowDialog = ({ open, handleClose, data }) => {
 
   useEffect(() => {
     // console.log(data);
-    if (data?.flow?.flowName) {
-      setName(data.flow.flowName);
+    if (data?.flow?.name) {
+      setName(data.flow.name);
     }
-    if (data?.flow?.flowDescription) {
-      setDescription(data.flow.flowDescription);
+    if (data?.flow?.description) {
+      setDescription(data.flow.description);
     }
-    if (data?.flow?.flowEmail) {
-      setUserEmail(data.flow.flowEmail);
+    if (data?.flow?.patientEmail) {
+      setUserEmail(data.flow.patientEmail);
     }
-    setDataFlow(data?.elements);
+    setDataFlow(data?.graph);
   }, [data]);
 
   return (

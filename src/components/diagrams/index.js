@@ -145,8 +145,8 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
   }, []);
 
   useEffect(() => {
-    if (flowDb?.data) {
-      const graph = flowDb.data;
+    if (flowDb?.graph) {
+      const graph = flowDb.graph;
 
       for (let i = 0; i < graph.length; i++) {
         graph[i] = { ...graph[i], onRemove: remModelData };
@@ -165,7 +165,7 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
 
   return (
     <Styled.Container>
-      { buildSaveFlowDialog(openSaveDialog, handleCloseSaveDialog, { flow, elements: nodes }) }
+      { buildSaveFlowDialog(openSaveDialog, handleCloseSaveDialog, { flow, graph: nodes }) }
       { buildNodeDialog(selectedNode, openNodeDialog, handleCloseNodeDialog, onAddElementResultValue, selectedNodeConnection) }
       <ReactFlowProvider>
         <ReactFlowContent 
