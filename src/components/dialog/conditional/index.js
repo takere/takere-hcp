@@ -25,38 +25,23 @@ const ConditionalDialog = ({
   const [parameterValues, setParameterValues] = useState([0, 0, undefined]);
 
   const saveInputs = () => {
-    // const inputData = {
-    //   left: left,
-    //   operator: operatorOptions[operator].originalValue,
-    //   right: rightOptions[right]?.label ?? right
-    // };
-
-    // onAddElementResultValue(node, inputData);
     toast.success(`Dados de ${node.data.name} salvos`);
     onAddElementResultValue(node, parameterValues);
   };
 
   const onSelectLeft = (index) => {
-    //const newIndex = connection.data.results.questions.findIndex(quiz => quiz.question === operand)
     const left = index;
     const operator = 0;
     const right = '';
     const updatedParameters = [ left, operator, right ];
     const options = [
-      parameters[0].options[index],
+      parameters[0].options,
       buildOperatorOptions(connection, index),
       buildRightOptions(connection, index)
     ];
 
     setParameterValues(updatedParameters);
     setParameters(parseParameters(parameters, options));
-    
-    
-    // setLeft(index);
-    // setOperator(0);
-    // setRight('');
-    // setOperatorOptions(buildOperatorOptions(connection, index));
-    // setRightOptions(buildRightOptions(connection, index));
   }
 
   const handleParameterChange = (newValue, parameterIndex) => {
@@ -67,7 +52,7 @@ const ConditionalDialog = ({
     setParameterValues(updatedParameters);
 
     if (parameterIndex === 0) {
-      onSelectLeft(parameterIndex);
+      onSelectLeft(newValue);
     }
   }
 
@@ -80,12 +65,6 @@ const ConditionalDialog = ({
 
     setParameters(parseParameters(node.data.parameters, options));
     setParameterValues([0, 0, options[2]?.length > 0 ? 0 : '']);
-
-    // setLeftOptions(buildLeftOptions(connection));
-    // setOperatorOptions(buildOperatorOptions(connection, 0));
-    // setRightOptions(buildRightOptions(connection, 0));
-
-    // console.log('c: ', connection)
   }, [connection]);
 
   return (

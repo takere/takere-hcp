@@ -24,13 +24,14 @@ const SaveFlowDialog = ({ open, handleClose, data }) => {
       data: dataFlow,
     };
 
-    new Requests().createOrUpdateFlow(payload).then((r) => {
-      handleClose();
-    });
+    console.log('Sending flow...', payload)
+    // new Requests().createOrUpdateFlow(payload).then((r) => {
+    //   handleClose();
+    // });
   };
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
     if (data?.flow?.flowName) {
       setName(data.flow.flowName);
     }

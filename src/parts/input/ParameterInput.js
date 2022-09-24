@@ -163,7 +163,6 @@ const ParameterInput = ({parameter, value, onChange}) => {
   
       setQuestions(updatedQuestions);
       onChange(updatedQuestions)
-      console.log(value)
     }
   }, [question, answerType, answerOptions, currentQuestion, questions]);
 
