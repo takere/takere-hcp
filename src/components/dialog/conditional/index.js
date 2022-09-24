@@ -34,8 +34,6 @@ const ConditionalDialog = ({
     // onAddElementResultValue(node, inputData);
     toast.success(`Dados de ${node.data.name} salvos`);
     onAddElementResultValue(node, parameterValues);
-
-    console.log(parameterValues)
   };
 
   const onSelectLeft = (index) => {
@@ -87,7 +85,7 @@ const ConditionalDialog = ({
     // setOperatorOptions(buildOperatorOptions(connection, 0));
     // setRightOptions(buildRightOptions(connection, 0));
 
-    console.log('c: ', connection)
+    // console.log('c: ', connection)
   }, [connection]);
 
   return (
@@ -146,7 +144,7 @@ function buildLeftOptions(connection) {
   }
 
   const options = [];
-  const fields = connection.data.arguments?.find(arg => arg.length > 0);
+  const fields = connection.data.arguments?.find(arg => Array.isArray(arg));
 
   fields?.forEach((field, index) => {
     options.push({ label: field.label, value: index });
@@ -170,7 +168,7 @@ function buildOperatorOptions(connection, currentIndex) {
     return [];
   }
 
-  const fields = connection.data.arguments?.find(arg => arg.length > 0);
+  const fields = connection.data.arguments?.find(arg => Array.isArray(arg));
   const field = fields[currentIndex];
   
   if (field.type === 'number') {
@@ -209,7 +207,7 @@ function buildRightOptions(connection, currentIndex) {
     return [];
   }
 
-  const fields = connection.data.arguments?.find(arg => arg.length > 0);
+  const fields = connection.data.arguments?.find(arg => Array.isArray(arg));
   const form = fields[currentIndex];
   const options = [];
   
