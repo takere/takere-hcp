@@ -64,7 +64,7 @@ const ParameterInput = ({parameter, value, onChange}) => {
     setTotalPages(newTotalPages);
     setCurrentPage(1);
     setPages(newPages);
-    setEditorState(pages[0]);
+    setEditorState(pages[0].structure);
     onChange(convertPagesToHtml(newPages));
   };
 
@@ -76,7 +76,7 @@ const ParameterInput = ({parameter, value, onChange}) => {
     }
 
     setCurrentPage(newCurrentPage);
-    setEditorState(pages[newCurrentPage - 1]);
+    setEditorState(pages[newCurrentPage - 1].structure);
   };
 
   const onChangeEditorState = (newState) => {
@@ -392,7 +392,7 @@ function loadEditorContentFromLoadedPages(parameter, value) {
     return EditorState.createWithContent(ContentState.createFromText(""));
   }
 
-  return EditorState.createWithContent(convertFromHTML(value[0]));
+  return EditorState.createWithContent(convertFromHTML(value[0].structure));
 }
 
 function loadQuestions(parameter, value) {
@@ -459,7 +459,7 @@ function convertPagesToHtml(pages) {
   const parsedPages = [];
 
   pages.forEach((page) => {
-    parsedPages.push(convertToHTML(page.getCurrentContent()));
+    parsedPages.push({structure: convertToHTML(page.getCurrentContent()), style: null});
   });
 
   return parsedPages;
