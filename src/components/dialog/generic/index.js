@@ -87,6 +87,7 @@ function initializeParameter(parameter) {
     case 'rich_text':
     case 'radio':
     case 'checkbox':
+    case 'select':
       return '';
     case 'select':
       return parameter.options[0].value;
@@ -99,38 +100,4 @@ function initializeParameter(parameter) {
     default:
       return null;
   }
-}
-
-function loadStoredStartDate(data) {
-  if (
-    !data ||
-    !data.data ||
-    !data.data.results ||
-    !data.data.results.startDate
-  ) {
-    return new Date();
-  }
-
-  return data.data.results.startDate;
-}
-
-function loadStoredEndDate(data) {
-  if (!data || !data.data || !data.data.results || !data.data.results.endDate) {
-    return new Date();
-  }
-
-  return data.data.results.endDate;
-}
-
-function loadStoredUndefinedEnd(data) {
-  if (
-    !data ||
-    !data.data ||
-    !data.data.results ||
-    !data.data.results.undefinedEnd
-  ) {
-    return false;
-  }
-
-  return data.data.results.undefinedEnd;
 }

@@ -452,7 +452,7 @@ function buildEmptyQuestion(answerTypes) {
 }
 
 function hasAnswerOptions(type) {
-  return (type === 'checkbox') || (type === 'radio');
+  return ['checkbox', 'radio', 'select'].includes(type);
 }
 
 function convertPagesToHtml(pages) {
