@@ -146,16 +146,23 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
 
   useEffect(() => {
     if (flowDb?.graph) {
-      const graph = flowDb.graph;
+      const loadedNodes = [];
 
-      for (let i = 0; i < graph.length; i++) {
-        graph[i] = { ...graph[i], onRemove: remModelData };
+      for (let i = 0; i < flowDb.graph.length; i++) {
+        let formattedData = { 
+          ...flowDb.graph[i],
+          data: flowDb.graph[i], 
+          onRemove: remModelData 
+        };
 
-        if (graph[i].source !== undefined) {
-          graph[i] = { ...graph[i], style:{strokeWidth:3} }
+        if (flowDb.graph[i].source !== undefined) {
+          formattedData = { ...formattedData, style:{strokeWidth:3} }
         }
+
+        loadedNodes.push(formattedData);
       }
-      setNodes(graph);
+
+      setNodes(loadedNodes);
       setFlow(flowDb);
     } else {
       setNodes([]);
