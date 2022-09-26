@@ -164,6 +164,9 @@ const ParameterInput = ({parameter, value, onChange}) => {
       setQuestions(updatedQuestions);
       onChange(updatedQuestions)
     }
+    else if (parameter.type === 'select') {
+      onChange(parameter.options[0].value);
+    }
   }, [question, answerType, answerOptions, currentQuestion, questions]);
 
     switch (parameter.type) {
