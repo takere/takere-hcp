@@ -275,6 +275,9 @@ const ParameterInput = ({parameter, value, onChange}) => {
           />
         );
       case "select":
+        if (!value) {
+          onChange(parameter.options[0].value);
+        }
         return (
           <MultiSelectionInput
             label={parameter.name}
