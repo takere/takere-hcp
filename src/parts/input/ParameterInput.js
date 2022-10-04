@@ -297,16 +297,18 @@ const ParameterInput = ({parameter, value, onChange}) => {
             <MultiSelectionInput
               label={parameter.name}
               helperText={parameter.description}
-              value={value}
-              onChange={onChange}
+              value={value.select}
+              onChange={newValue => onChange({ select: newValue, number: value.number })}
               options={parameter.options}
             />
-            <NumberInput
-              label={''}
-              helperText={''}
-              value={selectNumber}
-              onChange={setSelectNumber}
-            />
+            {parameter.options[value.select]['request_input'] &&
+              <NumberInput
+                label={''}
+                helperText={''}
+                value={value.number}
+                onChange={newValue => onChange({ select: value.select, number: newValue})}
+              />
+            }
           </>
         );
         case "checkbox":
