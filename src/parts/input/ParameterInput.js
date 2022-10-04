@@ -469,7 +469,7 @@ function loadAnswerOptions(parameter, value) {
 
 function loadSelectNumber(parameter, value) {
   if (!value || value.number === undefined || parameter.type !== 'select&number') {
-    return { select: value, number: 0 };
+    return { select: 'onlyOnce', number: 0 };
   }
 
   return value.number;
