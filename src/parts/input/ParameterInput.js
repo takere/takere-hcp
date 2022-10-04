@@ -24,7 +24,8 @@ const ParameterInput = ({parameter, value, onChange}) => {
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [answerType, setAnswerType] = useState(loadAnswerType(parameter, value));
   const [answerOptions, setAnswerOptions] = useState(loadAnswerOptions(parameter, value));
-
+  const [selectNumber, setSelectNumber] = useState(loadSelectNumber(parameter, value));
+  
   const onChangeUndefinedValue = (newValue) => {
     setUndefinedValue(newValue);
     onChange(newValue ? null : new Date().toISOString());
@@ -287,6 +288,27 @@ const ParameterInput = ({parameter, value, onChange}) => {
             options={parameter.options}
           />
         );
+        case "select&number":
+        if (!value) {
+          onChange({ select: parameter.options[0].value, number: selectNumber });
+        }
+        return (
+          <>
+            <MultiSelectionInput
+              label={parameter.name}
+              helperText={parameter.description}
+              value={value}
+              onChange={onChange}
+              options={parameter.options}
+            />
+            <NumberInput
+              label={''}
+              helperText={''}
+              value={selectNumber}
+              onChange={setSelectNumber}
+            />
+          </>
+        );
         case "checkbox":
         case "radio": 
           return (
@@ -443,6 +465,14 @@ function loadAnswerOptions(parameter, value) {
   }
 
   return value[0].options;
+}
+
+function loadSelectNumber(parameter, value) {
+  if (!value || value.number === undefined || parameter.type !== 'select&number') {
+    return { select: value, number: 0 };
+  }
+
+  return value.number;
 }
 
 function buildEmptyQuestion(answerTypes) {
