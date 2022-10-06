@@ -124,7 +124,7 @@ function buildLeftOptions(connection) {
   }
 
   if (connection.data.slug === 'medication_control') {
-    return [{ label: 'Medication', value: 0 }];
+    return [{ label: 'Medication', value: 'medication' }];
   }
 
   const options = [];
@@ -184,7 +184,7 @@ function buildRightOptions(connection, currentIndex) {
   }
 
   if (connection.data.slug === 'medication_control') {
-    return [{ label: 'Taken', value: 0 }];
+    return [{ label: 'Taken', value: 'taken' }];
   }
 
   if (!connection.data.arguments) {

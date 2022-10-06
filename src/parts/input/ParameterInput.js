@@ -292,25 +292,28 @@ const ParameterInput = ({parameter, value, onChange}) => {
         if (!value) {
           onChange({ select: parameter.options[0].value, number: selectNumber });
         }
-        return (
-          <>
-            <MultiSelectionInput
-              label={parameter.name}
-              helperText={parameter.description}
-              value={value.select}
-              onChange={newValue => onChange({ select: newValue, number: value.number })}
-              options={parameter.options}
-            />
-            {parameter.options[value.select]['request_input'] &&
-              <NumberInput
-                label={''}
-                helperText={''}
-                value={value.number}
-                onChange={newValue => onChange({ select: value.select, number: newValue})}
+        else {
+          return (
+            <>
+              <MultiSelectionInput
+                label={parameter.name}
+                helperText={parameter.description}
+                value={value.select}
+                onChange={newValue => onChange({ select: newValue, number: value.number })}
+                options={parameter.options}
               />
-            }
-          </>
-        );
+              {parameter.options[value.select] && parameter.options[value.select]['request_input'] &&
+                <NumberInput
+                  label={''}
+                  helperText={''}
+                  value={value.number}
+                  onChange={newValue => onChange({ select: value.select, number: newValue})}
+                />
+              }
+            </>
+          );
+        }
+        break;
         case "checkbox":
         case "radio": 
           return (
@@ -380,7 +383,7 @@ const OptionInputBuilder = ({
       }}
     />
     <Spacing />
-    {options.map((option, index) => (
+    {options && options.map((option, index) => (
       <div key={index}>
         <div style={{display: "flex", flexDirection: "row", alignItems: 'center'}}>
           <RawTextInput
@@ -471,7 +474,7 @@ function loadAnswerOptions(parameter, value) {
 
 function loadSelectNumber(parameter, value) {
   if (!value || value.number === undefined || parameter.type !== 'select&number') {
-    return { select: 'onlyOnce', number: 0 };
+    return 0;
   }
 
   return value.number;
