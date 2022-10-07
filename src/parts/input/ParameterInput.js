@@ -291,29 +291,28 @@ const ParameterInput = ({parameter, value, onChange}) => {
         case "select&number":
         if (!value) {
           onChange({ select: parameter.options[0].value, number: selectNumber });
+
+          return <></>
         }
-        else {
-          return (
-            <>
-              <MultiSelectionInput
-                label={parameter.name}
-                helperText={parameter.description}
-                value={value.select}
-                onChange={newValue => onChange({ select: newValue, number: value.number })}
-                options={parameter.options}
+        return (
+          <>
+            <MultiSelectionInput
+              label={parameter.name}
+              helperText={parameter.description}
+              value={value.select}
+              onChange={newValue => onChange({ select: newValue, number: value.number })}
+              options={parameter.options}
+            />
+            {parameter.options[value.select] && parameter.options[value.select]['request_input'] &&
+              <NumberInput
+                label={''}
+                helperText={''}
+                value={value.number}
+                onChange={newValue => onChange({ select: value.select, number: newValue})}
               />
-              {parameter.options[value.select] && parameter.options[value.select]['request_input'] &&
-                <NumberInput
-                  label={''}
-                  helperText={''}
-                  value={value.number}
-                  onChange={newValue => onChange({ select: value.select, number: newValue})}
-                />
-              }
-            </>
-          );
-        }
-        break;
+            }
+          </>
+        );
         case "checkbox":
         case "radio": 
           return (
