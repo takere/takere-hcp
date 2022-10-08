@@ -27,12 +27,10 @@ export const Patient = () => {
     });
   };
 
-  const handleOpenCompletedItem = (type, result, date) => {
-    console.log(result)
-
-    if (type === 'QUIZ') {
+  const handleOpenCompletedItem = (node, flow, progress) => {
+    if (progress && progress.answers) {
       setOpenDialog(true);
-      setDialogContent({ type, payload: result, date })
+      setDialogContent({ node, flow, progress })
     }
   };
 
@@ -80,7 +78,7 @@ export const Patient = () => {
                 description={`completed at ${item.finished.date}`}
                 icon={item.node.icon}
                 color={item.node.color}
-                onClick={() => handleOpenCompletedItem(item.node.name, item.finished.answers, item.finished.date)}
+                onClick={() => handleOpenCompletedItem(item.node, item.flow, item.finished)}
               />
             ))}
           </Styled.ContainerData>
@@ -207,10 +205,10 @@ const Dialog = ({ open, onClose, data }) => (
   >
     <Header 
       title='Details' 
-      subtitle={`completed at ${data.date}`}
+      subtitle={`completed at ${data.progress?.date}`}
     />
     <Body>
-      { buildDialogBody(data.type, data.payload) }
+      { buildDialogBody(data.node, data.progress?.answers) }
     </Body>
     <Footer>
       <DefaultButton title="Close" onClick={onClose} />
@@ -239,17 +237,20 @@ const Footer = ({ children }) => (
   </DialogActions>
 );
 
-const buildDialogBody = (type, payload) => {
-  if (type === 'QUIZ') {
+const buildDialogBody = (node, answers) => {
+  if (node && node.arguments && answers) {
+    const questionsIndex = node.parameters.findIndex(parameter => parameter.type === 'form');
+    const questions = node.arguments[questionsIndex];
+
     return (
       <Styled.Fields>
-        {payload.map((question, index) => (
-        <Styled.Field>
+        {answers.map((answer, index) => (
+        <Styled.Field key={index}>
           <Styled.FieldTitle>
-            {question.question}
+            {questions[index].label}
           </Styled.FieldTitle>
           <Styled.FieldContent>
-            {question.answer}
+            {answer}
           </Styled.FieldContent>
         </Styled.Field>
         ))}
