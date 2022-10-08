@@ -12,15 +12,12 @@ export class Requests {
 
     async getPatients() {
         const response = await remoteRequest.get('/progress/patients');
-        console.log('r:', response)
-        return [
-            { id: 1, firstName: 'U1', lastName: '', email: 'u1@email.com', profileUrl: '', flow: { id: 1, name: 'Urolithiasis' } },
-            { id: 1, firstName: 'C1', lastName: '', email: 'c1@email.com', profileUrl: '', flow: { id: 1, name: 'Cancer' } },
-        ]
+        
+        return response.data;
     }
 
     async getPatient(idPatient, idFlow) {
-        const response = await remoteRequest.get(`/progress/patients/${idFlow}/${idPatient}`);
+        const response = await remoteRequest.get(`/progress/patients/${idPatient}/${idFlow}`);
         console.log('r:', response)
         return { 
             id: 1, 

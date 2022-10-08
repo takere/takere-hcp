@@ -33,8 +33,8 @@ export const Patients = () => {
           {patients.map((patient, index) => (
             <Patient 
               key={index}
-              firstName={patient.firstName}
-              lastName={patient.lastName}
+              firstName={patient.patient.firstName}
+              lastName={patient.patient.lastName}
               flowName={patient.flow.name}
               onClick={(e) => handleClick(e, patient)}
             />
