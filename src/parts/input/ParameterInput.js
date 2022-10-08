@@ -291,8 +291,6 @@ const ParameterInput = ({parameter, value, onChange}) => {
         case "select&number":
         if (!value) {
           onChange({ select: parameter.options[0].value, number: selectNumber });
-
-          return <></>
         }
         return (
           <>

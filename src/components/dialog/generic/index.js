@@ -97,6 +97,8 @@ function initializeParameter(parameter) {
       return []
     case 'boolean':
       return false;
+    case 'select&number':
+      return { select: parameter.options[0].value, number: 0 };
     default:
       return null;
   }

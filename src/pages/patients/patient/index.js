@@ -18,10 +18,10 @@ export const Patient = () => {
   const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogContent, setDialogContent] = useState({});
-  const { idPatient, idFlow } = useParams();
+  const { patientId, flowId } = useParams();
 
   const getPatientInfo = () => {
-    new Requests().getPatient(idPatient, idFlow).then((r) => {
+    new Requests().getPatient(patientId, flowId).then((r) => {
       setPatient(r);
       setLoading(false);
     });
