@@ -18,46 +18,47 @@ export class Requests {
 
     async getPatient(idPatient, idFlow) {
         const response = await remoteRequest.get(`/progress/patients/${idPatient}/${idFlow}`);
-        console.log('r:', response)
-        return { 
-            id: 1, 
-            firstName: 'U1', 
-            lastName: '', 
-            email: 'u1@email.com', 
-            profileUrl: '', 
-            flow: { 
-                id: 1, 
-                name: 'Urolithiasis',
-                description: 'Fluid monitoring',
-                completed: [
-                    {
-                        node: { id: 2, type: 'QUIZ', icon: 'help', bgColor: '#be96fb'  },
-                        result: [
-                            { id: 1, question: 'How much fluid did you intake in the last 24 hours? (in liters)', answer: 'Around 2 liters' }
-                        ],
-                        date: new Date()
-                    }
-                ],
-                ongoing: [
-                    {
-                        node: { id: 2, type: 'MEDICATION CONTROL', icon: 'healing', bgColor:'#db594f'  },
-                        result: [
+        
+        return response.data;
+        // return { 
+        //     id: 1, 
+        //     firstName: 'U1', 
+        //     lastName: '', 
+        //     email: 'u1@email.com', 
+        //     profileUrl: '', 
+        //     flow: { 
+        //         id: 1, 
+        //         name: 'Urolithiasis',
+        //         description: 'Fluid monitoring',
+        //         completed: [
+        //             {
+        //                 node: { id: 2, type: 'QUIZ', icon: 'help', bgColor: '#be96fb'  },
+        //                 result: [
+        //                     { id: 1, question: 'How much fluid did you intake in the last 24 hours? (in liters)', answer: 'Around 2 liters' }
+        //                 ],
+        //                 date: new Date()
+        //             }
+        //         ],
+        //         ongoing: [
+        //             {
+        //                 node: { id: 2, type: 'MEDICATION CONTROL', icon: 'healing', bgColor:'#db594f'  },
+        //                 result: [
                             
-                        ],
-                        deadline: undefined
-                    }
-                ],
-                late: [
-                    {
-                        node: { id: 2, type: 'QUIZ', icon: 'help', bgColor:'#be96fb'  },
-                        result: [
-                            { id: 1, question: 'How are you?', answer: 'well' }
-                        ],
-                        deadline: new Date()
-                    }
-                ]
-            },
-        }
+        //                 ],
+        //                 deadline: undefined
+        //             }
+        //         ],
+        //         late: [
+        //             {
+        //                 node: { id: 2, type: 'QUIZ', icon: 'help', bgColor:'#be96fb'  },
+        //                 result: [
+        //                     { id: 1, question: 'How are you?', answer: 'well' }
+        //                 ],
+        //                 deadline: new Date()
+        //             }
+        //         ]
+        //     },
+        // }
     }
 
     async getMyFlows(){

@@ -14,7 +14,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DefaultButton from "../../../components/buttons/DefaultButton";
 
 export const Patient = () => {
-  const [patient, setPatient] = useState({});
+  const [patientProgress, setPatientProgress] = useState({});
   const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogContent, setDialogContent] = useState({});
@@ -22,7 +22,7 @@ export const Patient = () => {
 
   const getPatientInfo = () => {
     new Requests().getPatient(patientId, flowId).then((r) => {
-      setPatient(r);
+      setPatientProgress(r);
       setLoading(false);
     });
   };
@@ -57,10 +57,10 @@ export const Patient = () => {
             Patient progress
           </Styled.NameTitle>
           <ProfileCard 
-            name={`${patient.firstName} ${patient.lastName}`}
-            email={patient.email}
-            flowName={patient.flow.name}
-            flowDescription={patient.flow.description}
+            name={`${patientProgress.patient.firstName} ${patientProgress.patient.lastName}`}
+            email={patientProgress.patient.email}
+            flowName={patientProgress.flow.name}
+            flowDescription={patientProgress.flow.description}
           />
           <Styled.ContainerData>
             <Styled.ContainerHeader>
@@ -73,14 +73,14 @@ export const Patient = () => {
                 Completed
               </Styled.ContainerName>
             </Styled.ContainerHeader>
-            {patient.flow.completed.map((item, index) => (
+            {patientProgress.flow.completed.map((item, index) => (
               <Card
                 key={index}
-                title={item.node.type}
-                description={`completed at ${item.date}`}
+                title={item.node.name.toUpperCase()}
+                description={`completed at ${item.finished.date}`}
                 icon={item.node.icon}
-                color={item.node.bgColor}
-                onClick={() => handleOpenCompletedItem(item.node.type, item.result, item.date)}
+                color={item.node.color}
+                onClick={() => handleOpenCompletedItem(item.node.name, item.finished.answers, item.finished.date)}
               />
             ))}
           </Styled.ContainerData>
@@ -97,13 +97,13 @@ export const Patient = () => {
                 Ongoing
               </Styled.ContainerName>
             </Styled.ContainerHeader>
-            {patient.flow.ongoing.map((item, index) => (
+            {patientProgress.flow.ongoing.map((item, index) => (
               <Card
                 key={index}
-                title={item.node.type}
+                title={item.node.name.toUpperCase()}
                 description={item.deadline ? `should be completed until ${item.deadline}` : 'deadline date is undefined'}
                 icon={item.node.icon}
-                color={item.node.bgColor}
+                color={item.node.color}
               />
             ))}
           </Styled.ContainerData>
@@ -120,13 +120,13 @@ export const Patient = () => {
                 Late
               </Styled.ContainerName>
             </Styled.ContainerHeader>
-            {patient.flow.late.map((item, index) => (
+            {patientProgress.flow.late.map((item, index) => (
               <Card
                 key={index}
-                title={item.node.type}
+                title={item.node.name.toUpperCase()}
                 description={`should be completed until ${item.deadline}`}
                 icon={item.node.icon}
-                color={item.node.bgColor}
+                color={item.node.color}
               />
             ))}
           </Styled.ContainerData>
