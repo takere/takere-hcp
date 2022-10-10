@@ -3,10 +3,12 @@ import * as Styled from "./styled";
 import { Requests } from "../../services/axios/requests";
 import { useHistory } from "react-router-dom";
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
+import LocaleService from "../../services/locale.service";
 
 export const Patients = () => {
   const [patients, setPatients] = useState([]);
   const history = useHistory();
+  const localeService = new LocaleService();
 
   const getPatients = () => {
     new Requests().getPatients().then((r) => {
@@ -28,7 +30,7 @@ export const Patients = () => {
       <Styled.Container>
         <Styled.ContainerData>
           <Styled.NameTitle>
-            Patients
+            {localeService.translate("PATIENTS")}
           </Styled.NameTitle>
           {patients.map((patient, index) => (
             <Patient 

@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import * as Styled from './profile.styled';
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
+import LocaleService from "../../services/locale.service";
 
 export const Profile = () => {
+    const localeService = new LocaleService();
     const userData = JSON.parse(localStorage.getItem('user'));
 
     return (
@@ -10,13 +12,19 @@ export const Profile = () => {
         <MenuDrawer />
             <Styled.Container>
                 <Styled.ContainerData>
-                <Styled.NameTitle>Profile</Styled.NameTitle>
+                <Styled.NameTitle>
+                    {localeService.translate("PROFILE")}
+                </Styled.NameTitle>
                     {
                         userData ? (
                             <>
                                 <Styled.Spacing />
-                                <Styled.TextDescription>Nome: {userData.firstName}</Styled.TextDescription>
-                                <Styled.TextDescription>Email: {userData.email}</Styled.TextDescription>
+                                <Styled.TextDescription>
+                                    {localeService.translate("NAME")}: {userData.firstName}
+                                    </Styled.TextDescription>
+                                <Styled.TextDescription>
+                                    {localeService.translate("EMAIL")}: {userData.email}
+                                    </Styled.TextDescription>
                             </>
                         ) : null
                     }

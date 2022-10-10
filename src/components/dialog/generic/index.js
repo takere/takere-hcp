@@ -5,6 +5,7 @@ import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
 import ParameterInput from "../../../parts/input/ParameterInput";
+import LocaleService from "../../../services/locale.service";
 
 
 //-----------------------------------------------------------------------------
@@ -12,10 +13,11 @@ import ParameterInput from "../../../parts/input/ParameterInput";
 //-----------------------------------------------------------------------------
 const GenericDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
   const [parameterValues, setParameterValues] = useState(initializeParameterValues(node.data));
+  const localeService = new LocaleService();
 
   const saveInputs = () => {
     onAddElementResultValue(node, parameterValues);
-    toast.success(`Dados de ${node.data.name} salvos`);
+    toast.success(localeService.translate("DATA_NODE_SAVED", node.data.name));
     
   };
 
@@ -47,8 +49,8 @@ const GenericDialog = ({ open, handleClose, node, onAddElementResultValue }) => 
         ))}
       </Body>
       <Footer>
-        <SuccessButton title="Save" onClick={saveInputs} />
-        <DefaultButton title="Close" onClick={handleClose} />
+        <SuccessButton title={localeService.translate("SAVE")} onClick={saveInputs} />
+        <DefaultButton title={localeService.translate("CLOSE")} onClick={handleClose} />
       </Footer>
     </Dialog>
   );

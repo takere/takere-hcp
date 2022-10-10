@@ -10,6 +10,7 @@ import DangerButton from "../../components/buttons/DangerButton";
 import RichTextInput from "./RichTextInput";
 import { EditorState, ContentState } from "draft-js";
 import { convertFromHTML, convertToHTML } from "draft-convert";
+import LocaleService from "../../services/locale.service";
 
 const ParameterInput = ({parameter, value, onChange}) => {
   
@@ -26,6 +27,8 @@ const ParameterInput = ({parameter, value, onChange}) => {
   const [answerOptions, setAnswerOptions] = useState(loadAnswerOptions(parameter, value));
   const [selectNumber, setSelectNumber] = useState(loadSelectNumber(parameter, value));
   
+  const localeService = new LocaleService();
+
   const onChangeUndefinedValue = (newValue) => {
     setUndefinedValue(newValue);
     onChange(newValue ? null : new Date().toISOString());
@@ -198,8 +201,8 @@ const ParameterInput = ({parameter, value, onChange}) => {
                 />
               }
               <BooleanInput
-                label="Is undefined?"
-                helperText="Sets parameter as undefined"
+                label={localeService.translate("IS_UNDEFINED")}
+                helperText={localeService.translate("SET_PARAMETER_UNDEFINED")}
                 value={undefinedValue}
                 onChange={onChangeUndefinedValue}
               />
@@ -227,14 +230,14 @@ const ParameterInput = ({parameter, value, onChange}) => {
         return (
           <>
             <NumberInput
-              label="Total pages"
-              helperText="Explanation total pages"
+              label={localeService.translate("TOTAL_PAGES")}
+              helperText={localeService.translate("TOTAL_PAGES_DESCRIPTION")}
               value={totalPages}
               onChange={onTotalPagesChange}
             />
             <NumberInput
-              label="Current page"
-              helperText="Page to be edited"
+              label={localeService.translate("CURRENT_PAGE")}
+              helperText={localeService.translate("CURRENT_PAGE_DESCRIPTION")}
               value={currentPage}
               onChange={onChangeCurrentPage}
             />
@@ -325,26 +328,26 @@ const ParameterInput = ({parameter, value, onChange}) => {
           return (
             <>
               <NumberInput
-                label="Total questions"
-                helperText="How many questions?"
+                label={localeService.translate("TOTAL_QUESTIONS")}
+                helperText={localeService.translate("TOTAL_QUESTIONS_DESCRIPTION")}
                 value={totalQuestions}
                 onChange={onTotalQuestionsChange}
               />
               <NumberInput
-                label="Current question"
-                helperText="You're editing question..."
+                label={localeService.translate("CURRENT_QUESTION")}
+                helperText={localeService.translate("CURRENT_QUESTION_DESCRIPTION")}
                 value={currentQuestion}
                 onChange={onCurrentQuestionChange}
               />
               <RawTextInput
-                label="Question"
-                helperText="What's the question?"
+                label={localeService.translate("QUESTION")}
+                helperText={localeService.translate("QUESTION_DESCRIPTION")}
                 value={question}
                 onChange={setQuestion}
               />
               <MultiSelectionInput
-                label="Answer type"
-                helperText="How do you expect the answer?"
+                label={localeService.translate("ANSWER")}
+                helperText={localeService.translate("ANSWER_DESCRIPTION")}
                 value={answerType}
                 onChange={setAnswerType}
                 options={parameter.options}

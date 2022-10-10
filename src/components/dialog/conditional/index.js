@@ -4,11 +4,13 @@ import { toast } from "react-toastify";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
-import numberOperatorOptions from './number-operator.types.json';
-import selectionOperatorOptions from './selection-operator.types.json';
-import textOperatorOptions from './text-operator.types.json';
+import numberOperatorOptions from './number-operator.types';
+import selectionOperatorOptions from './selection-operator.types';
+import textOperatorOptions from './text-operator.types';
 import ParameterInput from "../../../parts/input/ParameterInput";
+import LocaleService from "../../../services/locale.service";
 
+const localeService = new LocaleService();
 
 //-----------------------------------------------------------------------------
 //        Components
@@ -24,7 +26,7 @@ const ConditionalDialog = ({
   const [parameterValues, setParameterValues] = useState([0, 0, undefined]);
 
   const saveInputs = () => {
-    toast.success(`Dados de ${node.data.name} salvos`);
+    toast.success(localeService.translate("DATA_NODE_SAVED", node.data.name));
     onAddElementResultValue(node, parameterValues);
   };
 
@@ -94,8 +96,8 @@ const ConditionalDialog = ({
         </Body>
       }
       <Footer>
-        <SuccessButton title="Save" onClick={saveInputs} />
-        <DefaultButton title="Close" onClick={handleClose} />
+        <SuccessButton title={localeService.translate("SAVE")} onClick={saveInputs} />
+        <DefaultButton title={localeService.translate("CLOSE")} onClick={handleClose} />
       </Footer>
     </Dialog>
   );
@@ -124,7 +126,7 @@ function buildLeftOptions(connection) {
   }
 
   if (connection.data.slug === 'medication_control') {
-    return [{ label: 'Medication', value: 'medication' }];
+    return [{ label: localeService.translate("MEDICATION"), value: 'medication' }];
   }
 
   const options = [];
@@ -184,7 +186,7 @@ function buildRightOptions(connection, currentIndex) {
   }
 
   if (connection.data.slug === 'medication_control') {
-    return [{ label: 'Taken', value: 'taken' }];
+    return [{ label: localeService.translate("TAKEN"), value: 'taken' }];
   }
 
   if (!connection.data.arguments) {

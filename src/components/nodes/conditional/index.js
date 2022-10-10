@@ -3,9 +3,11 @@ import { Handle } from "react-flow-renderer";
 import Icon from "@material-ui/core/Icon";
 import * as Styled from "./styled";
 import theme from "../../../assets/themes";
+import LocaleService from "../../../services/locale.service";
 
 const ConditionalNode = (props) => {
   const nodeData = props.data;
+  const localeService = new LocaleService();
 
   return (
     <Styled.Node bgColor={ nodeData?.color}>
@@ -25,8 +27,12 @@ const ConditionalNode = (props) => {
         </Icon>
       </Styled.NodeContainer>
       <div>
-        <Styled.FlowLabel className="false">False</Styled.FlowLabel>
-        <Styled.FlowLabel className="true">True</Styled.FlowLabel>
+        <Styled.FlowLabel className="false">
+        {localeService.translate("FALSE")}
+        </Styled.FlowLabel>
+        <Styled.FlowLabel className="true">
+        {localeService.translate("TRUE")}
+        </Styled.FlowLabel>
       </div>
       <InputHandler inputList={nodeData?.input_list} />
       <OutputHandler outputList={nodeData?.output_list} />

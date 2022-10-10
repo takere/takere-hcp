@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import * as Styled from './sidebar.styled';
 import {Requests} from "../../services/axios/requests";
+import LocaleService from "../../services/locale.service";
 
+const localeService = new LocaleService();
 
 export const Sidebar = () => {
     const [search, setSearch] = useState('');
     const [nodes, setNodes] = useState([]);
     const [foundNodes, setFoundNodes] = useState([]);
-
+    
+    
     useEffect(() => {
         new Requests().getNodes().then(r => {
             setNodes(r);
@@ -38,7 +41,9 @@ export const Sidebar = () => {
     return (
         <Styled.SideContainer>
             <Styled.SideAside>
-                <Styled.NameTitle>Elements</Styled.NameTitle>
+                <Styled.NameTitle>
+                {localeService.translate("ELEMENTS")}
+                </Styled.NameTitle>
                 <Styled.InputSearch
                     id="outlined-basic"
                     label="Filter"
@@ -47,7 +52,7 @@ export const Sidebar = () => {
                     value={search}
                     onChange={filter}
                     size="small"
-                    placeholder="Filter"
+                    placeholder={localeService.translate("FILTER")}
                 />
                 <Styled.SideGraggAside>
                     {foundNodes && foundNodes.length > 0 ? (
@@ -71,7 +76,9 @@ export const Sidebar = () => {
                     )}
                 </Styled.SideGraggAside>
                 {
-                    foundNodes.length === 0 ? <Styled.NameTitle style={{textAlign: 'center'}}>Nenhum resultado encontrado!</Styled.NameTitle> : <></>
+                    foundNodes.length === 0 ? <Styled.NameTitle style={{textAlign: 'center'}}>
+                        {localeService.translate("NO_ELEMENTS_FOUND")}
+                        </Styled.NameTitle> : <></>
                 }
             </Styled.SideAside>
         </Styled.SideContainer>

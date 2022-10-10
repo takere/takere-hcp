@@ -12,6 +12,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DefaultButton from "../../../components/buttons/DefaultButton";
+import LocaleService from "../../../services/locale.service";
 
 export const Patient = () => {
   const [patientProgress, setPatientProgress] = useState({});
@@ -19,6 +20,7 @@ export const Patient = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogContent, setDialogContent] = useState({});
   const { patientId, flowId } = useParams();
+  const localeService = new LocaleService();
 
   const getPatientInfo = () => {
     new Requests().getPatient(patientId, flowId).then((r) => {
@@ -52,7 +54,7 @@ export const Patient = () => {
         {!loading && 
         <Styled.MainContainer>
           <Styled.NameTitle>
-            Patient progress
+            {localeService.translate("PATIENTS_PROGRESS")}
           </Styled.NameTitle>
           <ProfileCard 
             name={`${patientProgress.patient.firstName} ${patientProgress.patient.lastName}`}
@@ -68,7 +70,7 @@ export const Patient = () => {
                 </Styled.IconItem>
               </Styled.ItemContent>
               <Styled.ContainerName>
-                Completed
+              {localeService.translate("COMPLETED")}
               </Styled.ContainerName>
             </Styled.ContainerHeader>
             {patientProgress.flow.completed.map((item, index) => (
@@ -92,7 +94,7 @@ export const Patient = () => {
                 </Styled.IconItem>
               </Styled.ItemContent>
               <Styled.ContainerName>
-                Ongoing
+              {localeService.translate("ONGOING")}
               </Styled.ContainerName>
             </Styled.ContainerHeader>
             {patientProgress.flow.ongoing.map((item, index) => (
@@ -115,7 +117,7 @@ export const Patient = () => {
                 </Styled.IconItem>
               </Styled.ItemContent>
               <Styled.ContainerName>
-                Late
+              {localeService.translate("LATE")}
               </Styled.ContainerName>
             </Styled.ContainerHeader>
             {patientProgress.flow.late.map((item, index) => (

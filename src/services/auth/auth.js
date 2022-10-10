@@ -1,8 +1,10 @@
 import {remoteRequest} from "../axios";
 import {toast} from "react-toastify";
+import LocaleService from "../locale.service";
 
 export const makeLogin = async (email, password) => {
-    const id = toast.loading("Fazendo login...")
+    const localeService = new LocaleService();
+    const id = toast.loading(localeService.translate("LOGIN_PROGRESS"))
     try {
         const response = await remoteRequest.post('/users/login', {
             email,
@@ -11,7 +13,7 @@ export const makeLogin = async (email, password) => {
         localStorage.setItem('user', JSON.stringify(response.data.userData))
         toast.dismiss(id);
         if(response.data.token) {
-            toast.success("Login com sucesso!")
+            toast.success(localeService.translate("LOGIN_SUCCESS"))
             localStorage.setItem('x_auth_token', response.data.token);
             return true;
         } else {
@@ -19,7 +21,7 @@ export const makeLogin = async (email, password) => {
         }
     } catch (e) {
         toast.dismiss(id);
-        toast.error('Opps.. Algo está errado!')
+        toast.error(localeService.translate("LOGIN_FAIL"))
     }
 }
 
