@@ -50,7 +50,7 @@
     "MEDICATION": "Medication",
     "SAVE": "Save",
     "CLOSE": "Close",
-    "DATA_NODE_SAVED": "DATA FROM %s HAS BEEN SAVED",
+    "DATA_NODE_SAVED": "Data from %s has been saved",
     "EQUALS_TO": "Equals to",
     "NOT_EQUALS_TO": "Not equals to",
     "CONTAINS": "Contains",

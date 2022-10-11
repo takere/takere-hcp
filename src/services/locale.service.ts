@@ -52,8 +52,17 @@ class LocaleService {
    */
 
   translate(string: any, args = undefined) {
-    return this.i18nProvider.translate(string, args)
+    if (!args) {
+      return this.i18nProvider.translate(string, args);
+    }
 
+    const text = this.i18nProvider.translate(string, args);
+    const parsedArgs = Array.isArray(args) ? args : [args];
+
+    return text
+      .split("%s")
+      .map((term: string, index: number) => parsedArgs[index] ? term + parsedArgs[index] : term)
+      .join('');
   }
 }
 

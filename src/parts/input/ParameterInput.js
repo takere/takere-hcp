@@ -169,7 +169,7 @@ const ParameterInput = ({parameter, value, onChange}) => {
       onChange(updatedQuestions)
     }
     else if (parameter.type === 'select') {
-      onChange(parameter.options[0].value);
+      //onChange(parameter.options[0].value);
     }
   }, [question, answerType, answerOptions, currentQuestion, questions]);
 

@@ -1,70 +1,80 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align='center'>
+<img src='https://raw.githubusercontent.com/takere/.github/main/docs/images/logo/logo.png' alt="logo" />
+</p>
 
-## Available Scripts
+<h1 align='center'>Takere - HCP</h1>
+<p align='center'>Takere for healthcare professionals</p>
+<p align="center">
+	<a href="https://github.com/takere/takere-hcp/actions/workflows/windows.yml"><img src="https://github.com/takere/takere-hcp/actions/workflows/windows.yml/badge.svg" alt=""></a>
+	<a href="https://github.com/takere/takere-hcp/actions/workflows/macos.yml"><img src="https://github.com/takere/takere-hcp/actions/workflows/macos.yml/badge.svg" alt=""></a>
+	<a href="https://github.com/takere/takere-hcp/actions/workflows/ubuntu.yml"><img src="https://github.com/takere/takere-hcp/actions/workflows/ubuntu.yml/badge.svg" alt=""></a>
+	<a href="https://reactnative.dev/"><img src="https://img.shields.io/badge/React-14.0+-D0008F.svg" alt="React"></a>
+	<a href="https://github.com/takere/takere-hcp/blob/master/LICENSE"><img src="https://img.shields.io/github/license/takere/takere-hcp" alt="License"></a>
+	<a href="https://github.com/takere/takere-hcp/releases"><img src="https://img.shields.io/github/v/release/takere/takere-hcp" alt="Release"></a>
+</p>
 
-In the project directory, you can run:
+<hr />
 
-### `yarn start`
+## ❇ Introduction
+Takere for healthcare professionals (HCP) is a system that allows the definition of a care plan along with monitoring patients’ progress. It is developed using [React](https://reactjs.org), which is a framework for creating websites using component-oriented programming.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Care plan flow
+We use drag-and-drop concept for building a care plan flow. The system shows care plan elements available for use in the flow. To include an element in the flow, the user needs to drag it and drop it in the flow (Figure 4.4). After that, it is necessary to connect these elements. Each connection is an arrow, indicating a dependency relation. For example, if an element Y should be generated only after an element X was completed, then the user must connect X with Y (in this order), resulting in the Figure 4.5.
+Each flow must begin with the ’Begin’ element, which indicates when the care plan begins and when it ends (Figure 4.6). If the end date is unknown, it can be marked as ’undefined end’, indicating the flow should stay active without a time to become disabled. Finally, each flow has a name, a description, and the email of the target patient.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Monitoring patients
+After a care plan flow is created, the target patient of the flow can start his/her treatment. When care plan elements are completed by him/her, results about this patient become available. This information can be monitored by HCP, seeing which elements have been completed, which are ongoing and those that are late (Figure 4.7). It is also possible to see patient input, if the element has inputs (Figure 4.8).
 
-### `yarn test`
+## Acknowledgements
+Special thanks to [Rodolfo Viola](https://github.com/rodolfoviolac) for starting development of the platform.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ✔ Requirements
 
-### `yarn build`
+```
+Coming soon
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ℹ How to run
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+Coming soon
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🖼 Gallery
 
-### `yarn eject`
+```
+Coming soon
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🚩 Changelog
+Details about each version are documented in the [releases section](https://github.com/takere/takere-hcp/releases).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 🗺 Project structure
+![architecture](https://raw.githubusercontent.com/takere/takere-hcp/master/docs/images/design/architecture.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+This front-end system has no information about the semantics of a care plan element and knows only its structure. The business logic is in [Takere - API](https://github.com/takere/takere-api).
 
-## Learn More
+## 📁 Files
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### /
+|        Name        |Type|Description|
+|----------------|-------------------------------|-----------------------------|
+|\_\_tests\_\_|`Directory`|Test files|
+|docs |`Directory`|Documentation files|
+|src     |`Directory`| Source files|
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### /src
+|        Name        |Type|Description|
+|----------------|-------------------------------|-----------------------------|
+|assets|`Directory`|Application static files|
+|components|`Directory`|Collection of user interface components (like buttons and inputs) that can be used across various files in the project|
+|config|`Directory`|Environment variables and configuration related files|
+|models / domain / dto|`Directory`|Data and database model files|
+|pages|`Directory`|Files responsible for showing information to users according to some endpoint|
+|parts|`Directory`|User interface components used for composing components|
+|routes|`Directory`|Files responsible for defining application endpoints and handling them|
+|services|`Directory`|Files responsible for business logic|
+|app.ts|`File`|Application point entry|
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
