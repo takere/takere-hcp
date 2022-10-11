@@ -12,27 +12,27 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DefaultButton from "../../../components/buttons/DefaultButton";
+import LocaleService from "../../../services/locale.service";
 
 export const Patient = () => {
-  const [patient, setPatient] = useState({});
+  const [patientProgress, setPatientProgress] = useState({});
   const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogContent, setDialogContent] = useState({});
-  const { idPatient, idFlow } = useParams();
+  const { patientId, flowId } = useParams();
+  const localeService = new LocaleService();
 
   const getPatientInfo = () => {
-    new Requests().getPatient(idPatient, idFlow).then((r) => {
-      setPatient(r);
+    new Requests().getPatient(patientId, flowId).then((r) => {
+      setPatientProgress(r);
       setLoading(false);
     });
   };
 
-  const handleOpenCompletedItem = (type, result, date) => {
-    console.log(result)
-
-    if (type === 'QUIZ') {
+  const handleOpenCompletedItem = (node, flow, progress) => {
+    if (progress && progress.answers) {
       setOpenDialog(true);
-      setDialogContent({ type, payload: result, date })
+      setDialogContent({ node, flow, progress })
     }
   };
 
@@ -54,13 +54,13 @@ export const Patient = () => {
         {!loading && 
         <Styled.MainContainer>
           <Styled.NameTitle>
-            Patient progress
+            {localeService.translate("PATIENTS_PROGRESS")}
           </Styled.NameTitle>
           <ProfileCard 
-            name={`${patient.firstName} ${patient.lastName}`}
-            email={patient.email}
-            flowName={patient.flow.name}
-            flowDescription={patient.flow.description}
+            name={`${patientProgress.patient.firstName} ${patientProgress.patient.lastName}`}
+            email={patientProgress.patient.email}
+            flowName={patientProgress.flow.name}
+            flowDescription={patientProgress.flow.description}
           />
           <Styled.ContainerData>
             <Styled.ContainerHeader>
@@ -70,17 +70,17 @@ export const Patient = () => {
                 </Styled.IconItem>
               </Styled.ItemContent>
               <Styled.ContainerName>
-                Completed
+              {localeService.translate("COMPLETED")}
               </Styled.ContainerName>
             </Styled.ContainerHeader>
-            {patient.flow.completed.map((item, index) => (
+            {patientProgress.flow.completed.map((item, index) => (
               <Card
                 key={index}
-                title={item.node.type}
-                description={`completed at ${item.date}`}
+                title={item.node.name.toUpperCase()}
+                description={`completed at ${item.finished.date}`}
                 icon={item.node.icon}
-                color={item.node.bgColor}
-                onClick={() => handleOpenCompletedItem(item.node.type, item.result, item.date)}
+                color={item.node.color}
+                onClick={() => handleOpenCompletedItem(item.node, item.flow, item.finished)}
               />
             ))}
           </Styled.ContainerData>
@@ -94,16 +94,16 @@ export const Patient = () => {
                 </Styled.IconItem>
               </Styled.ItemContent>
               <Styled.ContainerName>
-                Ongoing
+              {localeService.translate("ONGOING")}
               </Styled.ContainerName>
             </Styled.ContainerHeader>
-            {patient.flow.ongoing.map((item, index) => (
+            {patientProgress.flow.ongoing.map((item, index) => (
               <Card
                 key={index}
-                title={item.node.type}
+                title={item.node.name.toUpperCase()}
                 description={item.deadline ? `should be completed until ${item.deadline}` : 'deadline date is undefined'}
                 icon={item.node.icon}
-                color={item.node.bgColor}
+                color={item.node.color}
               />
             ))}
           </Styled.ContainerData>
@@ -117,16 +117,16 @@ export const Patient = () => {
                 </Styled.IconItem>
               </Styled.ItemContent>
               <Styled.ContainerName>
-                Late
+              {localeService.translate("LATE")}
               </Styled.ContainerName>
             </Styled.ContainerHeader>
-            {patient.flow.late.map((item, index) => (
+            {patientProgress.flow.late.map((item, index) => (
               <Card
                 key={index}
-                title={item.node.type}
+                title={item.node.name.toUpperCase()}
                 description={`should be completed until ${item.deadline}`}
                 icon={item.node.icon}
-                color={item.node.bgColor}
+                color={item.node.color}
               />
             ))}
           </Styled.ContainerData>
@@ -207,10 +207,10 @@ const Dialog = ({ open, onClose, data }) => (
   >
     <Header 
       title='Details' 
-      subtitle={`completed at ${data.date}`}
+      subtitle={`completed at ${data.progress?.date}`}
     />
     <Body>
-      { buildDialogBody(data.type, data.payload) }
+      { buildDialogBody(data.node, data.progress?.answers) }
     </Body>
     <Footer>
       <DefaultButton title="Close" onClick={onClose} />
@@ -239,17 +239,20 @@ const Footer = ({ children }) => (
   </DialogActions>
 );
 
-const buildDialogBody = (type, payload) => {
-  if (type === 'QUIZ') {
+const buildDialogBody = (node, answers) => {
+  if (node && node.arguments && answers) {
+    const questionsIndex = node.parameters.findIndex(parameter => parameter.type === 'form');
+    const questions = node.arguments[questionsIndex];
+
     return (
       <Styled.Fields>
-        {payload.map((question, index) => (
-        <Styled.Field>
+        {answers.map((answer, index) => (
+        <Styled.Field key={index}>
           <Styled.FieldTitle>
-            {question.question}
+            {questions[index].label}
           </Styled.FieldTitle>
           <Styled.FieldContent>
-            {question.answer}
+            {answer}
           </Styled.FieldContent>
         </Styled.Field>
         ))}

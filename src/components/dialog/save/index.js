@@ -5,7 +5,7 @@ import DefaultButton from "../../buttons/DefaultButton";
 import { Requests } from "../../../services/axios/requests";
 import { Header, Body, Footer } from "../";
 import RawTextInput from "../../../parts/input/RawTextInput";
-
+import LocaleService from "../../../services/locale.service";
 
 //-----------------------------------------------------------------------------
 //        Components
@@ -15,13 +15,14 @@ const SaveFlowDialog = ({ open, handleClose, data }) => {
   const [description, setDescription] = useState("");
   const [dataFlow, setDataFlow] = useState([]);
   const [userEmail, setUserEmail] = useState("");
+  const localeService = new LocaleService();
 
   const handleSave = () => {
     const payload = {
       name,
       description,
-      userEmail,
-      data: dataFlow,
+      patientEmail:userEmail,
+      graph: dataFlow,
     };
 
     new Requests().createOrUpdateFlow(payload).then((r) => {
@@ -30,17 +31,16 @@ const SaveFlowDialog = ({ open, handleClose, data }) => {
   };
 
   useEffect(() => {
-    console.log(data);
-    if (data?.flow?.flowName) {
-      setName(data.flow.flowName);
+    if (data?.flow?.name) {
+      setName(data.flow.name);
     }
-    if (data?.flow?.flowDescription) {
-      setDescription(data.flow.flowDescription);
+    if (data?.flow?.description) {
+      setDescription(data.flow.description);
     }
-    if (data?.flow?.flowEmail) {
-      setUserEmail(data.flow.flowEmail);
+    if (data?.flow?.patientEmail) {
+      setUserEmail(data.flow.patientEmail);
     }
-    setDataFlow(data?.elements);
+    setDataFlow(data?.graph);
   }, [data]);
 
   return (
@@ -52,32 +52,32 @@ const SaveFlowDialog = ({ open, handleClose, data }) => {
       aria-labelledby="max-width-dialog-title"
     >
       <Header 
-        title='Save care plan' 
-        subtitle='Use this popup to save your care plan!' 
+        title={localeService.translate("SAVE_CARE_PLAN_TITLE")}
+        subtitle={localeService.translate("SAVE_CARE_PLAN_SUBTITLE")}
       />
       <Body>
         <RawTextInput
-          label="Care plan name"
-          helperText="Cancer care plan, urolithiasis care plan..."
+          label={localeService.translate("CARE_PLAN_NAME")}
+          helperText={localeService.translate("CARE_PLAN_NAME_PLACEHOLDER")}
           value={name}
           onChange={setName}
         />
         <RawTextInput
-          label="Description"
-          helperText="This care plan is about..."
+          label={localeService.translate("DESCRIPTION")}
+          helperText={localeService.translate("CARE_PLAN_DESCRIPTION_PLACEHOLDER")}
           value={description}
           onChange={setDescription}
         />
         <RawTextInput
-          label="Patient email"
-          helperText="This care plan is for..."
+          label={localeService.translate("PATIENT_EMAIL")}
+          helperText={localeService.translate("PATIENT_EMAIL_PLACEHOLDER")}
           value={userEmail}
           onChange={setUserEmail}
         />
       </Body>
       <Footer>
-        <SuccessButton title="Save" onClick={handleSave} />
-        <DefaultButton title="Close" onClick={handleClose} />
+        <SuccessButton title={localeService.translate("SAVE")} onClick={handleSave} />
+        <DefaultButton title={localeService.translate("CLOSE")} onClick={handleClose} />
       </Footer>
     </Dialog>
   );

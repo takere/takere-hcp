@@ -1,4 +1,4 @@
-import { theme } from "../../../utils/colors";
+import theme from "../../../assets/themes";
 
 export const area = {
   backgroundColor: theme.colors.day.x1

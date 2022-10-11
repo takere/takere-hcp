@@ -4,13 +4,13 @@ import { toast } from "react-toastify";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
 import { Header, Body, Footer } from "../";
-import numberOperatorOptions from './number-operator.types.json';
-import selectionOperatorOptions from './selection-operator.types.json';
-import textOperatorOptions from './text-operator.types.json';
-import RawTextInput from "../../../parts/input/RawTextInput";
-import MultiSelectionInput from "../../../parts/input/MultiSelectionInput";
-import * as Styled from './styled';
+import numberOperatorOptions from './number-operator.types';
+import selectionOperatorOptions from './selection-operator.types';
+import textOperatorOptions from './text-operator.types';
+import ParameterInput from "../../../parts/input/ParameterInput";
+import LocaleService from "../../../services/locale.service";
 
+const localeService = new LocaleService();
 
 //-----------------------------------------------------------------------------
 //        Components
@@ -18,46 +18,60 @@ import * as Styled from './styled';
 const ConditionalDialog = ({
   open,
   handleClose,
-  data,
+  node,
   onAddElementResultValue,
   connection
 }) => {
-  const { data: payloadData } = data;
-
-  const [left, setLeft] = useState(loadStoredLeft(data, connection));
-  const [operator, setOperator] = useState(loadStoredOperator(data, connection));
-  const [right, setRight] = useState(loadStoredRight(data, connection));
-  const [leftOptions, setLeftOptions] = useState([]);
-  const [operatorOptions, setOperatorOptions] = useState([]);
-  const [rightOptions, setRightOptions] = useState([]);
+  const [parameters, setParameters] = useState(parseParameters(node.data.parameters, [buildLeftOptions(connection), buildOperatorOptions(connection, 0), buildRightOptions(connection, 0)]));
+  const [parameterValues, setParameterValues] = useState([0, 0, undefined]);
 
   const saveInputs = () => {
-    const inputData = {
-      left: left,
-      operator: operatorOptions[operator].originalValue,
-      right: rightOptions[right]?.label ?? right
-    };
-
-    onAddElementResultValue(data, inputData);
-    toast.success(`Dados de ${payloadData.label} salvos`);
+    toast.success(localeService.translate("DATA_NODE_SAVED", node.data.name));
+    onAddElementResultValue(node, parameterValues);
   };
 
   const onSelectLeft = (index) => {
-    //const newIndex = connection.data.results.questions.findIndex(quiz => quiz.question === operand)
+    const left = index;
+    const operator = 0;
+    const right = '';
+    const updatedParameters = [ left, operator, right ];
+    const options = [
+      parameters[0].options,
+      buildOperatorOptions(connection, index),
+      buildRightOptions(connection, index)
+    ];
 
-    setLeft(index);
-    setOperator(0);
-    setRight('');
-    setOperatorOptions(buildOperatorOptions(connection, index));
-    setRightOptions(buildRightOptions(connection, index));
+    setParameterValues(updatedParameters);
+    setParameters(parseParameters(parameters, options));
+  }
+
+  const handleParameterChange = (newValue, parameterIndex) => {
+    const updatedParameters = [ ...parameterValues ];
+
+    updatedParameters[parameterIndex] = newValue;
+
+    setParameterValues(updatedParameters);
+
+    if (parameterIndex === 0) {
+      onSelectLeft(newValue);
+    }
   }
 
   useEffect(() => {
-    setLeftOptions(buildLeftOptions(connection));
-    setOperatorOptions(buildOperatorOptions(connection, 0));
-    setRightOptions(buildRightOptions(connection, 0));
+    const options = [
+      buildLeftOptions(connection), 
+      buildOperatorOptions(connection, 0), 
+      buildRightOptions(connection, 0)
+    ];
 
-    console.log('c: ', connection)
+    setParameters(parseParameters(node.data.parameters, options));
+
+    if (node.data.arguments) {
+      setParameterValues(node.data.arguments);
+    }
+    else {
+      setParameterValues([0, 0, options[2]?.length > 0 ? 0 : '']);
+    }
   }, [connection]);
 
   return (
@@ -68,47 +82,22 @@ const ConditionalDialog = ({
       onClose={handleClose}
       aria-labelledby="max-width-dialog-title"
     >
-      <Header title={payloadData.label} subtitle={payloadData.description} />
+      <Header title={node.data.name} subtitle={node.data.description} />
       {connection &&
         <Body>
-          <Styled.InputArea>
-            <MultiSelectionInput
-              label="Left"
-              helperText="Left operand"
-              value={left}
-              onChange={onSelectLeft}
-              options={leftOptions}
+          {connection.data.arguments && connection.data.arguments.length > 0 && parameters.map((parameter, index) => (
+            <ParameterInput 
+              key={index}
+              parameter={parameter}
+              value={parameterValues[index]}
+              onChange={(newValue) => handleParameterChange(newValue, index)}
             />
-            <MultiSelectionInput
-              label="Operator"
-              helperText="Operator that will be applied in the left and right terms"
-              value={operator}
-              onChange={setOperator}
-              options={operatorOptions}
-            />
-            {rightOptions.length === 0 
-            ? 
-              <RawTextInput 
-                label="Right"
-                helperText="Right operand"
-                value={right}
-                onChange={setRight}
-              />
-            :
-              <MultiSelectionInput
-                label="Right"
-                helperText="Right operand"
-                value={right}
-                onChange={setRight}
-                options={rightOptions}
-              />
-            }
-          </Styled.InputArea>
+          ))}
         </Body>
       }
       <Footer>
-        <SuccessButton title="Save" onClick={saveInputs} />
-        <DefaultButton title="Close" onClick={handleClose} />
+        <SuccessButton title={localeService.translate("SAVE")} onClick={saveInputs} />
+        <DefaultButton title={localeService.translate("CLOSE")} onClick={handleClose} />
       </Footer>
     </Dialog>
   );
@@ -117,64 +106,34 @@ const ConditionalDialog = ({
 export default ConditionalDialog;
 
 
+function parseParameters(parameters, options) {
+  let parsedParameters = [];
+
+  parameters.forEach((parameter, index) => {
+    parsedParameters.push({ ...parameter, options: options[index] });
+  })
+
+  return parsedParameters;
+}
+
+
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
-function hasResults(data) {
-  return  data
-          && data.data 
-          && data.data.results;
-}
-
-function loadStoredLeft(data, connection) {
-  if (!connection) {
-    return 0;
-  }
-
-  if (!hasResults(data) || !data.data.results.left) {
-    return 0;
-  }
-
-  return data.data.results.left;
-}
-
-function loadStoredOperator(data, connection) {
-  if (!connection) {
-    return 0;
-  }
-
-  if (!hasResults(data) || !data.data.results.operator) {
-    return 0;
-  }
-
-  return data.data.results.operator;
-}
-
-function loadStoredRight(data, connection) {
-  if (!connection) {
-    return '';
-  }
-
-  if (!hasResults(data) || !data.data.results.right) {
-    return buildRightOptions(connection, 0);
-  }
-
-  return data.data.results.right;
-}
-
 function buildLeftOptions(connection) {
   if (!connection) {
     return [];
   }
 
-  if (connection.type === 'MEDICATION_CONTROL_NODE') {
-    return [{ label: 'Medication', value: 0 }];
+  if (connection.data.slug === 'medication_control') {
+    return [{ label: localeService.translate("MEDICATION"), value: 'medication' }];
   }
 
   const options = [];
+  const fields = connection.data.arguments?.find(arg => Array.isArray(arg));
 
-  connection.data.results.questions?.forEach((quiz, index) => {
-    options.push({ label: quiz.question, value: index });
+  fields?.forEach((field, index) => {
+    options.push({ label: field.label, value: index });
   });
 
   return options;
@@ -187,20 +146,21 @@ function buildOperatorOptions(connection, currentIndex) {
 
   let options = [];
 
-  if (connection.type === 'MEDICATION_CONTROL_NODE') {
+  if (connection.data.slug === 'medication_control') {
     return buildOptions(selectionOperatorOptions);;
   }
 
-  if (!connection.data.results) {
+  if (!connection.data.arguments) {
     return [];
   }
+
+  const fields = connection.data.arguments?.find(arg => Array.isArray(arg));
+  const field = fields[currentIndex];
   
-  const quiz = connection.data.results.questions[currentIndex];
-  
-  if (quiz.answer.type === 'number') {
+  if (field.type === 'number') {
     options = buildOptions(numberOperatorOptions);
   }
-  else if (quiz.answer.type === 'checkbox') {
+  else if (['checkbox', 'radio', 'select'].includes(field.type)) {
     options = buildOptions(selectionOperatorOptions);
   }
   else {
@@ -225,20 +185,22 @@ function buildRightOptions(connection, currentIndex) {
     return [];
   }
 
-  if (connection.type === 'MEDICATION_CONTROL_NODE') {
-    return [{ label: 'Taken', value: 0 }];
+  if (connection.data.slug === 'medication_control') {
+    return [{ label: localeService.translate("TAKEN"), value: 'taken' }];
   }
 
-  if (!connection.data.results) {
+  if (!connection.data.arguments) {
     return [];
   }
 
-  const answer = connection.data.results.questions[currentIndex].answer;
+  const fields = connection.data.arguments?.find(arg => Array.isArray(arg));
+  const form = fields[currentIndex];
   const options = [];
   
-  answer.options.forEach((option, index) => {
+  form.options.forEach((option, index) => {
     options.push({ label: option, value: index });
   });
+
 
   return options;
 }

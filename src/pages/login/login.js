@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import * as Styled from './login.styled';
 import Button from "@material-ui/core/Button";
-import {theme} from "../../utils/colors";
+import theme from "../../assets/themes";
 import {makeLogin} from "../../services/auth/auth";
 import {useHistory} from "react-router-dom";
+import LocaleService from "../../services/locale.service";
 
 export const Login = () => {
     const [error, setError] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory();
+    const localeService = new LocaleService();
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value)
@@ -30,9 +32,11 @@ export const Login = () => {
 
     return (
         <Styled.Container>
-            <Styled.NameTitle>login - mflow</Styled.NameTitle>
+            <Styled.NameTitle>Takere - HCP: {localeService.translate("LOGIN")}</Styled.NameTitle>
             <Styled.LoginBox>
-                <Styled.Description>Email</Styled.Description>
+                <Styled.Description>
+                {localeService.translate("EMAIL")}
+                </Styled.Description>
                 <Styled.Input
                     id="outlined-basic"
                     label="Email"
@@ -44,17 +48,19 @@ export const Login = () => {
                     size="medium"
                     placeholder="Digite seu email"
                 />
-                <Styled.Description style={{marginTop: 30}}>Password</Styled.Description>
+                <Styled.Description style={{marginTop: 30}}>
+                {localeService.translate("PASSWORD")}
+                </Styled.Description>
                 <Styled.Input
                     id="outlined-basic"
-                    label="Senha"
+                    label={localeService.translate("PASSWORD")}
                     variant="outlined"
                     type="password"
                     error={error}
                     value={password}
                     onChange={handlePasswordChange}
                     size="medium"
-                    placeholder="Digita sua senha"
+                    placeholder={localeService.translate("TYPE_PASSWORD")}
                 />
                 <Button
                     style={{marginTop: 30,
@@ -62,7 +68,7 @@ export const Login = () => {
                         width: '100%'}}
                     onClick={handleSubmit}
                     variant="contained">
-                    Entrar
+                    {localeService.translate("SIGN_IN")}
                 </Button>
             </Styled.LoginBox>
         </Styled.Container>

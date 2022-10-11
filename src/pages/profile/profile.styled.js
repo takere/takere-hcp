@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {theme} from "../../utils/colors";
+import theme from "../../assets/themes";
 
 export const PageWithDrawer = styled.div`
   flex-direction: row;

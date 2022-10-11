@@ -3,10 +3,12 @@ import * as Styled from "./styled";
 import { Requests } from "../../services/axios/requests";
 import { useHistory } from "react-router-dom";
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
+import LocaleService from "../../services/locale.service";
 
 export const Patients = () => {
   const [patients, setPatients] = useState([]);
   const history = useHistory();
+  const localeService = new LocaleService();
 
   const getPatients = () => {
     new Requests().getPatients().then((r) => {
@@ -19,7 +21,7 @@ export const Patients = () => {
   }, []);
 
   const handleClick = (e, patient) => {
-    history.push(`/patients/${patient.id}/${patient.flow.id}`);
+    history.push(`/patients/${patient.patient.id ?? patient.patient._id}/${patient.flow.id}`);
   };
 
   return (
@@ -28,13 +30,13 @@ export const Patients = () => {
       <Styled.Container>
         <Styled.ContainerData>
           <Styled.NameTitle>
-            Patients
+            {localeService.translate("PATIENTS")}
           </Styled.NameTitle>
           {patients.map((patient, index) => (
             <Patient 
               key={index}
-              firstName={patient.firstName}
-              lastName={patient.lastName}
+              firstName={patient.patient.firstName}
+              lastName={patient.patient.lastName}
               flowName={patient.flow.name}
               onClick={(e) => handleClick(e, patient)}
             />

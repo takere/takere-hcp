@@ -1,62 +1,30 @@
 import {remoteRequest} from "./index";
 import {toast} from "react-toastify";
+import LocaleService from "../locale.service";
 
 export class Requests {
 
+    constructor() {
+        this.localeService = new LocaleService();
+    }
+
     async getMe(){
-        const toastId = toast.loading("Buscando dados...");
+        const toastId = toast.loading(this.localeService.translate("FETCHING_DATA"));
         const response = await remoteRequest.get('/users/me');
         toast.dismiss(toastId);
         return response.data.data;
     }
 
     async getPatients() {
-        return [
-            { id: 1, firstName: 'U1', lastName: '', email: 'u1@email.com', profileUrl: '', flow: { id: 1, name: 'Urolithiasis' } },
-            { id: 1, firstName: 'C1', lastName: '', email: 'c1@email.com', profileUrl: '', flow: { id: 1, name: 'Cancer' } },
-        ]
+        const response = await remoteRequest.get('/progress/patients');
+        
+        return response.data;
     }
 
     async getPatient(idPatient, idFlow) {
-        return { 
-            id: 1, 
-            firstName: 'U1', 
-            lastName: '', 
-            email: 'u1@email.com', 
-            profileUrl: '', 
-            flow: { 
-                id: 1, 
-                name: 'Urolithiasis',
-                description: 'Fluid monitoring',
-                completed: [
-                    {
-                        node: { id: 2, type: 'QUIZ', icon: 'help', bgColor: '#be96fb'  },
-                        result: [
-                            { id: 1, question: 'How much fluid did you intake in the last 24 hours? (in liters)', answer: 'Around 2 liters' }
-                        ],
-                        date: new Date()
-                    }
-                ],
-                ongoing: [
-                    {
-                        node: { id: 2, type: 'MEDICATION CONTROL', icon: 'healing', bgColor:'#db594f'  },
-                        result: [
-                            
-                        ],
-                        deadline: undefined
-                    }
-                ],
-                late: [
-                    {
-                        node: { id: 2, type: 'QUIZ', icon: 'help', bgColor:'#be96fb'  },
-                        result: [
-                            { id: 1, question: 'How are you?', answer: 'well' }
-                        ],
-                        deadline: new Date()
-                    }
-                ]
-            },
-        }
+        const response = await remoteRequest.get(`/progress/patients/${idPatient}/${idFlow}`);
+        
+        return response.data;
     }
 
     async getMyFlows(){
@@ -75,25 +43,25 @@ export class Requests {
     }
 
     async getFlowById(id){
-        const toastId = toast.loading("Buscando fluxo...");
+        const toastId = toast.loading(this.localeService.translate("FETCHING_FLOW"));
         const response = await remoteRequest.get(`/flows/mine/${id}`);
         toast.dismiss(toastId);
         return response.data;
     }
 
     async deleteFlowById(id){
-        const toastId = toast.loading("Deletando fluxo...");
+        const toastId = toast.loading(this.localeService.translate("REMOVING_FLOW"));
         const response = await remoteRequest.delete(`/flows/mine/${id}`);
         toast.dismiss(toastId);
-        toast.success('Fluxo deletado com sucesso!')
+        toast.success(this.localeService.translate("FLOW_REMOVED_SUCCESS"))
         return response.data;
     }
 
     async createOrUpdateFlow(data){
-        const toastId = toast.loading("Atualizando fluxo...");
+        const toastId = toast.loading(this.localeService.translate("CREATING_FLOW"));
         const response = await remoteRequest.post(`/flows/create`, data);
         toast.dismiss(toastId);
-        toast.success('Fluxo criado com sucesso!')
+        toast.success(this.localeService.translate("FLOW_CREATED_SUCCESS"))
         return response.data;
     }
 

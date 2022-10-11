@@ -11,13 +11,14 @@ import LocaleService from "../../../services/locale.service";
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
+const GenericDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
   const [parameterValues, setParameterValues] = useState(initializeParameterValues(node.data));
   const localeService = new LocaleService();
 
   const saveInputs = () => {
     onAddElementResultValue(node, parameterValues);
     toast.success(localeService.translate("DATA_NODE_SAVED", node.data.name));
+    
   };
 
   const handleParameterChange = (newValue, parameterIndex) => {
@@ -55,7 +56,7 @@ const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
   );
 };
 
-export default BeginDialog;
+export default GenericDialog;
 
 
 //-----------------------------------------------------------------------------
@@ -85,52 +86,22 @@ function initializeParameter(parameter) {
     case 'date':
       return null;
     case 'text':
+    case 'rich_text':
     case 'radio':
     case 'checkbox':
+    case 'select':
       return '';
     case 'select':
-      return parameter.options[0];
-    case 'rich_text':
-      return '<p></p>';
+      return parameter.options[0].value;
     case 'number':
       return 0;
+    case 'form':
+      return []
     case 'boolean':
       return false;
+    case 'select&number':
+      return { select: parameter.options[0].value, number: 0 };
     default:
       return null;
   }
-}
-
-function loadStoredStartDate(data) {
-  if (
-    !data ||
-    !data.data ||
-    !data.data.results ||
-    !data.data.results.startDate
-  ) {
-    return new Date();
-  }
-
-  return data.data.results.startDate;
-}
-
-function loadStoredEndDate(data) {
-  if (!data || !data.data || !data.data.results || !data.data.results.endDate) {
-    return new Date();
-  }
-
-  return data.data.results.endDate;
-}
-
-function loadStoredUndefinedEnd(data) {
-  if (
-    !data ||
-    !data.data ||
-    !data.data.results ||
-    !data.data.results.undefinedEnd
-  ) {
-    return false;
-  }
-
-  return data.data.results.undefinedEnd;
 }

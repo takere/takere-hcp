@@ -3,10 +3,12 @@ import * as Styled from "./home.styled";
 import { Requests } from "../../services/axios/requests";
 import { useHistory } from "react-router-dom";
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
+import LocaleService from "../../services/locale.service";
 
 export const Home = () => {
   const [flows, setFlows] = useState([]);
   const history = useHistory();
+  const localeService = new LocaleService();
 
   const getFlows = () => {
     new Requests().getMyFlows().then((r) => {
@@ -38,7 +40,7 @@ export const Home = () => {
         <Styled.ContainerData>
           <Styled.ContainerHeader>
               <Styled.ContainerName>
-                Care plans
+                {localeService.translate("CARE_PLANS")}
               </Styled.ContainerName>
             </Styled.ContainerHeader>
             <Styled.Flow>

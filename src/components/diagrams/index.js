@@ -29,7 +29,6 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
   const reactFlowWrapper = useRef(null);
 
   const handleClickOpenDialog = () => {
-    console.log(nodes);
     setOpenNodeDialog(true);
   };
 
@@ -64,12 +63,14 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
             ...element,
             data: {
               ...element.data,
-              results: result,
+              arguments: result,
             },
           }
         : element
     );
     setNodes(newElements);
+
+    console.log(result)
   };
 
   const onConnect = (
@@ -79,7 +80,7 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
       const sourceNode = nodes.filter(element => element.id === sourceId)[0];
       const targetNode = nodes.filter(element => element.id === targetId)[0];
 
-      if (isConnectionAllowed(sourceNode.slug, targetNode.slug, nodeConnections)) {
+      if (isConnectionAllowed(sourceNode.data.slug, targetNode.data.slug, nodeConnections)) {
         const connectedNodes = nodes.filter(node => (!node.target) || (node.target !== targetId));
 
         setNodes(addEdge({ ...params, animated: true, style:{strokeWidth:3} }, connectedNodes));
@@ -121,7 +122,8 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
       id: `dndnode_${index}`,
       type: node.type,
       position,
-      data: { ...node.data, onRemove: remModelData}
+      data: node, 
+      onRemove: remModelData
     };
 
     setIndex(index + 1);
@@ -143,13 +145,24 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
   }, []);
 
   useEffect(() => {
-    if (flowDb?.data) {
-      const rawNodes = flowDb.data;
+    if (flowDb?.graph) {
+      const loadedNodes = [];
 
-      for (let i = 0; i < rawNodes.length; i++) {
-        rawNodes[i].data = { ...rawNodes[i].data, onRemove: remModelData };
+      for (let i = 0; i < flowDb.graph.length; i++) {
+        let formattedData = { 
+          ...flowDb.graph[i],
+          data: flowDb.graph[i], 
+          onRemove: remModelData 
+        };
+
+        if (flowDb.graph[i].source !== undefined) {
+          formattedData = { ...formattedData, style:{strokeWidth:3} }
+        }
+
+        loadedNodes.push(formattedData);
       }
-      setNodes(rawNodes);
+
+      setNodes(loadedNodes);
       setFlow(flowDb);
     } else {
       setNodes([]);
@@ -159,7 +172,7 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
 
   return (
     <Styled.Container>
-      { buildSaveFlowDialog(openSaveDialog, handleCloseSaveDialog, { flow, elements: nodes }) }
+      { buildSaveFlowDialog(openSaveDialog, handleCloseSaveDialog, { flow, graph: nodes }) }
       { buildNodeDialog(selectedNode, openNodeDialog, handleCloseNodeDialog, onAddElementResultValue, selectedNodeConnection) }
       <ReactFlowProvider>
         <ReactFlowContent 
@@ -229,15 +242,13 @@ const ReactFlowContent = ({
 //        Functions
 //-----------------------------------------------------------------------------
 function isConnectionAllowed(sourceNodeSlug, targetNodeSlug, nodeConnections) {
-  if (nodeConnections[sourceNodeSlug] === undefined) {
+  const sourceNodeConnections = nodeConnections.find(connection => connection.slug === sourceNodeSlug)?.connections;
+  
+  if (sourceNodeConnections === undefined) {
     return false;
   }
 
-  if (nodeConnections[targetNodeSlug] === undefined) {
-    return false;
-  }
-
-  return nodeConnections[sourceNodeSlug].includes(targetNodeSlug);
+  return sourceNodeConnections.includes(targetNodeSlug);
 }
 
 
@@ -268,11 +279,11 @@ function buildNodeDialog(
   }
 
   return dialogFactory(
-    selectedElement.type.replace("_NODE", ""),
+    selectedElement.type,
     {
       open: openDialog,
       handleClose: handleCloseDialog,
-      data: selectedElement,
+      node: selectedElement,
       onAddElementResultValue: onAddElementResultValue,
       connection: selectedNodeConnection
     }
