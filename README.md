@@ -47,7 +47,7 @@ After a care plan flow is created, the target patient of the flow can start his/
 ![HCP view about one care plan element that has input fields](https://raw.githubusercontent.com/takere/takere-hcp/master/docs/images/explanation/patient-progress-details.png)
 
 
-## Acknowledgements
+## 👥 Acknowledgements
 Special thanks to [Rodolfo Viola](https://github.com/rodolfoviolac) for starting development of the platform.
 
 ## ✔ Requirements
