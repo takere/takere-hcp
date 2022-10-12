@@ -20,11 +20,32 @@
 Takere for healthcare professionals (HCP) is a system that allows the definition of a care plan along with monitoring patients’ progress. It is developed using [React](https://reactjs.org), which is a framework for creating websites using component-oriented programming.
 
 ### Care plan flow
-We use drag-and-drop concept for building a care plan flow. The system shows care plan elements available for use in the flow. To include an element in the flow, the user needs to drag it and drop it in the flow (Figure 4.4). After that, it is necessary to connect these elements. Each connection is an arrow, indicating a dependency relation. For example, if an element Y should be generated only after an element X was completed, then the user must connect X with Y (in this order), resulting in the Figure 4.5.
-Each flow must begin with the ’Begin’ element, which indicates when the care plan begins and when it ends (Figure 4.6). If the end date is unknown, it can be marked as ’undefined end’, indicating the flow should stay active without a time to become disabled. Finally, each flow has a name, a description, and the email of the target patient.
+We use drag-and-drop concept for building a care plan flow. The system shows care plan elements available for use in the flow. To include an element in the flow, the user needs to drag it and drop it in the flow (Figure 1). After that, it is necessary to connect these elements. Each connection is an arrow, indicating a dependency relation. For example, if an element Y should be generated only after an element X was completed, then the user must connect X with Y (in this order), resulting in the Figure 2.
+Each flow must begin with the ’Begin’ element, which indicates when the care plan begins and when it ends (Figure 3). If the end date is unknown, it can be marked as ’undefined end’, indicating the flow should stay active without a time to become disabled. Finally, each flow has a name, a description, and the email of the target patient.
+
+#### Figure 1
+
+![Drag-and-drop example using Begin element](https://raw.githubusercontent.com/takere/takere-hcp/master/docs/images/explanation/begin-drag-drop.png)
+
+#### Figure 2
+
+![Two elements: X and Y, being Y a child of X](https://raw.githubusercontent.com/takere/takere-hcp/master/docs/images/explanation/xy.png)
+
+#### Figure 3
+
+![Begin element - configuration window](https://raw.githubusercontent.com/takere/takere-hcp/master/docs/images/explanation/begin-configuration.png)
 
 ### Monitoring patients
-After a care plan flow is created, the target patient of the flow can start his/her treatment. When care plan elements are completed by him/her, results about this patient become available. This information can be monitored by HCP, seeing which elements have been completed, which are ongoing and those that are late (Figure 4.7). It is also possible to see patient input, if the element has inputs (Figure 4.8).
+After a care plan flow is created, the target patient of the flow can start his/her treatment. When care plan elements are completed by him/her, results about this patient become available. This information can be monitored by HCP, seeing which elements have been completed, which are ongoing and those that are late (Figure 4). It is also possible to see patient input, if the element has inputs (Figure 5).
+
+#### Figure 4
+
+![Care plan progress based on a created flow - HCP view](https://raw.githubusercontent.com/takere/takere-hcp/master/docs/images/explanation/hcp-patients.png)
+
+#### Figure 5
+
+![HCP view about one care plan element that has input fields](https://raw.githubusercontent.com/takere/takere-hcp/master/docs/images/explanation/patient-progress-details.png)
+
 
 ## Acknowledgements
 Special thanks to [Rodolfo Viola](https://github.com/rodolfoviolac) for starting development of the platform.
@@ -76,5 +97,5 @@ This front-end system has no information about the semantics of a care plan elem
 |parts|`Directory`|User interface components used for composing components|
 |routes|`Directory`|Files responsible for defining application endpoints and handling them|
 |services|`Directory`|Files responsible for business logic|
-|app.ts|`File`|Application point entry|
+|App.tsx|`File`|Application point entry|
 
