@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as Styled from './login.styled';
 import Button from "@material-ui/core/Button";
 import theme from "../../assets/themes";
-import {makeLogin} from "../../services/auth/auth";
+import UserService from '../../services/user.service';
 import {useHistory} from "react-router-dom";
 import LocaleService from "../../services/locale.service";
 
@@ -12,6 +12,7 @@ export const Login = () => {
     const [password, setPassword] = useState('');
     const history = useHistory();
     const localeService = new LocaleService();
+    const userService = new UserService();
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value)
@@ -22,7 +23,7 @@ export const Login = () => {
     }
 
     const handleSubmit = async () => {
-        const result = await makeLogin(email, password);
+        const result = await userService.makeLogin(email, password);
         if(result){
             history.push('/');
         } else {

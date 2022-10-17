@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import * as Styled from './sidebar.styled';
-import {Requests} from "../../services/axios/requests";
 import LocaleService from "../../services/locale.service";
+import NodeService from '../../services/node.service';
 
 const localeService = new LocaleService();
+const nodeService = new NodeService();
 
 export const Sidebar = () => {
     const [search, setSearch] = useState('');
@@ -12,7 +13,7 @@ export const Sidebar = () => {
     
     
     useEffect(() => {
-        new Requests().getNodes().then(r => {
+        nodeService.getNodes().then(r => {
             setNodes(r);
             setFoundNodes(r);
         })

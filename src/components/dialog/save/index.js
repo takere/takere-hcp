@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
-import { Requests } from "../../../services/axios/requests";
 import { Header, Body, Footer } from "../";
 import RawTextInput from "../../../parts/input/RawTextInput";
 import LocaleService from "../../../services/locale.service";
+import FlowService from "../../../services/flow.service";
 
 //-----------------------------------------------------------------------------
 //        Components
@@ -16,6 +16,7 @@ const SaveFlowDialog = ({ open, handleClose, data }) => {
   const [dataFlow, setDataFlow] = useState([]);
   const [userEmail, setUserEmail] = useState("");
   const localeService = new LocaleService();
+  const flowService = new FlowService();
 
   const handleSave = () => {
     const payload = {
@@ -25,7 +26,7 @@ const SaveFlowDialog = ({ open, handleClose, data }) => {
       graph: dataFlow,
     };
 
-    new Requests().createOrUpdateFlow(payload).then((r) => {
+    flowService.create(payload).then((r) => {
       handleClose();
     });
   };

@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import * as Styled from "./home.styled";
-import { Requests } from "../../services/axios/requests";
 import { useHistory } from "react-router-dom";
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
 import LocaleService from "../../services/locale.service";
+import FlowService from "../../services/flow.service";
 
 export const Home = () => {
   const [flows, setFlows] = useState([]);
   const history = useHistory();
   const localeService = new LocaleService();
+  const flowService = new FlowService();
 
   const getFlows = () => {
-    new Requests().getMyFlows().then((r) => {
+    flowService.getMyFlows().then((r) => {
       setFlows(r);
     });
   };
@@ -22,7 +23,7 @@ export const Home = () => {
 
   const handleClick = (e: any, flow: any) => {
     if (e.target.id === "close") {
-      new Requests().deleteFlowById(flow._id).then(() => {
+      flowService.deleteFlowById(flow._id).then(() => {
         getFlows();
       });
     } else {

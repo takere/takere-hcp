@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Styled from './menuDrawer.styled';
 import { Link, useHistory } from "react-router-dom";
-import { makeLogout } from "../../services/auth/auth";
+import UserService from '../../services/user.service';
 
 const MENU = [
     {
@@ -20,9 +20,10 @@ const MENU = [
 
 export const MenuDrawer = () => {
     const history = useHistory();
+    const userService = new UserService();
 
     const handleLogout = () => {
-        makeLogout();
+        userService.makeLogout();
         history.push('/login');
     }
 

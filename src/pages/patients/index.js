@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as Styled from "./styled";
-import { Requests } from "../../services/axios/requests";
+import ProgressService from "../../services/progress.service";
 import { useHistory } from "react-router-dom";
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
 import LocaleService from "../../services/locale.service";
@@ -9,9 +9,10 @@ export const Patients = () => {
   const [patients, setPatients] = useState([]);
   const history = useHistory();
   const localeService = new LocaleService();
+  const progressService = new ProgressService();
 
   const getPatients = () => {
-    new Requests().getPatients().then((r) => {
+    progressService.getPatients().then((r) => {
       setPatients(r);
     });
   };

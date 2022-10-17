@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import * as Styled from "./styled";
-import { Requests } from "../../../services/axios/requests";
 import DialogMaterialUI from "@material-ui/core/Dialog";
 import { MenuDrawer } from "../../../components/menuDrawer/menuDrawer";
 import {
@@ -13,6 +12,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DefaultButton from "../../../components/buttons/DefaultButton";
 import LocaleService from "../../../services/locale.service";
+import ProgressService from "../../../services/progress.service";
 
 export const Patient = () => {
   const [patientProgress, setPatientProgress] = useState({});
@@ -21,9 +21,10 @@ export const Patient = () => {
   const [dialogContent, setDialogContent] = useState({});
   const { patientId, flowId } = useParams();
   const localeService = new LocaleService();
+  const progressService = new ProgressService();
 
   const getPatientInfo = () => {
-    new Requests().getPatient(patientId, flowId).then((r) => {
+    progressService.getPatient(patientId, flowId).then((r) => {
       setPatientProgress(r);
       setLoading(false);
     });

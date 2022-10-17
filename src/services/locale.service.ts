@@ -6,12 +6,13 @@
  */
 
 import i18nConfig from "../config/i18n.config";
+import Service from "./service";
 
 
 /**
  * Responsible for providing translations according to some language.
  */
-class LocaleService {
+class LocaleService extends Service {
   
   // --------------------------------------------------------------------------
   //     Attributes
@@ -22,7 +23,8 @@ class LocaleService {
   // --------------------------------------------------------------------------
   //     Constructor
   // --------------------------------------------------------------------------
-  constructor() {
+  public constructor() {
+    super();
     this.i18nProvider = new i18nConfig();
   }
 
@@ -88,7 +90,7 @@ class LocaleService {
    * @param      locale The locale to set. Must be from the list of available 
    * locales.
    */
-  public setLocale(locale: any) {
+  public setLocale(locale: any): void {
     if (this.getLocales().indexOf(locale) !== -1) {
       this.i18nProvider.setLocale(locale)
     }
