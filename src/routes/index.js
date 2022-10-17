@@ -6,9 +6,14 @@
  */
 
 import React from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
-import Protected, { protectedRoutes } from "./protected";
-import Public, { publicRoutes } from "./public";
+import { 
+  BrowserRouter as Router, 
+  Switch, 
+  Redirect, 
+  Route 
+} from "react-router-dom";
+import protectedRoutes from "./protected";
+import publicRoutes from "./public";
 
 
 //-----------------------------------------------------------------------------
@@ -25,6 +30,26 @@ const Routes = () => (
 
 export default Routes;
 
+const PublicRoute = ({ component: Component, ...restOfProps }) => (
+  <Route
+    { ...restOfProps }
+    render={(props) => !isAuthenticated() 
+      ? <Component { ...props } /> 
+      : <Redirect to="/" />
+    }
+  />
+);
+
+const ProtectedRoute = ({ component: Component, ...restOfProps }) => (
+  <Route
+    { ...restOfProps }
+    render={(props) => hasAuthenticationToken() 
+      ? <Component { ...props } /> 
+      : <Redirect to="/login" />
+    }
+  />
+);
+
 
 //-----------------------------------------------------------------------------
 //        Functions
@@ -33,7 +58,7 @@ function buildPublicRoutes() {
   const routeSwitch = [];
 
   publicRoutes.forEach((route, index) => {
-    routeSwitch.push(<Public key={index} { ...route } />);
+    routeSwitch.push(<PublicRoute key={index} { ...route } />);
   })
 
   return routeSwitch;
@@ -43,8 +68,16 @@ function buildProtectedRoutes() {
   const routeSwitch = [];
 
   protectedRoutes.forEach((route, index) => {
-    routeSwitch.push(<Protected key={index} { ...route } />);
+    routeSwitch.push(<ProtectedRoute key={index} { ...route } />);
   })
 
   return routeSwitch;
+}
+
+function isAuthenticated() {
+  return localStorage.getItem("isAuthenticated");
+}
+
+function hasAuthenticationToken() {
+  return localStorage.getItem("x_auth_token");
 }
