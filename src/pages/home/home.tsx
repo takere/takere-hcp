@@ -12,7 +12,7 @@ export const Home = () => {
   const flowService = new FlowService();
 
   const getFlows = () => {
-    flowService.getMyFlows().then((r) => {
+    flowService.getMyFlows().then((r: any) => {
       setFlows(r);
     });
   };

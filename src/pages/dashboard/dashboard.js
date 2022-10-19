@@ -6,17 +6,19 @@ import {
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
 import * as Styled from "./dashboard.styled";
 import NodeService from '../../services/node.service';
+import FlowService from '../../services/flow.service';
 
 export const Dashboard = () => {
     const [flow, setFlow] = useState(null);
     const [nodeConnections, setNodeConnections] = useState([]);
     const { id } = useParams();
     const nodeService = new NodeService();
+    const flowService = new FlowService();
 
 
     useEffect(() => {
         if(id) {
-            new Requests().getFlowById(id).then(r => {
+            flowService.getFlowById(id).then(r => {
                 setFlow(r);
             })
         } else {
