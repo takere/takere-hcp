@@ -16,13 +16,13 @@ import Service from "./service";
 class UserService extends Service {
   
   // --------------------------------------------------------------------------
-  //     Attributes
+  //         Attributes
   // --------------------------------------------------------------------------
   private readonly localeService: LocaleService;
 
 
   // --------------------------------------------------------------------------
-  //     Constructor
+  //         Constructor
   // --------------------------------------------------------------------------
   constructor() {
     super();
@@ -31,7 +31,7 @@ class UserService extends Service {
 
 
   // --------------------------------------------------------------------------
-  //     Methods
+  //         Methods
   // --------------------------------------------------------------------------
   public async makeLogin(email: string, password: string): Promise<boolean> {
     let success = false;

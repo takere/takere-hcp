@@ -16,7 +16,7 @@ import Service from "./service";
 class NodeService extends Service {
   
   // --------------------------------------------------------------------------
-  //     Constructor
+  //         Constructor
   // --------------------------------------------------------------------------
   constructor() {
     super();
@@ -24,7 +24,7 @@ class NodeService extends Service {
 
 
   // --------------------------------------------------------------------------
-  //     Methods
+  //         Methods
   // --------------------------------------------------------------------------
   public async getNodes(): Promise<Node> {
     const response = await this.remoteRequest.get('/nodes/me');

@@ -1,8 +1,19 @@
-import React, { useEffect, useState } from "react";
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import { useState } from "react";
 import BooleanInput from "../BooleanInput";
 import DateInput from "../DateInput";
 import LocaleService from "../../../services/locale.service";
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 const DateParameterInput = ({ parameter, value, onChange }) => {
 
   const [undefinedValue, setUndefinedValue] = useState(value === null);

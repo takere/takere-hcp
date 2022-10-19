@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from "react";
-import MultiSelectionInput from "../MultiSelectionInput";
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import { useState } from "react";
 import NumberInput from "../NumberInput";
-import RawTextInput from "../RawTextInput";
 import LocaleService from "../../../services/locale.service";
 import RichTextInput from "../RichTextInput";
 import { EditorState, ContentState } from "draft-js";
 import { convertFromHTML, convertToHTML } from "draft-convert";
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 const BookParameterInput = ({ parameter, value, onChange }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -81,6 +90,9 @@ const BookParameterInput = ({ parameter, value, onChange }) => {
 export default BookParameterInput;
 
 
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
 function loadPages(parameter, value) {
   if (!value || value.length === 0 || parameter.type !== 'book') {
     return [];

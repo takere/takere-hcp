@@ -15,7 +15,7 @@ import Service from "./service";
 class ProgressService extends Service {
   
   // --------------------------------------------------------------------------
-  //     Constructor
+  //         Constructor
   // --------------------------------------------------------------------------
   constructor() {
     super();
@@ -23,7 +23,7 @@ class ProgressService extends Service {
 
 
   // --------------------------------------------------------------------------
-  //     Methods
+  //         Methods
   // --------------------------------------------------------------------------
   public async getPatients(): Promise<Progress[]> {
     const response = await this.remoteRequest.get('/progress/patients');

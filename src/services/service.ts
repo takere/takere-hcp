@@ -15,18 +15,18 @@ import axios, { AxiosInstance } from 'axios';
 abstract class Service {
   
   // --------------------------------------------------------------------------
-  //     Attributes
+  //         Attributes
   // --------------------------------------------------------------------------
   protected readonly remoteRequest: AxiosInstance;
 
 
   // --------------------------------------------------------------------------
-  //     Constructor
+  //         Constructor
   // --------------------------------------------------------------------------
   public constructor() {
     this.remoteRequest = axios.create({
       baseURL: ApiConfig.BASE_URL,
-      timeout: 10000,
+      timeout: ApiConfig.REQUEST_TIMEOUT,
       headers: { 'authorization': localStorage.getItem('x_auth_token') }
     });
   }

@@ -1,10 +1,21 @@
-import React, { useEffect, useState } from "react";
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import { useEffect, useState } from "react";
 import RawTextInput from "../RawTextInput";
 import MultiSelectionInput from "../MultiSelectionInput";
 import NumberInput from "../NumberInput";
 import LocaleService from "../../../services/locale.service";
 import OptionInputBuilder from "../OptionInputBuilder";
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 const FormParameterInput = ({ parameter, value, onChange }) => {
   
   const [questions, setQuestions] = useState(loadQuestions(parameter, value));
@@ -133,6 +144,9 @@ const FormParameterInput = ({ parameter, value, onChange }) => {
 export default FormParameterInput;
 
 
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
 function loadQuestions(parameter, value) {
   if (parameter.type !== 'form') {
     return [];

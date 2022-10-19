@@ -1,7 +1,18 @@
-import React, { useState } from "react";
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import { useState } from "react";
 import MultiSelectionInput from "../MultiSelectionInput";
 import NumberInput from "../NumberInput";
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 const SelectAndNumberParameterInput = ({ parameter, value, onChange }) => {
 
   const [selectNumber, setSelectNumber] = useState(loadSelectNumber(parameter, value));
@@ -33,6 +44,10 @@ const SelectAndNumberParameterInput = ({ parameter, value, onChange }) => {
 
 export default SelectAndNumberParameterInput;
 
+
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
 function loadSelectNumber(parameter, value) {
   if (!value || value.number === undefined || parameter.type !== 'select&number') {
     return 0;

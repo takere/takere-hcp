@@ -1,8 +1,17 @@
-import React from "react";
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import MultiSelectionInput from "../MultiSelectionInput";
-import NumberInput from "../NumberInput";
 import RawTextInput from "../RawTextInput";
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 const SelectOrTextParameterInput = ({ parameter, value, onChange }) => {
   
   if (parameter.options.length === 0) {

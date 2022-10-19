@@ -18,13 +18,13 @@ import Service from "./service";
 class FlowService extends Service {
   
   // --------------------------------------------------------------------------
-  //     Attributes
+  //         Attributes
   // --------------------------------------------------------------------------
   private readonly localeService: LocaleService;
 
 
   // --------------------------------------------------------------------------
-  //     Constructor
+  //         Constructor
   // --------------------------------------------------------------------------
   constructor() {
     super();
@@ -33,7 +33,7 @@ class FlowService extends Service {
 
 
   // --------------------------------------------------------------------------
-  //     Methods
+  //         Methods
   // --------------------------------------------------------------------------
   public async getMyFlows(): Promise<Flow> {
     const response = await this.remoteRequest.get('/flows/mines');

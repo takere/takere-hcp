@@ -1,9 +1,19 @@
-import React from "react";
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import RawTextInput from "./RawTextInput";
 import { Spacing } from "./styled";
 import AccentButton from "../../components/buttons/AccentButton";
 import DangerButton from "../../components/buttons/DangerButton";
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 const OptionInputBuilder = ({ 
   handleNewOption, 
   options, // option: {label, type, options}

@@ -5,13 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import RoutePath from "../models/route-path.model";
 import { Login } from "../pages/login/login";
 
 
-//-----------------------------------------------------------------------------
-//        Constants
-//-----------------------------------------------------------------------------
-const publicRoutes = [
+// ----------------------------------------------------------------------------
+//         Constants
+// ----------------------------------------------------------------------------
+const publicRoutes: RoutePath[] = [
   { path: '/login', exact: true, component: Login }
 ];
 

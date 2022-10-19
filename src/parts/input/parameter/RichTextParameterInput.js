@@ -1,8 +1,19 @@
-import React, { useEffect, useState } from "react";
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import { useState } from "react";
 import RichTextInput from "../RichTextInput";
 import { EditorState, ContentState } from "draft-js";
 import { convertFromHTML, convertToHTML } from "draft-convert";
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 const RichTextParameterInput = ({ parameter, value, onChange }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,6 +44,10 @@ const RichTextParameterInput = ({ parameter, value, onChange }) => {
 
 export default RichTextParameterInput;
 
+
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
 function loadEditorContentFromLoadedPages(parameter, value) {
   if (!value || value.length === 0 || parameter.type !== 'book') {
     return EditorState.createWithContent(ContentState.createFromText(""));

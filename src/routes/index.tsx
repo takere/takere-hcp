@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from "react";
 import { 
   BrowserRouter as Router, 
   Switch, 
@@ -16,9 +15,9 @@ import protectedRoutes from "./protected";
 import publicRoutes from "./public";
 
 
-//-----------------------------------------------------------------------------
-//        Components
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 const Routes = () => (
   <Router>
     <Switch>
@@ -30,7 +29,7 @@ const Routes = () => (
 
 export default Routes;
 
-const PublicRoute = ({ component: Component, ...restOfProps }) => (
+const PublicRoute = ({ component: Component, ...restOfProps }: any) => (
   <Route
     { ...restOfProps }
     render={(props) => !isAuthenticated() 
@@ -40,7 +39,7 @@ const PublicRoute = ({ component: Component, ...restOfProps }) => (
   />
 );
 
-const ProtectedRoute = ({ component: Component, ...restOfProps }) => (
+const ProtectedRoute = ({ component: Component, ...restOfProps }: any) => (
   <Route
     { ...restOfProps }
     render={(props) => hasAuthenticationToken() 
@@ -51,11 +50,11 @@ const ProtectedRoute = ({ component: Component, ...restOfProps }) => (
 );
 
 
-//-----------------------------------------------------------------------------
-//        Functions
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
 function buildPublicRoutes() {
-  const routeSwitch = [];
+  const routeSwitch: JSX.Element[] = [];
 
   publicRoutes.forEach((route, index) => {
     routeSwitch.push(<PublicRoute key={index} { ...route } />);
@@ -65,7 +64,7 @@ function buildPublicRoutes() {
 }
 
 function buildProtectedRoutes() {
-  const routeSwitch = [];
+  const routeSwitch: JSX.Element[] = [];
 
   protectedRoutes.forEach((route, index) => {
     routeSwitch.push(<ProtectedRoute key={index} { ...route } />);
