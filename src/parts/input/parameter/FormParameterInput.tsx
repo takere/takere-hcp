@@ -11,7 +11,7 @@ import MultiSelectionInput from "../MultiSelectionInput";
 import NumberInput from "../NumberInput";
 import LocaleService from "../../../services/locale.service";
 import OptionInputBuilder from "../OptionInputBuilder";
-import Parameter from "../../../models/parameter.model";
+import Parameter from "../../../models/parameter/parameter.model";
 
 
 // ----------------------------------------------------------------------------

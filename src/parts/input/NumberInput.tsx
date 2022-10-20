@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import NumberImputer from '../../models/number-imputer.model';
+import NumberImputer from '../../models/imputer/number-imputer.model';
 import { InputDefault, Spacing } from './styled';
 
 

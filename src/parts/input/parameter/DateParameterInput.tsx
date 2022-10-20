@@ -9,12 +9,13 @@ import { useState } from "react";
 import BooleanInput from "../BooleanInput";
 import DateInput from "../DateInput";
 import LocaleService from "../../../services/locale.service";
+import DateParameter from "../../../models/parameter/date-parameter.model";
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const DateParameterInput = ({ parameter, value, onChange }: any) => {
+const DateParameterInput = ({ parameter, value, onChange }: DateParameter) => {
 
   const [undefinedValue, setUndefinedValue] = useState(value === null);
   
@@ -27,7 +28,7 @@ const DateParameterInput = ({ parameter, value, onChange }: any) => {
   
   if (parameter.required) {
     if (!value) {
-      onChange(new Date())
+      onChange(new Date().toISOString())
     }
 
     return (
@@ -52,7 +53,6 @@ const DateParameterInput = ({ parameter, value, onChange }: any) => {
         }
         <BooleanInput
           label={localeService.translate("IS_UNDEFINED")}
-          helperText={localeService.translate("SET_PARAMETER_UNDEFINED")}
           value={undefinedValue}
           onChange={onChangeUndefinedValue}
         />

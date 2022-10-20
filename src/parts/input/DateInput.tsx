@@ -14,12 +14,13 @@ import DateImputer from "../../models/date-imputer.model";
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const DateInput = ({ label, value, onChange }: DateImputer) => (
+const DateInput = ({ label, value, helperText, onChange }: DateImputer) => (
   <>
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <InputDatePicker
         inputVariant="outlined"
         label={label}
+        helperText={helperText}
         value={value}
         onChange={newValue => onChange(newValue?.toISOString())}
       />

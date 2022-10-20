@@ -11,14 +11,15 @@ import LocaleService from "../../../services/locale.service";
 import RichTextInput from "../RichTextInput";
 import { EditorState, ContentState } from "draft-js";
 import { convertFromHTML, convertToHTML } from "draft-convert";
-import Parameter from "../../../models/parameter.model";
+import Parameter from "../../../models/parameter/parameter.model";
 import Page from "../../../models/page.model";
+import BookParameter from "../../../models/book-parameter.model";
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const BookParameterInput = ({ parameter, value, onChange }: any) => {
+const BookParameterInput = ({ parameter, value, onChange }: BookParameter) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(loadPages(parameter, value));
@@ -27,9 +28,7 @@ const BookParameterInput = ({ parameter, value, onChange }: any) => {
 
   const localeService = new LocaleService();
   
-  const onTotalPagesChange = (rawValue: string) => {
-    let newTotalPages = parseInt(rawValue);
-
+  const onTotalPagesChange = (newTotalPages: number) => {
     if (newTotalPages <= 0) {
       return;
     }
@@ -43,9 +42,7 @@ const BookParameterInput = ({ parameter, value, onChange }: any) => {
     onChange(convertPagesToHtml(newPages));
   };
 
-  const onChangeCurrentPage = (rawValue: string) => {
-    let newCurrentPage = parseInt(rawValue);
-
+  const onChangeCurrentPage = (newCurrentPage: number) => {
     if (isPageNumberOutOfBounds(newCurrentPage, totalPages)) {
       return;
     }

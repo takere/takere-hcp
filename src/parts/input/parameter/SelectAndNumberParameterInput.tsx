@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Parameter from "../../../models/parameter.model";
+import Parameter from "../../../models/parameter/parameter.model";
 import SelectAndNumberContainer from "../../../models/select-and-number-container.model";
 import SelectAndNumberParameter from "../../../models/select-and-number-parameter.model";
 import MultiSelectionInput from "../MultiSelectionInput";

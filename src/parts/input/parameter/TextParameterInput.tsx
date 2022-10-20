@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import TextParameter from "../../../models/text-parameter.model";
+import TextParameter from "../../../models/parameter/text-parameter.model";
 import RawTextInput from "../RawTextInput";
 
 

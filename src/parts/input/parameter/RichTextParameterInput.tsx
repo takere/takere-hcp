@@ -9,7 +9,7 @@ import { useState } from "react";
 import RichTextInput from "../RichTextInput";
 import { EditorState, ContentState } from "draft-js";
 import { convertFromHTML, convertToHTML } from "draft-convert";
-import Parameter from "../../../models/parameter.model";
+import Parameter from "../../../models/parameter/parameter.model";
 import Page from "../../../models/page.model";
 import RichTextParameter from "../../../models/rich-text-parameter.model";
 
