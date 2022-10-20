@@ -11,6 +11,9 @@ import { DatePicker } from "@material-ui/pickers";
 import theme from "../../assets/themes";
 
 
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export const InputDefault = styled(TextField)`
   width: 100%;
   padding-top: 45px;

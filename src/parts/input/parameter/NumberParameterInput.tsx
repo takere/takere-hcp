@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import NumberParameter from "../../../models/number-parameter.model";
+import NumberParameter from "../../../models/parameter/number-parameter.model";
 import NumberInput from "../NumberInput";
 
 

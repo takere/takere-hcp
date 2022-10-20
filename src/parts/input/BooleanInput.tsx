@@ -6,7 +6,7 @@
  */
 
 import Checkbox from "@material-ui/core/Checkbox";
-import BooleanImputer from "../../models/boolean-imputer.model";
+import BooleanImputer from "../../models/imputer/boolean-imputer.model";
 import { TextName, Spacing } from './styled';
 
 

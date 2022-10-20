@@ -6,7 +6,7 @@
  */
 
 import RoutePath from "../models/route-path.model";
-import { Login } from "../pages/login/login";
+import Login from "../pages/login/login";
 
 
 // ----------------------------------------------------------------------------

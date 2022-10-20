@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import RawTextImputer from '../../models/raw-text-imputer.model';
+import RawTextImputer from '../../models/imputer/raw-text-imputer.model';
 import { InputDefault, Spacing } from './styled';
 
 

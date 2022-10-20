@@ -8,7 +8,7 @@
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { InputDatePicker, Spacing } from './styled';
-import DateImputer from "../../models/date-imputer.model";
+import DateImputer from "../../models/imputer/date-imputer.model";
 
 
 // ----------------------------------------------------------------------------

@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import ParameterImputer from "../../models/parameter-imputer.model";
+import ParameterImputer from "../../models/imputer/parameter-imputer.model";
 import InputFactoryException from "../exception/input-factory.exception";
 import parameters from "./parameter";
 

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import OptionsParameter from "../../../models/options-parameter.model";
+import OptionsParameter from "../../../models/parameter/options-parameter.model";
 import Options from "../../../models/options.model";
 import OptionInputBuilder from "../OptionInputBuilder";
 

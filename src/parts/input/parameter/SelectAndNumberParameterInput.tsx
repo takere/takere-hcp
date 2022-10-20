@@ -7,7 +7,7 @@
 
 import Parameter from "../../../models/parameter/parameter.model";
 import SelectAndNumberContainer from "../../../models/select-and-number-container.model";
-import SelectAndNumberParameter from "../../../models/select-and-number-parameter.model";
+import SelectAndNumberParameter from "../../../models/parameter/select-and-number-parameter.model";
 import MultiSelectionInput from "../MultiSelectionInput";
 import NumberInput from "../NumberInput";
 

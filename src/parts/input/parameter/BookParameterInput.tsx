@@ -13,7 +13,7 @@ import { EditorState, ContentState } from "draft-js";
 import { convertFromHTML, convertToHTML } from "draft-convert";
 import Parameter from "../../../models/parameter/parameter.model";
 import Page from "../../../models/page.model";
-import BookParameter from "../../../models/book-parameter.model";
+import BookParameter from "../../../models/parameter/book-parameter.model";
 
 
 // ----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ const BookParameterInput = ({ parameter, value, onChange }: BookParameter) => {
       return;
     }
 
-    const newPages = updatePagesBasedOnTotalPages(newTotalPages, totalPages, pages);
+  const newPages = updatePagesBasedOnTotalPages(newTotalPages, totalPages, pages);
 
     setTotalPages(newTotalPages);
     setCurrentPage(1);

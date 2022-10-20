@@ -11,7 +11,7 @@ import { EditorState, ContentState } from "draft-js";
 import { convertFromHTML, convertToHTML } from "draft-convert";
 import Parameter from "../../../models/parameter/parameter.model";
 import Page from "../../../models/page.model";
-import RichTextParameter from "../../../models/rich-text-parameter.model";
+import RichTextParameter from "../../../models/parameter/rich-text-parameter.model";
 
 
 // ----------------------------------------------------------------------------

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import MultiSelectionImputer from '../../models/multi-selection-imputer.model';
+import MultiSelectionImputer from '../../models/imputer/multi-selection-imputer.model';
 import { InputDefault, Spacing } from './styled';
 
 
