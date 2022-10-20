@@ -5,35 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import RawTextImputer from '../../models/raw-text-imputer.model';
 import { InputDefault, Spacing } from './styled';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const MultiSelectionInput = ({ label, value, helperText, onChange, options }) => (
+const RawTextInput = ({ label, value, helperText, onChange, style }: RawTextImputer) => (
   <>
     <InputDefault
+      id="outlined-basic"
       label={label}
-      size="small"
-      id="outlined-select-currency-native"
-      select
+      style={style}
       variant="outlined"
+      type="text"
+      helperText={helperText}
       value={value}
       onChange={event => onChange(event.target.value)}
-      SelectProps={{
-        native: true,
-      }}
-      helperText={helperText}
-    >
-      {options?.map((option, index) => (
-        <option key={option.key ?? index} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </InputDefault>
+      size="small"
+    />
     <Spacing />
   </>
 );
 
-export default MultiSelectionInput;
+export default RawTextInput;

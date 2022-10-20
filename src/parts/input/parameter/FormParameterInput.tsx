@@ -11,12 +11,13 @@ import MultiSelectionInput from "../MultiSelectionInput";
 import NumberInput from "../NumberInput";
 import LocaleService from "../../../services/locale.service";
 import OptionInputBuilder from "../OptionInputBuilder";
+import Parameter from "../../../models/parameter.model";
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const FormParameterInput = ({ parameter, value, onChange }) => {
+const FormParameterInput = ({ parameter, value, onChange }: any) => {
   
   const [questions, setQuestions] = useState(loadQuestions(parameter, value));
   const [totalQuestions, setTotalQuestions] = useState(loadTotalQuestions(parameter, value));
@@ -27,7 +28,7 @@ const FormParameterInput = ({ parameter, value, onChange }) => {
   
   const localeService = new LocaleService();
 
-  const onTotalQuestionsChange = (rawValue) => {
+  const onTotalQuestionsChange = (rawValue: any) => {
     const value = parseInt(rawValue);
 
     if (value < 1) {
@@ -52,7 +53,7 @@ const FormParameterInput = ({ parameter, value, onChange }) => {
     setAnswerType(questions[0].type);
   };
 
-  const onCurrentQuestionChange = (rawValue) => {
+  const onCurrentQuestionChange = (rawValue: any) => {
     const value = parseInt(rawValue);
 
     if ((value < 1) || (value > totalQuestions)) {
@@ -65,7 +66,7 @@ const FormParameterInput = ({ parameter, value, onChange }) => {
     setAnswerType(questions[value-1].type);
   };
 
-  const handleAnswerOptionChange = (newValue, index) => {
+  const handleAnswerOptionChange = (newValue: any, index: number) => {
     const updatedAnswerOptions =  [...answerOptions];
 
     updatedAnswerOptions[index] = newValue;
@@ -81,8 +82,8 @@ const FormParameterInput = ({ parameter, value, onChange }) => {
     setAnswerOptions(updatedAnswerOptions);
   }
 
-  const handleRemoveOption = (answerIndex) => {
-    const updatedAnswerOptions =  answerOptions.filter((_, index) => index !== answerIndex);
+  const handleRemoveOption = (answerIndex: number) => {
+    const updatedAnswerOptions =  answerOptions.filter((_: any, index: number) => index !== answerIndex);
 
     setAnswerOptions(updatedAnswerOptions);
   }
@@ -147,7 +148,7 @@ export default FormParameterInput;
 // ----------------------------------------------------------------------------
 //         Functions
 // ----------------------------------------------------------------------------
-function loadQuestions(parameter, value) {
+function loadQuestions(parameter: Parameter, value: any) {
   if (parameter.type !== 'form') {
     return [];
   }
@@ -159,7 +160,7 @@ function loadQuestions(parameter, value) {
   return value;
 }
 
-function loadTotalQuestions(parameter, value) {
+function loadTotalQuestions(parameter: Parameter, value: any) {
   if (!value || value.length === 0 || parameter.type !== 'form') {
     return 1;
   }
@@ -167,7 +168,7 @@ function loadTotalQuestions(parameter, value) {
   return value.length;
 }
 
-function loadQuestion(parameter, value) {
+function loadQuestion(parameter: Parameter, value: any) {
   if (!value || value.length === 0 || parameter.type !== 'form') {
     return '';
   }
@@ -175,7 +176,7 @@ function loadQuestion(parameter, value) {
   return value[0].label;
 }
 
-function loadAnswerType(parameter, value) {
+function loadAnswerType(parameter: Parameter, value: any) {
   if (!value || value.length === 0 || parameter.type !== 'form') {
     return 'text';
   }
@@ -183,7 +184,7 @@ function loadAnswerType(parameter, value) {
   return value[0].type;
 }
 
-function loadAnswerOptions(parameter, value) {
+function loadAnswerOptions(parameter: Parameter, value: any) {
   if (!value || value.length === 0 || parameter.type !== 'form') {
     return [];
   }
@@ -191,7 +192,7 @@ function loadAnswerOptions(parameter, value) {
   return value[0].options;
 }
 
-function buildEmptyQuestion(answerTypes) {
+function buildEmptyQuestion(answerTypes: any) {
   if (!answerTypes) {
     return {}
   }
@@ -203,6 +204,6 @@ function buildEmptyQuestion(answerTypes) {
   };
 }
 
-function hasAnswerOptions(type) {
+function hasAnswerOptions(type: string) {
   return ['checkbox', 'radio', 'select'].includes(type);
 }

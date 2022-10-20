@@ -8,19 +8,20 @@
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { InputDatePicker, Spacing } from './styled';
+import DateImputer from "../../models/date-imputer.model";
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const DateInput = ({ label, value, onChange }) => (
+const DateInput = ({ label, value, onChange }: DateImputer) => (
   <>
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <InputDatePicker
-        variant="outlined"
+        inputVariant="outlined"
         label={label}
         value={value}
-        onChange={newValue => onChange(newValue.toISOString())}
+        onChange={newValue => onChange(newValue?.toISOString())}
       />
     </MuiPickersUtilsProvider>
     <Spacing />

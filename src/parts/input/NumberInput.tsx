@@ -5,13 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import NumberImputer from '../../models/number-imputer.model';
 import { InputDefault, Spacing } from './styled';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const NumberInput = ({ label, value, helperText, onChange }) => (
+const NumberInput = ({ label, value, helperText, onChange }: NumberImputer) => (
   <>
     <InputDefault
       id="outlined-basic"
@@ -20,7 +21,7 @@ const NumberInput = ({ label, value, helperText, onChange }) => (
       type="number"
       helperText={helperText}
       value={value}
-      onChange={event => onChange(event.target.value)}
+      onChange={event => onChange(parseInt(event.target.value))}
       size="small"
     />
     <Spacing />

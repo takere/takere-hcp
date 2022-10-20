@@ -7,7 +7,7 @@ import AbstractButton from '../parts/AbstractButton';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const DangerButton = ({ iconName, title, onClick, type, style }) => (
+const DangerButton = ({ iconName, title=undefined, onClick, type=null, style=undefined }) => (
   <AbstractButton
     style={{ ...buttonStyle, ...style }}
     type={type}

@@ -6,13 +6,14 @@
  */
 
 import Checkbox from "@material-ui/core/Checkbox";
+import BooleanImputer from "../../models/boolean-imputer.model";
 import { TextName, Spacing } from './styled';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const BooleanInput = ({ label, value, onChange }) => (
+const BooleanInput = ({ label, value, onChange }: BooleanImputer) => (
   <>
     <TextName>
       { label }

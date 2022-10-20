@@ -11,12 +11,14 @@ import LocaleService from "../../../services/locale.service";
 import RichTextInput from "../RichTextInput";
 import { EditorState, ContentState } from "draft-js";
 import { convertFromHTML, convertToHTML } from "draft-convert";
+import Parameter from "../../../models/parameter.model";
+import Page from "../../../models/page.model";
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const BookParameterInput = ({ parameter, value, onChange }) => {
+const BookParameterInput = ({ parameter, value, onChange }: any) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(loadPages(parameter, value));
@@ -25,7 +27,7 @@ const BookParameterInput = ({ parameter, value, onChange }) => {
 
   const localeService = new LocaleService();
   
-  const onTotalPagesChange = (rawValue) => {
+  const onTotalPagesChange = (rawValue: string) => {
     let newTotalPages = parseInt(rawValue);
 
     if (newTotalPages <= 0) {
@@ -41,7 +43,7 @@ const BookParameterInput = ({ parameter, value, onChange }) => {
     onChange(convertPagesToHtml(newPages));
   };
 
-  const onChangeCurrentPage = (rawValue) => {
+  const onChangeCurrentPage = (rawValue: string) => {
     let newCurrentPage = parseInt(rawValue);
 
     if (isPageNumberOutOfBounds(newCurrentPage, totalPages)) {
@@ -52,7 +54,7 @@ const BookParameterInput = ({ parameter, value, onChange }) => {
     setEditorState(pages[newCurrentPage - 1].structure);
   };
 
-  const onChangeEditorState = (newState) => {
+  const onChangeEditorState = (newState: any) => {
     setEditorState(newState);
 
     const updatedPages = pages;
@@ -93,7 +95,7 @@ export default BookParameterInput;
 // ----------------------------------------------------------------------------
 //         Functions
 // ----------------------------------------------------------------------------
-function loadPages(parameter, value) {
+function loadPages(parameter: Parameter, value: any[]) {
   if (!value || value.length === 0 || parameter.type !== 'book') {
     return [];
   }
@@ -101,7 +103,7 @@ function loadPages(parameter, value) {
   return value;
 }
 
-function loadTotalPages(parameter, value) {
+function loadTotalPages(parameter: Parameter, value: Page[]) {
   if (!value || value.length === 0 || parameter.type !== 'book') {
     return 1;
   }
@@ -109,7 +111,7 @@ function loadTotalPages(parameter, value) {
   return value.length;
 }
 
-function loadEditorContentFromLoadedPages(parameter, value) {
+function loadEditorContentFromLoadedPages(parameter: Parameter, value: Page[]) {
   if (!value || value.length === 0 || parameter.type !== 'book') {
     return EditorState.createWithContent(ContentState.createFromText(""));
   }
@@ -117,10 +119,10 @@ function loadEditorContentFromLoadedPages(parameter, value) {
   return EditorState.createWithContent(convertFromHTML(value[0].structure));
 }
 
-function convertPagesToHtml(pages) {
-  const parsedPages = [];
+function convertPagesToHtml(pages: any): any[] {
+  const parsedPages: any[] = [];
 
-  pages.forEach((page) => {
+  pages.forEach((page: any) => {
     parsedPages.push({structure: convertToHTML(page.getCurrentContent()), style: null});
   });
 
@@ -128,7 +130,7 @@ function convertPagesToHtml(pages) {
 }
 
 
-function updatePagesBasedOnTotalPages(newTotalPages, oldTotalPages, pages) {
+function updatePagesBasedOnTotalPages(newTotalPages: number, oldTotalPages: number, pages: any) {
   let updatedPages = pages;
 
   if (newTotalPages > oldTotalPages) {
@@ -144,6 +146,6 @@ function updatePagesBasedOnTotalPages(newTotalPages, oldTotalPages, pages) {
   return updatedPages;
 }
 
-function isPageNumberOutOfBounds(value, total) {
+function isPageNumberOutOfBounds(value: number, total: number) {
   return value <= 0 || value > total;
 }

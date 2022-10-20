@@ -5,19 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import OptionsParameter from "../../../models/options-parameter.model";
+import Options from "../../../models/options.model";
 import OptionInputBuilder from "../OptionInputBuilder";
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const OptionsParameterInput = ({ value, onChange }) => {
+const OptionsParameterInput = ({ value, onChange }: OptionsParameter) => {
 
-
-  const handleFieldChange = (newValue, index) => {
+  const handleFieldChange = (newOption: Options, index: number) => {
     const updatedFields =  [ ...value ];
 
-    updatedFields[index] = newValue;
+    updatedFields[index] = newOption;
 
     onChange(updatedFields);
   }
@@ -25,13 +26,13 @@ const OptionsParameterInput = ({ value, onChange }) => {
   const handleNewField = () => {
     const updatedFields =  [ ...value ];
 
-    updatedFields.push('');
+    updatedFields.push();
 
     onChange(updatedFields);
   }
 
-  const handleRemoveField = (fieldIndex) => {
-    const updatedFields =  value.filter((_, index) => index !== fieldIndex);
+  const handleRemoveField = (fieldIndex: number) => {
+    const updatedFields =  value.filter((_: any, index: number) => index !== fieldIndex);
 
     onChange(updatedFields);
   }

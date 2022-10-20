@@ -9,12 +9,13 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './style.css'
 import { Spacing } from '../styled';
+import RichTextImputer from '../../../models/rich-text-imputer.model';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const RichTextInput = ({ label, value, onChange }) => (
+const RichTextInput = ({ label, value, onChange }: RichTextImputer) => (
   <fieldset>
     <legend className='title'>
       { label }

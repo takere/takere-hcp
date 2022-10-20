@@ -7,7 +7,7 @@ import AbstractButton from '../parts/AbstractButton';
 //-----------------------------------------------------------------------------
 //        Components
 //-----------------------------------------------------------------------------
-const AccentButton = ({ iconName, title, onClick, type, style }) => (
+const AccentButton = ({ iconName, title=undefined, onClick, type, style }) => (
   <AbstractButton
     style={{ ...buttonStyle, ...style }}
     type={type}

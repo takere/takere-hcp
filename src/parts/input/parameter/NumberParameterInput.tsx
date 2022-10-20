@@ -5,13 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import NumberParameter from "../../../models/number-parameter.model";
 import NumberInput from "../NumberInput";
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const NumberParameterInput = ({ parameter, value, onChange }) => {
+const NumberParameterInput = ({ parameter, value, onChange }: NumberParameter) => {
   
   return (
     <NumberInput

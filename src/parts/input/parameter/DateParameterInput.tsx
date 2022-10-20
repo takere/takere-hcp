@@ -14,13 +14,13 @@ import LocaleService from "../../../services/locale.service";
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const DateParameterInput = ({ parameter, value, onChange }) => {
+const DateParameterInput = ({ parameter, value, onChange }: any) => {
 
   const [undefinedValue, setUndefinedValue] = useState(value === null);
   
   const localeService = new LocaleService();
 
-  const onChangeUndefinedValue = (newValue) => {
+  const onChangeUndefinedValue = (newValue: any) => {
     setUndefinedValue(newValue);
     onChange(newValue ? null : new Date().toISOString());
   }

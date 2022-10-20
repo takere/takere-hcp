@@ -5,22 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import RawTextInput from "../RawTextInput";
+import SelectParameter from "../../../models/select-parameter.model";
+import MultiSelectionInput from "../MultiSelectionInput";
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const TextParameterInput = ({ parameter, value, onChange }) => {
+const SelectParameterInput = ({ parameter, value, onChange }: SelectParameter) => {
   
+  if (!value && parameter.options) {
+    onChange(parameter.options[0].value);
+  }
   return (
-    <RawTextInput
+    <MultiSelectionInput
       label={parameter.name}
       helperText={parameter.description}
       value={value}
       onChange={onChange}
+      options={parameter.options ?? []}
     />
   );
 }
 
-export default TextParameterInput;
+export default SelectParameterInput;

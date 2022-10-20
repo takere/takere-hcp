@@ -2096,6 +2096,22 @@
     "@types/d3-transition" "*"
     "@types/d3-zoom" "*"
 
+"@types/draft-convert@^2.1.4":
+  "integrity" "sha512-NbhE0ijzENK6ZQa3zO0KK6cNS80XESnQ03Bg7DEzE/qBg6YvpIEni6vzruYCYPkm1Sc6z0K7XbtJu4p53elGdA=="
+  "resolved" "https://registry.npmjs.org/@types/draft-convert/-/draft-convert-2.1.4.tgz"
+  "version" "2.1.4"
+  dependencies:
+    "@types/draft-js" "*"
+    "@types/react" "*"
+
+"@types/draft-js@*":
+  "integrity" "sha512-cQJBZjjIlGaPA1tOY+wGz2KhlPtAAZOIXpUvGPxPRw5uzZ2tcj8m6Yu1QDV9YgP36+cqE3cUvgkARBzgUiuI/Q=="
+  "resolved" "https://registry.npmjs.org/@types/draft-js/-/draft-js-0.11.9.tgz"
+  "version" "0.11.9"
+  dependencies:
+    "@types/react" "*"
+    "immutable" "~3.7.4"
+
 "@types/eslint@^7.2.6":
   "integrity" "sha512-I+1sYH+NPQ3/tVqCeUSBwTE/0heyvtXqpIopUUArlBm0Kpocb8FbMa3AZ/ASKIFpN3rnEx932TTXDbt9OXsNDw=="
   "resolved" "https://registry.npmjs.org/@types/eslint/-/eslint-7.2.6.tgz"
@@ -2234,6 +2250,14 @@
   "resolved" "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.0.6.tgz"
   "version" "18.0.6"
   dependencies:
+    "@types/react" "*"
+
+"@types/react-draft-wysiwyg@^1.13.4":
+  "integrity" "sha512-wasD1t78JDmQvdPDRPf/mf5FSHMlncunW0F6KMOKB3awzi3Wi21yHMGsRAUOkfTr3R8F+yceG8fSLz0kYWu/QA=="
+  "resolved" "https://registry.npmjs.org/@types/react-draft-wysiwyg/-/react-draft-wysiwyg-1.13.4.tgz"
+  "version" "1.13.4"
+  dependencies:
+    "@types/draft-js" "*"
     "@types/react" "*"
 
 "@types/react-redux@^7.1.16", "@types/react-redux@^7.1.18":

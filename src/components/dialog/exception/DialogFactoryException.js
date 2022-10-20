@@ -1,6 +1,6 @@
-class DialogFactoryException {
+class DialogFactoryException extends Error {
   constructor(message) {
-    this.message = message;
+    super(message);
     this.name = 'DialogFactoryException';
   }
 }
