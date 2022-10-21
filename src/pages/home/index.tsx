@@ -11,6 +11,8 @@ import { useHistory } from "react-router-dom";
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
 import LocaleService from "../../services/locale.service";
 import FlowService from "../../services/flow.service";
+import TakereHeader from "../../components/takere/header";
+import CarePlans from "../../components/carePlans";
 
 
 // ----------------------------------------------------------------------------
@@ -35,18 +37,16 @@ const Home = () => {
         <TakereHeader />
         <Styled.ContainerData>
           <PageTitle localeService={localeService} />
-            <Styled.Gallery>
-              <CarePlans 
-                flows={flows} 
-                onClick={(event: any, flow: any) => handleClick(
-                  event, 
-                  flow, 
-                  flowService, 
-                  setFlows, 
-                  history
-                )} 
-              />
-          </Styled.Gallery>
+            <CarePlans 
+              flows={flows} 
+              onClick={(event: any, flow: any) => handleClick(
+                event, 
+                flow, 
+                flowService, 
+                setFlows, 
+                history
+              )}
+            />
         </Styled.ContainerData>
       </Styled.Container>
     </Styled.PageWithDrawer>
@@ -55,44 +55,12 @@ const Home = () => {
 
 export default Home;
 
-const TakereHeader = () => (
-  <Styled.Logo>
-    <Styled.LogoImage src='/assets/images/logo.png' alt='takere logo' />
-  </Styled.Logo>
-);
-
 const PageTitle = ({ localeService }: any) => (
   <Styled.ContainerHeader>
     <Styled.ContainerName>
       { localeService.translate("CARE_PLANS") }
     </Styled.ContainerName>
   </Styled.ContainerHeader>
-);
-
-const CarePlans = ({ flows, onClick }: any) => {
-  return flows.map((flow: any) => (
-    <Styled.ItemBox
-      id={"box"}
-      key={flow.id}
-      onClick={onClick}
-    >
-      <DeleteButton />
-      <Styled.ItemName id={"box"}>
-        { flow.name }
-      </Styled.ItemName>
-      <Styled.ItemDescription id={"box"}>
-        { flow.description }
-      </Styled.ItemDescription>
-    </Styled.ItemBox>
-  ));
-};
-
-const DeleteButton = () => (
-  <Styled.DeleteButton id={"close"}>
-    <Styled.IconItem id={"close"}>
-      close
-    </Styled.IconItem>
-  </Styled.DeleteButton>
 );
 
 
