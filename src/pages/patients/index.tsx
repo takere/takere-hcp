@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
 import LocaleService from "../../services/locale.service";
 import Progress from "../../domain/progress.domain";
+import PatientCard from "../../parts/card/patient";
 
 
 // ----------------------------------------------------------------------------
@@ -36,7 +37,7 @@ const Patients = () => {
         <Styled.ContainerData>
           <Title localeService={localeService} />
           {patients.map((patient: Progress, index: number) => (
-            <Patient 
+            <PatientCard
               key={index}
               firstName={patient.patient.firstName}
               lastName={patient.patient.lastName}
@@ -55,40 +56,6 @@ export default Patients;
 const Title = ({ localeService }: any) => (
   <Styled.NameTitle>
     {localeService.translate("PATIENTS")}
-  </Styled.NameTitle>
-);
-
-const Patient = ({ firstName, lastName, flowName, onClick }: any) => (
-  <Styled.ItemBox onClick={onClick}>
-    <Styled.ItemContent>
-      <PersonInformation 
-        firstName={firstName}
-        lastName={lastName}
-        flowName={flowName}
-      />
-    </Styled.ItemContent>
-    <Styled.ItemContent>
-      <PersonIcon />
-    </Styled.ItemContent>
-  </Styled.ItemBox>
-);
-
-const PersonInformation = ({ firstName, lastName, flowName }: any) => (
-  <>
-    <Styled.ItemName>
-      { firstName } { lastName }
-    </Styled.ItemName>
-    <Styled.ItemDescription>
-      { flowName }
-    </Styled.ItemDescription>
-  </>
-);
-
-const PersonIcon = () => (
-  <Styled.NameTitle>
-    <Styled.IconItem>
-      person
-    </Styled.IconItem>
   </Styled.NameTitle>
 );
 
