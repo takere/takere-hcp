@@ -1,7 +1,18 @@
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import styled from "styled-components";
 import theme from "../../assets/themes";
 import TextField from '@material-ui/core/TextField';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export const SideContainer = styled.div`
   background-color: ${theme.colors.day.x1};
   width: 350px;
@@ -15,7 +26,7 @@ export const SideAside = styled.aside`
   width: 100%;
 `;
 
-export const SideGraggAside = styled.aside`
+export const List = styled.aside`
   margin-top: 20px;
   margin-bottom: 20px;
   cursor: grab;
@@ -35,7 +46,7 @@ export const SideItem = styled.div`
   flex: 1;
   margin-bottom: 5px;
   border: 2px solid ${theme.colors.night.x1};
-  background-color: ${(props) => props.bgColor};
+  background-color: ${(props) => props.color};
   padding: 10px;
   text-align: center;
   border-radius: 8px;
