@@ -27,7 +27,7 @@ import Board from "../../../domain/board.domain";
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-export const Patient = () => {
+const Patient = () => {
   
   const [patientProgress, setPatientProgress]: any = useState({});
   const [dialogContent, setDialogContent]: any = useState({});
@@ -69,6 +69,8 @@ export const Patient = () => {
     </Styled.PageWithDrawer>
   );
 };
+
+export default Patient;
 
 const LoadingContent = ({ display }: any) => {
   if (!display) {

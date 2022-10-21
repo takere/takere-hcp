@@ -8,6 +8,7 @@
 import styled from 'styled-components'
 import theme from "../../assets/themes";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 
 // ----------------------------------------------------------------------------
@@ -41,6 +42,12 @@ export const Description = styled.p`
   margin-bottom: 10px;
 `;
 
-export const Input= styled(TextField)`
+export const Input = styled(TextField)`
+  width: 100%;
+`;
+
+export const SignInButton = styled(Button)`
+  margin-top: 30;
+  background-color: ${theme.colors.feedback.success.x1}
   width: 100%;
 `;
