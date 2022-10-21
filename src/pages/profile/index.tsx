@@ -9,6 +9,7 @@ import * as Styled from "./styled";
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
 import LocaleService from "../../services/locale.service";
 import StorageService from "../../services/storage.service";
+import UserInformation from "../../parts/userInformation";
 
 
 // ----------------------------------------------------------------------------
@@ -26,7 +27,7 @@ const Profile = () => {
       <Styled.Container>
         <Styled.ContainerData>
           <Title localeService={localeService} />
-          <UserData data={userData} localeService={localeService} />
+          <UserInformation data={userData} />
         </Styled.ContainerData>
       </Styled.Container>
     </Styled.PageWithDrawer>
@@ -39,30 +40,4 @@ const Title = ({ localeService }: any) => (
   <Styled.NameTitle>
     {localeService.translate("PROFILE")}
   </Styled.NameTitle>
-);
-
-const UserData = ({ data, localeService }: any) => {
-  if (!data) {
-    return (<></>);
-  }
-
-  return (
-    <>
-      <Styled.Spacing />
-      <Name data={data} localeService={localeService} />
-      <Email data={data} localeService={localeService} />
-    </>
-  );
-}
-
-const Name = ({ data, localeService }: any) => (
-  <Styled.TextDescription>
-    {localeService.translate("NAME")}: {data.firstName}
-  </Styled.TextDescription>
-);
-
-const Email = ({ data, localeService }: any) => (
-  <Styled.TextDescription>
-    {localeService.translate("EMAIL")}: {data.email}
-  </Styled.TextDescription>
 );

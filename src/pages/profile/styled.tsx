@@ -33,15 +33,6 @@ export const NameTitle = styled.h1`
    text-shadow: 0 0 4px  ${theme.colors.day.x1};
 `;
 
-export const TextDescription = styled.h4`
-   color: ${theme.colors.day.x1};
-   padding-left: 30px;
-`;
-
-export const Spacing = styled.div`
-   padding-top: 15px;
-`;
-
 export const ContainerData = styled.div`
   flex-direction: column;
   
