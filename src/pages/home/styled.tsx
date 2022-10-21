@@ -121,7 +121,7 @@ export const ItemDescription = styled.p`
   text-overflow: ellipsis;
 `;
 
-export const Flow = styled.div`
+export const Gallery = styled.div`
   min-height: 400px;
   border-radius: 16px;
   display: grid;

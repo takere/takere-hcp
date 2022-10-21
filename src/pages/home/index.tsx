@@ -16,66 +16,108 @@ import FlowService from "../../services/flow.service";
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-export const Home = () => {
+const Home = () => {
+
   const [flows, setFlows] = useState([]);
+
   const history = useHistory();
   const localeService = new LocaleService();
   const flowService = new FlowService();
 
-  const getFlows = () => {
-    flowService.getMyFlows().then((r: any) => {
-      setFlows(r);
-    });
-  };
-
   useEffect(() => {
-    getFlows();
+    fetchFlows(flowService, setFlows);
   }, []);
-
-  const handleClick = (e: any, flow: any) => {
-    if (e.target.id === "close") {
-      flowService.deleteFlowById(flow._id).then(() => {
-        getFlows();
-      });
-    } else {
-      history.push(`/dash/flow/${flow._id}`);
-    }
-  };
   
   return (
     <Styled.PageWithDrawer>
       <MenuDrawer />
       <Styled.Container>
-        <Styled.Logo>
-          <Styled.LogoImage src='/assets/images/logo.png' alt='takere logo' />
-        </Styled.Logo>
+        <TakereHeader />
         <Styled.ContainerData>
-          <Styled.ContainerHeader>
-              <Styled.ContainerName>
-                {localeService.translate("CARE_PLANS")}
-              </Styled.ContainerName>
-            </Styled.ContainerHeader>
-            <Styled.Flow>
-          {flows.map((f: any) => {
-            return (
-              <Styled.ItemBox
-                id={"box"}
-                key={f.id}
-                onClick={(e: any) => handleClick(e, f)}
-              >
-                <Styled.DeleteButton id={"close"}>
-                  <Styled.IconItem id={"close"}>close</Styled.IconItem>
-                </Styled.DeleteButton>
-                <Styled.ItemName id={"box"}>{f.name}</Styled.ItemName>
-                <Styled.ItemDescription id={"box"}>
-                  {f.description}
-                </Styled.ItemDescription>
-              </Styled.ItemBox>
-            );
-          })}
-          </Styled.Flow>
+          <PageTitle localeService={localeService} />
+            <Styled.Gallery>
+              <CarePlans 
+                flows={flows} 
+                onClick={(event: any, flow: any) => handleClick(
+                  event, 
+                  flow, 
+                  flowService, 
+                  setFlows, 
+                  history
+                )} 
+              />
+          </Styled.Gallery>
         </Styled.ContainerData>
       </Styled.Container>
     </Styled.PageWithDrawer>
   );
 };
+
+export default Home;
+
+const TakereHeader = () => (
+  <Styled.Logo>
+    <Styled.LogoImage src='/assets/images/logo.png' alt='takere logo' />
+  </Styled.Logo>
+);
+
+const PageTitle = ({ localeService }: any) => (
+  <Styled.ContainerHeader>
+    <Styled.ContainerName>
+      { localeService.translate("CARE_PLANS") }
+    </Styled.ContainerName>
+  </Styled.ContainerHeader>
+);
+
+const CarePlans = ({ flows, onClick }: any) => {
+  return flows.map((flow: any) => (
+    <Styled.ItemBox
+      id={"box"}
+      key={flow.id}
+      onClick={onClick}
+    >
+      <DeleteButton />
+      <Styled.ItemName id={"box"}>
+        { flow.name }
+      </Styled.ItemName>
+      <Styled.ItemDescription id={"box"}>
+        { flow.description }
+      </Styled.ItemDescription>
+    </Styled.ItemBox>
+  ));
+};
+
+const DeleteButton = () => (
+  <Styled.DeleteButton id={"close"}>
+    <Styled.IconItem id={"close"}>
+      close
+    </Styled.IconItem>
+  </Styled.DeleteButton>
+);
+
+
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
+function fetchFlows(flowService: FlowService, setFlows: any) {
+  flowService.getMyFlows().then((r: any) => {
+    setFlows(r);
+  });
+}
+
+function handleClick(
+  event: any, 
+  flow: any, 
+  flowService: FlowService, 
+  setFlows: any, 
+  history: any
+) {
+  if (event.target.id === "close") {
+    flowService.deleteFlowById(flow._id).then(() => {
+      fetchFlows(flowService, setFlows);
+    });
+  } 
+  else {
+    history.push(`/dash/flow/${flow._id}`);
+  }
+}
