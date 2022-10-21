@@ -3,7 +3,7 @@ import Dialog from "@material-ui/core/Dialog";
 import { toast } from "react-toastify";
 import SuccessButton from "../../buttons/SuccessButton";
 import DefaultButton from "../../buttons/DefaultButton";
-import { Header, Body, Footer } from "../";
+import { Header, Body, Footer } from "../patient";
 import ParameterInput from "../../../parts/input/ParameterInput";
 import LocaleService from "../../../services/locale.service";
 

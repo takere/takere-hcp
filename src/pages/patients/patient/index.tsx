@@ -22,6 +22,7 @@ import LocaleService from "../../../services/locale.service";
 import ProgressService from "../../../services/progress.service";
 import Progress from "../../../domain/progress.domain";
 import Board from "../../../domain/board.domain";
+import PatientDialog from "../../../components/dialog/patient";
 
 
 // ----------------------------------------------------------------------------
@@ -60,7 +61,7 @@ const Patient = () => {
           setOpenDialog={setOpenDialog}
           setDialogContent={setDialogContent}
         />
-        <Dialog 
+        <PatientDialog
           open={openDialog}
           onClose={() => handleCloseDialog(setOpenDialog)}
           data={dialogContent}
@@ -267,71 +268,6 @@ const Row = ({ icon, label }: any) => (
     </Styled.CardTitle>
   </Styled.CardRow>
 );
-
-const Dialog = ({ open, onClose, data }: any) => (
-  <DialogMaterialUI
-    fullWidth={true}
-    style={{backgroundColor: 'rgba(0,0,0,0.7)'}}
-    maxWidth={"md"}
-    open={open}
-    onClose={onClose}
-    aria-labelledby="max-width-dialog-title"
-  >
-    <Header 
-      title='Details' 
-      subtitle={`completed at ${data.progress?.date}`}
-    />
-    <Body>
-      { buildDialogBody(data.node, data.progress?.answers) }
-    </Body>
-    <Footer>
-      <DefaultButton title="Close" onClick={onClose} />
-    </Footer>
-  </DialogMaterialUI>
-);
-
-const Header = ({ title, subtitle }: any) => (
-  <DialogTitle id="max-width-dialog-title">
-    { title }
-    <DialogContentText>
-      { subtitle }
-    </DialogContentText>
-  </DialogTitle>
-);
-
-const Body = ({ children }: any) => (
-  <DialogContent>
-    { children }
-  </DialogContent>
-);
-
-const Footer = ({ children }: any) => (
-  <DialogActions>
-    { children }
-  </DialogActions>
-);
-
-const buildDialogBody = (node: any, answers: any) => {
-  if (node && node.arguments && answers) {
-    const questionsIndex = node.parameters.findIndex((parameter: any) => parameter.type === 'form');
-    const questions = node.arguments[questionsIndex];
-
-    return (
-      <Styled.Fields>
-        {answers.map((answer: any, index: number) => (
-        <Styled.Field key={index}>
-          <Styled.FieldTitle>
-            {questions[index].label}
-          </Styled.FieldTitle>
-          <Styled.FieldContent>
-            {answer}
-          </Styled.FieldContent>
-        </Styled.Field>
-        ))}
-      </Styled.Fields>
-    );
-  }
-}
 
 
 // ----------------------------------------------------------------------------
