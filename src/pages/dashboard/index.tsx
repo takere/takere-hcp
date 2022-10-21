@@ -5,48 +5,54 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from "react";
 import Diagrams from "../../components/diagrams";
-import {
-    useParams
-} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
 import * as Styled from "./styled";
-import NodeService from '../../services/node.service';
-import FlowService from '../../services/flow.service';
+import NodeService from "../../services/node.service";
+import FlowService from "../../services/flow.service";
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-export const Dashboard = () => {
-    const [flow, setFlow] = useState(null);
-    const [nodeConnections, setNodeConnections] = useState([]);
-    const { id } = useParams();
-    const nodeService = new NodeService();
-    const flowService = new FlowService();
+const Dashboard = () => {
 
+  const [flow, setFlow] = useState(null);
+  const [nodeConnections, setNodeConnections] = useState([]);
 
-    useEffect(() => {
-        if(id) {
-            flowService.getFlowById(id).then(r => {
-                setFlow(r);
-            })
-        } else {
-            setFlow(null)
-        }
-    }, [id]);
+  const { id }: any = useParams();
+  const nodeService = new NodeService();
+  const flowService = new FlowService();
 
-    useEffect(() => {
-        nodeService.getNodeConnections().then(r => {
-            setNodeConnections(r);
+  useEffect(() => {
+    if (id) {
+      flowService
+        .getFlowById(id)
+        .then((fetchedFlow: any) => {
+          setFlow(fetchedFlow);
         });
-    }, []);
+    }
+    else {
+      setFlow(null);
+    }
+  }, [id]);
 
-    return (
-        <Styled.PageWithDrawer>
-            <MenuDrawer />
-            <Diagrams flowDb={flow} nodeConnections={nodeConnections}/>
-        </Styled.PageWithDrawer>
-    );
-}
+  useEffect(() => {
+    nodeService
+      .getNodeConnections()
+      .then((connections: any) => {
+        setNodeConnections(connections);
+      });
+  }, []);
+
+  return (
+    <Styled.PageWithDrawer>
+      <MenuDrawer />
+      <Diagrams flowDb={flow} nodeConnections={nodeConnections} />
+    </Styled.PageWithDrawer>
+  );
+};
+
+export default Dashboard;
