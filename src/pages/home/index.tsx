@@ -1,10 +1,21 @@
-import React, { useEffect, useState } from "react";
-import * as Styled from "./home.styled";
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import { useEffect, useState } from "react";
+import * as Styled from "./styled";
 import { useHistory } from "react-router-dom";
 import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
 import LocaleService from "../../services/locale.service";
 import FlowService from "../../services/flow.service";
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export const Home = () => {
   const [flows, setFlows] = useState([]);
   const history = useHistory();

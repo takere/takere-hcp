@@ -7,7 +7,7 @@ interface Board {
   patientEmail: string,
   flow: any,
   node: any,
-  finished?: Finished
+  finished?: any
 }
 
 export default Board;

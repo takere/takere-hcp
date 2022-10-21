@@ -6,11 +6,11 @@
  */
 
 import RoutePath from "../models/route-path.model";
-import Dashboard from "../pages/dashboard/dashboard";
-import Home from "../pages/home/home";
+import Dashboard from "../pages/dashboard";
+import Home from "../pages/home";
 import Patients from "../pages/patients";
 import Patient from "../pages/patients/patient";
-import Profile from "../pages/profile/profile";
+import Profile from "../pages/profile";
 
 
 // ----------------------------------------------------------------------------

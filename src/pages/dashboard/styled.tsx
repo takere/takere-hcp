@@ -5,15 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import RoutePath from "../models/route-path.model";
-import Login from "../pages/login";
+import styled from 'styled-components'
 
 
 // ----------------------------------------------------------------------------
-//         Constants
+//         Components
 // ----------------------------------------------------------------------------
-const publicRoutes: RoutePath[] = [
-  { path: '/login', exact: true, component: Login }
-];
+export const PageWithDrawer = styled.div`
+  flex-direction: row;
+  display: flex;
+  flex: 1;
+`;
 
-export default publicRoutes;
+export const Container = styled.div`
+  flex: 1;
+  background-color: #282c34;
+`;

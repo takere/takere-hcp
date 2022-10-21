@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
-import * as Styled from './login.styled';
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import { useState } from 'react';
+import * as Styled from './styled';
 import Button from "@material-ui/core/Button";
 import theme from "../../assets/themes";
 import UserService from '../../services/user.service';
 import {useHistory} from "react-router-dom";
 import LocaleService from "../../services/locale.service";
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export const Login = () => {
     const [error, setError] = useState(false);
     const [email, setEmail] = useState('');

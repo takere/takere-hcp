@@ -1,7 +1,18 @@
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import styled from 'styled-components'
 import theme from "../../../assets/themes";
 import Icon from "@material-ui/core/Icon";
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export const PageWithDrawer = styled.div`
   flex-direction: row;
   display: flex;
@@ -16,7 +27,7 @@ export const Container = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-`
+`;
 
 export const NameTitle = styled.h1`
    color: ${theme.colors.day.x1};
@@ -58,7 +69,6 @@ export const DeleteButton = styled.div`
   position: absolute;
   right: 0;
   z-index: 999999;
-
 `;
 
 export const IconItem = styled(Icon)`
@@ -100,7 +110,7 @@ export const MainContainer = styled.div`
   border-radius: 16px;
   display: flex;
   flex-direction: column;
-`
+`;
 
 export const ContainerData = styled.div`
   margin-top: 10px;
@@ -112,7 +122,8 @@ export const ContainerData = styled.div`
   border-radius: 16px;
   display: flex;
   flex-direction: column;
-`
+`;
+
 export const ItemContent = styled.div`
   display: flex;
   flex-direction: column;

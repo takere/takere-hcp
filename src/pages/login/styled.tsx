@@ -1,7 +1,18 @@
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import styled from 'styled-components'
 import theme from "../../assets/themes";
 import TextField from "@material-ui/core/TextField";
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export const Container = styled.div`
   flex: 1;
   display: flex;
@@ -10,14 +21,14 @@ export const Container = styled.div`
   align-content: center;
   align-items: center;
   justify-content: center;
-`
+`;
 
 export const LoginBox = styled.div`
   background-color: ${theme.colors.night.x5};
   width: 550px;
   border-radius: 16px;
   padding: 35px;
-`
+`;
 
 export const NameTitle = styled.h1`
    color: ${theme.colors.night.x1};
