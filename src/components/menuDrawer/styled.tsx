@@ -1,7 +1,18 @@
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import styled from "styled-components";
 import theme from "../../assets/themes";
 import Icon from '@material-ui/core/Icon';
 
+
+// ----------------------------------------------------------------------------
+//         Constants
+// ----------------------------------------------------------------------------
 export const SideContainer = styled.div`
   background-color: ${theme.colors.day.x1};
   width: 80px;
@@ -32,7 +43,6 @@ export const IconExit = styled(Icon)`
   color: ${theme.colors.night.x1};
   text-align: center;
 `;
-
 
 export const ExitSideItem = styled.div`
   position: absolute;

@@ -8,7 +8,7 @@
 import { useEffect, useState } from "react";
 import * as Styled from "./styled";
 import { useHistory } from "react-router-dom";
-import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
+import { MenuDrawer } from "../../components/menuDrawer";
 import LocaleService from "../../services/locale.service";
 import FlowService from "../../services/flow.service";
 import TakereHeader from "../../components/takere/header";

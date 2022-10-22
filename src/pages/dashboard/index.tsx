@@ -8,7 +8,7 @@
 import { useEffect, useState } from "react";
 import Diagrams from "../../components/diagrams";
 import { useParams } from "react-router-dom";
-import { MenuDrawer } from "../../components/menuDrawer/menuDrawer";
+import { MenuDrawer } from "../../components/menuDrawer";
 import * as Styled from "./styled";
 import NodeService from "../../services/node.service";
 import FlowService from "../../services/flow.service";
