@@ -1,4 +1,11 @@
-import React, { useState } from "react";
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import { toast } from "react-toastify";
 import SuccessButton from "../../buttons/SuccessButton";
@@ -8,9 +15,9 @@ import ParameterInput from "../../../parts/input/ParameterInput";
 import LocaleService from "../../../services/locale.service";
 
 
-//-----------------------------------------------------------------------------
-//        Components
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
   const [parameterValues, setParameterValues] = useState(initializeParameterValues(node.data));
   const localeService = new LocaleService();
@@ -58,9 +65,9 @@ const BeginDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
 export default BeginDialog;
 
 
-//-----------------------------------------------------------------------------
-//        Functions
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
 function initializeParameterValues(nodeData) {
   let initializedValues = [];
 

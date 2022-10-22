@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import React from 'react';
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -10,9 +17,9 @@ import DialogFactoryException from './exception/DialogFactoryException';
 import GenericDialog from './generic';
 
 
-//-----------------------------------------------------------------------------
-//        Constants
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+//         Constants
+// ----------------------------------------------------------------------------
 const dialogs = {
   BEGIN: BeginDialog,
   CONDITIONAL: ConditionalDialog,
@@ -22,10 +29,10 @@ const dialogs = {
 };
 
 
-//-----------------------------------------------------------------------------
-//        Components
-//-----------------------------------------------------------------------------
-export const Header = ({ title, subtitle }) => (
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
+export const Header = ({ title, subtitle }: any) => (
   <DialogTitle id="max-width-dialog-title">
     { title }
     <DialogContentText>
@@ -34,13 +41,13 @@ export const Header = ({ title, subtitle }) => (
   </DialogTitle>
 );
 
-export const Body = ({ children }) => (
+export const Body = ({ children }: any) => (
   <DialogContent>
     { children }
   </DialogContent>
 );
 
-export const Footer = ({ children }) => (
+export const Footer = ({ children }: any) => (
   <DialogActions>
     { children }
   </DialogActions>
@@ -50,10 +57,13 @@ export const Footer = ({ children }) => (
 //-----------------------------------------------------------------------------
 //        Functions
 //-----------------------------------------------------------------------------
-export function dialogFactory(type, props) {
-  if (dialogs[type.toUpperCase()] === undefined) {
+export function dialogFactory(type: string, props: any) {
+  if (dialogs[type.toUpperCase() as keyof typeof dialogs] === undefined) {
     throw new DialogFactoryException(`There is no support for ${type}`);
   }
 
-  return React.createElement(dialogs[type], { ...props });
+  return React.createElement(
+    dialogs[type.toUpperCase() as keyof typeof dialogs], 
+    { ...props }
+  );
 }

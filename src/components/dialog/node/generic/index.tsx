@@ -8,9 +8,9 @@ import ParameterInput from "../../../parts/input/ParameterInput";
 import LocaleService from "../../../services/locale.service";
 
 
-//-----------------------------------------------------------------------------
-//        Components
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 const GenericDialog = ({ open, handleClose, node, onAddElementResultValue }) => {
   const [parameterValues, setParameterValues] = useState(initializeParameterValues(node.data));
   const localeService = new LocaleService();
@@ -59,9 +59,9 @@ const GenericDialog = ({ open, handleClose, node, onAddElementResultValue }) => 
 export default GenericDialog;
 
 
-//-----------------------------------------------------------------------------
-//        Functions
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
 function initializeParameterValues(nodeData) {
   let initializedValues = [];
 
