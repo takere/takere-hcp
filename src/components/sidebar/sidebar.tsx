@@ -102,7 +102,7 @@ const FilteredElements = ({ filteredElements, onDragStart }: any) => {
       key={index}
       onDragStart={(event) => onDragStart(event, node)}
       draggable
-      color={node.color}
+      bgColor={node.color}
     >
       <Styled.TitleNodeItem>{node.name}</Styled.TitleNodeItem>
       <Styled.DescriptionNodeItem>

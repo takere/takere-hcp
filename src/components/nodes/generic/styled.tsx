@@ -1,8 +1,20 @@
-import styled from "styled-components";
-import theme from "../../../assets/themes";
-import Icon from "@material-ui/core/Icon";
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
-export const Node = styled.div`
+import styled from "styled-components";
+import Icon from "@material-ui/core/Icon";
+import theme from "../../../assets/themes";
+import { rotationByShape } from "../shape";
+
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
+export const Node = styled.div<{ bgColor?: string, fgColor?: string, shape: string }>`
   background: ${props => props.bgColor ?? 'transparent'};
   color: ${props => props.fgColor ?? '#333'};
   width: 100px;
@@ -15,21 +27,23 @@ export const Node = styled.div`
   border-radius: 12px;
   display: flex;
   justify-content: center;
+  wordBreak: break-all;
+  transform: rotate(${props => rotationByShape[props.shape as keyof typeof rotationByShape]}deg);
 `;
 
-export const NodeContainer = styled.div`
+export const NodeContainer = styled.div<{ shape: string }>`
   flex-direction: column;
   display: flex;
   justify-content: center;
   align-content: center;
   align-items: center;
+  transform: rotate(-${props => rotationByShape[props.shape as keyof typeof rotationByShape]}deg);
 `;
 
 export const NodeName = styled.p`
   color: ${theme.colors.night.x1};
   text-align: center;
   margin: 5px;
-
   display: -webkit-box;
   max-width: 200px;
   -webkit-line-clamp: 2;
@@ -50,7 +64,6 @@ export const DeleteButton = styled.div`
   right: -5px;
   top: -5px;
   z-index: 999999;
-
 `;
 
 export const IconItem = styled(Icon)`
@@ -60,4 +73,10 @@ export const IconItem = styled(Icon)`
   }
 
   color: ${theme.colors.day.x1};
+`;
+
+export const NodeIcon = styled(Icon)`
+  text-align: center;
+  font-size: 28px;
+  color: ${theme.colors.night.x1};
 `;

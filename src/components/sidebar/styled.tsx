@@ -41,12 +41,12 @@ export const InputDefault = styled(TextField)`
   padding-top: 45px;
 `;
 
-export const SideItem = styled.div`
+export const SideItem = styled.div<{ bgColor: string}>`
   flex-direction: column;
   flex: 1;
   margin-bottom: 5px;
   border: 2px solid ${theme.colors.night.x1};
-  background-color: ${(props) => props.color};
+  background-color: ${(props) => props.bgColor};
   padding: 10px;
   text-align: center;
   border-radius: 8px;
