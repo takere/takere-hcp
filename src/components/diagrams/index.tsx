@@ -13,7 +13,7 @@ import ReactFlow, {
   Controls
 } from "react-flow-renderer";
 import * as Styled from './styled';
-import { Sidebar } from "../sidebar/sidebar";
+import Sidebar from "../sidebar";
 import { nodeTypes } from "../nodes/nodes";
 import { ConnectionLine } from "../connectionLine";
 import { dialogFactory } from '../dialog';
@@ -24,154 +24,27 @@ import DotsBackground from "./DotsBackground";
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const Diagrams = ({ flowDb, nodeConnections }) => {
+const Diagrams = ({ flowDb, nodeConnections }: any) => {
+  
   const [openNodeDialog, setOpenNodeDialog] = useState(false);
   const [openSaveDialog, setOpenSaveDialog] = useState(false);
-  const [reactFlowInstance, setReactFlowInstance] = useState(null);
-  const [nodes, setNodes] = useState([]);
+  const [reactFlowInstance, setReactFlowInstance]: any = useState(null);
+  const [nodes, setNodes]: any = useState([]);
   const [selectedNode, setSelectedNode] = useState(null);
   const [flow, setFlow] = useState(null);
   const [index, setIndex] = useState(0);
   const [selectedNodeConnection, setSelectedNodeConnection] = useState({});
-  const reactFlowWrapper = useRef(null);
 
-  const handleClickOpenDialog = () => {
-    setOpenNodeDialog(true);
-  };
-
-  const handleClickOpenSaveDialog = () => {
-    setOpenSaveDialog(true);
-  };
-
-  const handleCloseNodeDialog = () => {
-    setOpenNodeDialog(false);
-    setSelectedNode(null);
-  };
-
-  const handleCloseSaveDialog = () => {
-    setOpenSaveDialog(false);
-  };
-
-  const onElementClick = (event, element) => {
-    const connectedNodeIds = nodes
-      .filter(node => node.target === element.id)
-      .map(edge => edge.source);
-    const connectedNodes = nodes.filter(node => connectedNodeIds.includes(node.id))[0];
-    
-    setSelectedNodeConnection(connectedNodes)
-    setSelectedNode(element);
-    handleClickOpenDialog();
-  };
-
-  const onAddElementResultValue = (e, result) => {
-    const newElements = nodes.map((element) =>
-      element.id === e.id
-        ? {
-            ...element,
-            data: {
-              ...element.data,
-              arguments: result,
-            },
-          }
-        : element
-    );
-    setNodes(newElements);
-
-    console.log(result)
-  };
-
-  const onConnect = (
-    (params) => {
-      const sourceId = params.source;
-      const targetId = params.target;
-      const sourceNode = nodes.filter(element => element.id === sourceId)[0];
-      const targetNode = nodes.filter(element => element.id === targetId)[0];
-
-      if (isConnectionAllowed(sourceNode.data.slug, targetNode.data.slug, nodeConnections)) {
-        const connectedNodes = nodes.filter(node => (!node.target) || (node.target !== targetId));
-
-        setNodes(addEdge({ ...params, animated: true, style:{strokeWidth:3} }, connectedNodes));
-      }
-    }
-  );
-
-  const onElementsRemove = (elementsToRemove) => {
-    setNodes((els) => removeElements(elementsToRemove, els));
-  }
-
-  const onLoad = (_reactFlowInstance) =>
-    setReactFlowInstance(_reactFlowInstance);
-
-  const onDragOver = (event) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  };
-
-  const onDrop = (event) => {
-    event.preventDefault();
-
-    const newNode = getDroppedNode(event);
-    
-    setNodes((es) => es.concat(newNode));
-  };
-
-  const getDroppedNode = (event) => {
-    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-    const node = JSON.parse(
-      event.dataTransfer.getData("application/reactflow")
-    );
-    const position = reactFlowInstance.project({
-      x: event.clientX - reactFlowBounds.left,
-      y: event.clientY - reactFlowBounds.top,
-    });
-    const newNode = {
-      key: index,
-      id: `dndnode_${index}`,
-      type: node.type,
-      position,
-      data: node, 
-      onRemove: remModelData
-    };
-
-    setIndex(index + 1);
-
-    return newNode;
-  }
-
-  const remModelData = useCallback((id) => {
-    let arr = nodes
-    let idx = arr.indexOf(id);
-
-    if (idx > -1) {
-      arr.splice(idx, 1);
-    }
-    arr = arr.filter(function (obj) {
-      return obj.id !== id;
-    });
-    setNodes(arr);
-  }, []);
+  const reactFlowWrapper: any = useRef(null);
 
   useEffect(() => {
     if (flowDb?.graph) {
-      const loadedNodes = [];
-
-      for (let i = 0; i < flowDb.graph.length; i++) {
-        let formattedData = { 
-          ...flowDb.graph[i],
-          data: flowDb.graph[i], 
-          onRemove: remModelData 
-        };
-
-        if (flowDb.graph[i].source !== undefined) {
-          formattedData = { ...formattedData, style:{strokeWidth:3} }
-        }
-
-        loadedNodes.push(formattedData);
-      }
+      const loadedNodes = formatNodes(flowDb.graph, setNodes);
 
       setNodes(loadedNodes);
       setFlow(flowDb);
-    } else {
+    } 
+    else {
       setNodes([]);
       setFlow(null);
     }
@@ -179,19 +52,19 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
 
   return (
     <Styled.Container>
-      { buildSaveFlowDialog(openSaveDialog, handleCloseSaveDialog, { flow, graph: nodes }) }
-      { buildNodeDialog(selectedNode, openNodeDialog, handleCloseNodeDialog, onAddElementResultValue, selectedNodeConnection) }
+      { buildSaveFlowDialog(openSaveDialog, () => handleCloseSaveDialog(setOpenSaveDialog), { flow, graph: nodes }) }
+      { buildNodeDialog(selectedNode, openNodeDialog, () => handleCloseNodeDialog(setOpenNodeDialog, setSelectedNode), (e: any, result: any) => onAddElementResultValue(e, result, nodes, setNodes), selectedNodeConnection) }
       <ReactFlowProvider>
         <ReactFlowContent 
           reactFlowWrapper={reactFlowWrapper}
           elements={nodes}
-          onConnect={onConnect}
-          onElementsRemove={onElementsRemove}
-          onElementClick={onElementClick}
-          onLoad={onLoad}
-          onDrop={onDrop}
-          onDragOver={onDragOver}
-          handleClickOpenSaveDialog={handleClickOpenSaveDialog}
+          onConnect={(params: any) => onConnect(params, nodes, nodeConnections, setNodes)}
+          onElementsRemove={(elements: any) => onElementsRemove(elements, setNodes)}
+          onElementClick={(_: any, element: any) => onElementClick(element, setOpenNodeDialog, setSelectedNodeConnection, setSelectedNode, nodes)}
+          onLoad={(instance: any) => onLoad(instance, setReactFlowInstance)}
+          onDrop={(event: any) => onDrop(event, nodes, setNodes, index, setIndex, reactFlowWrapper, reactFlowInstance)}
+          onDragOver={(event: any) => onDragOver(event)}
+          handleClickOpenSaveDialog={() => handleClickOpenSaveDialog(setOpenSaveDialog)}
         />
         <Sidebar />
       </ReactFlowProvider>
@@ -200,6 +73,9 @@ const Diagrams = ({ flowDb, nodeConnections }) => {
 };
 
 export default Diagrams;
+
+
+
 
 const ReactFlowContent = ({ 
   reactFlowWrapper,
@@ -211,7 +87,7 @@ const ReactFlowContent = ({
   onDrop,
   onDragOver,
   handleClickOpenSaveDialog
-}) => (
+}: any) => (
   <Styled.FlowArea ref={reactFlowWrapper}>
     <ReactFlow
       nodeTypes={nodeTypes}
@@ -248,18 +124,66 @@ const ReactFlowContent = ({
 // ----------------------------------------------------------------------------
 //         Functions
 // ----------------------------------------------------------------------------
-function isConnectionAllowed(sourceNodeSlug, targetNodeSlug, nodeConnections) {
-  const sourceNodeConnections = nodeConnections.find(connection => connection.slug === sourceNodeSlug)?.connections;
-  
-  if (sourceNodeConnections === undefined) {
-    return false;
+function formatNodes(nodes: any, setNodes: any) {
+  const formattedNodes = [];
+
+  for (const element of nodes) {
+    let formattedData = { 
+      ...element,
+      data: element, 
+      onRemove: (id: string) => removeNodeWithId(id, nodes, setNodes)
+    };
+
+    if (element.source !== undefined) {
+      formattedData = { ...formattedData, style: { strokeWidth:3 } }
+    }
+
+    formattedNodes.push(formattedData);
   }
 
-  return sourceNodeConnections.includes(targetNodeSlug);
+  return formattedNodes;
 }
 
+function removeNodeWithId(id: string, nodes: any, setNodes: any) {
+  let arr = nodes
+  let idx = arr.indexOf(id);
 
-function buildSaveFlowDialog(display, onClose, data) {
+  if (idx > -1) {
+    arr.splice(idx, 1);
+  }
+  arr = arr.filter(function (obj: any) {
+    return obj.id !== id;
+  });
+
+  setNodes(arr);
+}
+
+function handleCloseSaveDialog(setOpenSaveDialog: any) {
+  setOpenSaveDialog(false);
+}
+
+function onAddElementResultValue(e: any, result: any, nodes: any, setNodes: any) {
+  const newElements = nodes.map((element: any) =>
+    element.id === e.id
+      ? {
+          ...element,
+          data: {
+            ...element.data,
+            arguments: result,
+          },
+        }
+      : element
+  );
+
+  setNodes(newElements);
+}
+
+function handleCloseNodeDialog(setOpenNodeDialog: any, setSelectedNode: any) {
+  setOpenNodeDialog(false);
+  setSelectedNode(null);
+}
+
+function buildSaveFlowDialog(display: boolean, onClose: any, data: any) {
   if (!display) {
     return (<></>);
   }
@@ -275,11 +199,11 @@ function buildSaveFlowDialog(display, onClose, data) {
 }
 
 function buildNodeDialog(
-  selectedElement, 
-  openDialog,
-  handleCloseDialog, 
-  onAddElementResultValue,
-  selectedNodeConnection
+  selectedElement: any, 
+  openDialog: boolean,
+  handleCloseDialog: any, 
+  onAddElementResultValue: any,
+  selectedNodeConnection: any
 ) {
   if (!selectedElement || !openDialog) {
     return (<></>);
@@ -295,4 +219,100 @@ function buildNodeDialog(
       connection: selectedNodeConnection
     }
   );
+}
+
+function onConnect(params: any, nodes: any, nodeConnections: any, setNodes: any) {
+  const sourceId = params.source;
+  const targetId = params.target;
+  const sourceNode = nodes.filter((element: any) => element.id === sourceId)[0];
+  const targetNode = nodes.filter((element: any) => element.id === targetId)[0];
+
+  if (isConnectionAllowed(sourceNode.data.slug, targetNode.data.slug, nodeConnections)) {
+    const connectedNodes = nodes.filter((node: any) => (!node.target) || (node.target !== targetId));
+
+    setNodes(addEdge({ ...params, animated: true, style: { strokeWidth:3 } }, connectedNodes));
+  }
+}
+
+function isConnectionAllowed(
+  sourceNodeSlug: string, 
+  targetNodeSlug: string, 
+  nodeConnections: any[]
+) {
+  const sourceNodeConnections = nodeConnections
+    .find(connection => connection.slug === sourceNodeSlug)
+    ?.connections;
+  
+  if (sourceNodeConnections === undefined) {
+    return false;
+  }
+
+  return sourceNodeConnections.includes(targetNodeSlug);
+}
+
+function onElementsRemove(elementsToRemove: any, setNodes: any) {
+  setNodes((els: any) => removeElements(elementsToRemove, els));
+}
+
+function onElementClick(element: any, setOpenNodeDialog: any, setSelectedNodeConnection: any, setSelectedNode: any, nodes: any) {
+  const connectedNodeIds = nodes
+    .filter((node: any) => node.target === element.id)
+    .map((edge: any) => edge.source);
+  const connectedNodes = nodes.filter((node: any) => connectedNodeIds.includes(node.id))[0];
+  
+  setSelectedNodeConnection(connectedNodes)
+  setSelectedNode(element);
+  handleClickOpenDialog(setOpenNodeDialog);
+}
+
+function handleClickOpenDialog(setOpenNodeDialog: any) {
+  setOpenNodeDialog(true);
+}
+
+function onLoad(instance: any, setReactFlowInstance: any) {
+  setReactFlowInstance(instance);
+}
+
+function onDrop(event: any, nodes: any, setNodes: any, index: any, setIndex: any, reactFlowWrapper: any, reactFlowInstance: any) {
+  event.preventDefault();
+
+  const newNode = getDroppedNode(event, nodes, setNodes, index, setIndex, reactFlowWrapper, reactFlowInstance);
+  
+  setNodes((es: any) => es.concat(newNode));
+}
+
+function getDroppedNode(event: any, nodes: any, setNodes: any, index: any, setIndex: any, reactFlowWrapper: any, reactFlowInstance: any) {
+  if (!reactFlowWrapper || !reactFlowWrapper.current) {
+    return null;
+  }
+
+  const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+  const node = JSON.parse(
+    event.dataTransfer.getData("application/reactflow")
+  );
+  const position = reactFlowInstance.project({
+    x: event.clientX - reactFlowBounds.left,
+    y: event.clientY - reactFlowBounds.top,
+  });
+  const newNode = {
+    key: index,
+    id: `dndnode_${index}`,
+    type: node.type,
+    position,
+    data: node, 
+    onRemove: (id: string) => removeNodeWithId(id, nodes, setNodes)
+  };
+
+  setIndex(index + 1);
+
+  return newNode;
+}
+
+function onDragOver(event: any) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = "move";
+}
+
+function handleClickOpenSaveDialog(setOpenSaveDialog: any) {
+  setOpenSaveDialog(true);
 }
