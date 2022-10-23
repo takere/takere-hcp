@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -52,17 +52,50 @@ const Diagrams = ({ flowDb, nodeConnections }: any) => {
 
   return (
     <Styled.Container>
-      { buildSaveFlowDialog(openSaveDialog, () => handleCloseSaveDialog(setOpenSaveDialog), { flow, graph: nodes }) }
-      { buildNodeDialog(selectedNode, openNodeDialog, () => handleCloseNodeDialog(setOpenNodeDialog, setSelectedNode), (e: any, result: any) => onAddElementResultValue(e, result, nodes, setNodes), selectedNodeConnection) }
+      <SaveDialog 
+        display={openSaveDialog}
+        onClose={() => handleCloseSaveDialog(setOpenSaveDialog)}
+        flow={flow}
+        graph={nodes}
+      />
+      <NodeDialog 
+        selectedElement={selectedNode}
+        openDialog={openNodeDialog}
+        handleCloseDialog={() => handleCloseNodeDialog(
+          setOpenNodeDialog, 
+          setSelectedNode
+        )}
+        onAddElementResultValue={(e: any, result: any) => onAddElementResultValue(
+          e, 
+          result, 
+          nodes, 
+          setNodes
+        )}
+        selectedNodeConnection={selectedNodeConnection}
+      />
       <ReactFlowProvider>
         <ReactFlowContent 
           reactFlowWrapper={reactFlowWrapper}
           elements={nodes}
           onConnect={(params: any) => onConnect(params, nodes, nodeConnections, setNodes)}
           onElementsRemove={(elements: any) => onElementsRemove(elements, setNodes)}
-          onElementClick={(_: any, element: any) => onElementClick(element, setOpenNodeDialog, setSelectedNodeConnection, setSelectedNode, nodes)}
+          onElementClick={(_: any, element: any) => onElementClick(
+            element, 
+            setOpenNodeDialog, 
+            setSelectedNodeConnection, 
+            setSelectedNode, 
+            nodes
+          )}
           onLoad={(instance: any) => onLoad(instance, setReactFlowInstance)}
-          onDrop={(event: any) => onDrop(event, nodes, setNodes, index, setIndex, reactFlowWrapper, reactFlowInstance)}
+          onDrop={(event: any) => onDrop(
+            event, 
+            nodes, 
+            setNodes, 
+            index, 
+            setIndex, 
+            reactFlowWrapper, 
+            reactFlowInstance
+          )}
           onDragOver={(event: any) => onDragOver(event)}
           handleClickOpenSaveDialog={() => handleClickOpenSaveDialog(setOpenSaveDialog)}
         />
@@ -74,8 +107,45 @@ const Diagrams = ({ flowDb, nodeConnections }: any) => {
 
 export default Diagrams;
 
+const SaveDialog = ({ display, onClose, flow, graph }: any) => {
+  if (!display) {
+    return (<></>);
+  }
 
+  const data = { flow, graph };
 
+  return dialogFactory(
+    "SAVE_FLOW",
+    {
+      open: display,
+      handleClose: onClose,
+      data
+    }
+  );
+}
+
+const NodeDialog = ({
+  selectedElement, 
+  openDialog,
+  handleCloseDialog, 
+  onAddElementResultValue,
+  selectedNodeConnection
+}: any) => {
+  if (!selectedElement || !openDialog) {
+    return (<></>);
+  }
+
+  return dialogFactory(
+    selectedElement.type,
+    {
+      open: openDialog,
+      handleClose: handleCloseDialog,
+      node: selectedElement,
+      onAddElementResultValue: onAddElementResultValue,
+      connection: selectedNodeConnection
+    }
+  );
+}
 
 const ReactFlowContent = ({ 
   reactFlowWrapper,
@@ -183,44 +253,6 @@ function handleCloseNodeDialog(setOpenNodeDialog: any, setSelectedNode: any) {
   setSelectedNode(null);
 }
 
-function buildSaveFlowDialog(display: boolean, onClose: any, data: any) {
-  if (!display) {
-    return (<></>);
-  }
-
-  return dialogFactory(
-    "SAVE_FLOW",
-    {
-      open: display,
-      handleClose: onClose,
-      data
-    }
-  );
-}
-
-function buildNodeDialog(
-  selectedElement: any, 
-  openDialog: boolean,
-  handleCloseDialog: any, 
-  onAddElementResultValue: any,
-  selectedNodeConnection: any
-) {
-  if (!selectedElement || !openDialog) {
-    return (<></>);
-  }
-
-  return dialogFactory(
-    selectedElement.type,
-    {
-      open: openDialog,
-      handleClose: handleCloseDialog,
-      node: selectedElement,
-      onAddElementResultValue: onAddElementResultValue,
-      connection: selectedNodeConnection
-    }
-  );
-}
-
 function onConnect(params: any, nodes: any, nodeConnections: any, setNodes: any) {
   const sourceId = params.source;
   const targetId = params.target;
@@ -254,7 +286,13 @@ function onElementsRemove(elementsToRemove: any, setNodes: any) {
   setNodes((els: any) => removeElements(elementsToRemove, els));
 }
 
-function onElementClick(element: any, setOpenNodeDialog: any, setSelectedNodeConnection: any, setSelectedNode: any, nodes: any) {
+function onElementClick(
+  element: any, 
+  setOpenNodeDialog: any, 
+  setSelectedNodeConnection: any, 
+  setSelectedNode: any, 
+  nodes: any
+) {
   const connectedNodeIds = nodes
     .filter((node: any) => node.target === element.id)
     .map((edge: any) => edge.source);
@@ -273,15 +311,39 @@ function onLoad(instance: any, setReactFlowInstance: any) {
   setReactFlowInstance(instance);
 }
 
-function onDrop(event: any, nodes: any, setNodes: any, index: any, setIndex: any, reactFlowWrapper: any, reactFlowInstance: any) {
+function onDrop(
+  event: any, 
+  nodes: any, 
+  setNodes: any, 
+  index: any, 
+  setIndex: any, 
+  reactFlowWrapper: any, 
+  reactFlowInstance: any
+) {
   event.preventDefault();
 
-  const newNode = getDroppedNode(event, nodes, setNodes, index, setIndex, reactFlowWrapper, reactFlowInstance);
+  const newNode = getDroppedNode(
+    event, 
+    nodes, 
+    setNodes, 
+    index, 
+    setIndex, 
+    reactFlowWrapper, 
+    reactFlowInstance
+  );
   
   setNodes((es: any) => es.concat(newNode));
 }
 
-function getDroppedNode(event: any, nodes: any, setNodes: any, index: any, setIndex: any, reactFlowWrapper: any, reactFlowInstance: any) {
+function getDroppedNode(
+  event: any, 
+  nodes: any, 
+  setNodes: any, 
+  index: any, 
+  setIndex: any, 
+  reactFlowWrapper: any, 
+  reactFlowInstance: any
+) {
   if (!reactFlowWrapper || !reactFlowWrapper.current) {
     return null;
   }
