@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import { useState, useRef, useEffect, useCallback } from "react";
 import ReactFlow, {
   ReactFlowProvider,
@@ -8,15 +15,15 @@ import ReactFlow, {
 import * as Styled from './styled';
 import { Sidebar } from "../sidebar/sidebar";
 import { nodeTypes } from "../nodes/nodes";
-import { ConnectionLine } from "../connectionLine/connectionLine";
+import { ConnectionLine } from "../connectionLine";
 import { dialogFactory } from '../dialog';
 import AccentButton from "../buttons/AccentButton";
 import DotsBackground from "./DotsBackground";
 
 
-//-----------------------------------------------------------------------------
-//        Components
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 const Diagrams = ({ flowDb, nodeConnections }) => {
   const [openNodeDialog, setOpenNodeDialog] = useState(false);
   const [openSaveDialog, setOpenSaveDialog] = useState(false);
@@ -238,9 +245,9 @@ const ReactFlowContent = ({
 );
 
 
-//-----------------------------------------------------------------------------
-//        Functions
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
 function isConnectionAllowed(sourceNodeSlug, targetNodeSlug, nodeConnections) {
   const sourceNodeConnections = nodeConnections.find(connection => connection.slug === sourceNodeSlug)?.connections;
   
