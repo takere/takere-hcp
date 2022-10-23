@@ -5,11 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import LocaleService from "../../../services/locale.service";
+import LocaleService from "../../../../services/locale.service";
 
+
+// ----------------------------------------------------------------------------
+//         Constants
+// ----------------------------------------------------------------------------
 const localeService = new LocaleService();
 
-export default [
+const selectionOperators = [
   {
     "value": "==",
     "label": localeService.translate("IS")
@@ -18,4 +22,6 @@ export default [
     "value": "!=",
     "label": localeService.translate("IS_NOT")
   }
-]
+];
+
+export default selectionOperators;

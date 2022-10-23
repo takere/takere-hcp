@@ -10,7 +10,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import BeginDialog from "./begin";
 import SaveFlowDialog from './save';
 import ConditionalDialog from './conditional';
 import DialogFactoryException from './exception/DialogFactoryException';
@@ -21,7 +20,7 @@ import GenericDialog from './generic';
 //         Constants
 // ----------------------------------------------------------------------------
 const dialogs = {
-  BEGIN: BeginDialog,
+  BEGIN: GenericDialog,
   CONDITIONAL: ConditionalDialog,
   PERIODIC: GenericDialog,
   NON_PERIODIC: GenericDialog,

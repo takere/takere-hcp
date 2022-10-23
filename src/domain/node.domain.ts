@@ -5,6 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import Parameter from "../models/parameter/parameter.model";
+
+
 interface Node {
   slug: string,
   id?: string,
@@ -17,18 +20,7 @@ interface Node {
   input_list: string[],
   output_list: string[],
   content_type?: string,
-  parameters: {
-    slug: string,
-    name: string,
-    description: string,
-    required: boolean,
-    type: string | string[],
-    options: {
-      value: string,
-      label: string,
-      request_input?: string
-    }[]
-  }[],
+  parameters: Parameter[],
   icons?: string[],
   arguments?: any[],
   position: any,

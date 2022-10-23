@@ -121,7 +121,7 @@ const PatientEmailInput = ({ localeService, value, onChange }: any) => (
 );
 
 const SaveButton = ({ localeService, onClick }: any) => (
-  <DefaultButton 
+  <SuccessButton 
     title={localeService.translate("SAVE")} 
     onClick={onClick} 
   />
