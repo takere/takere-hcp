@@ -8,6 +8,8 @@
 import * as Styled from "./styled";
 import { useHistory } from "react-router-dom";
 import SignInForm from "../../components/forms/signIn";
+import LocaleService from "../../services/locale.service";
+
 
 // ----------------------------------------------------------------------------
 //         Components
@@ -15,10 +17,11 @@ import SignInForm from "../../components/forms/signIn";
 const Login = () => {
 
   const history = useHistory();
+  const localeService = new LocaleService();
 
   return (
     <Styled.Container>
-      <Title />
+      <Title localeService={localeService} />
       <SignInForm onSuccess={() => handleSignIn(history)} />
     </Styled.Container>
   );
