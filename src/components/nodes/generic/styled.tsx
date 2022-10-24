@@ -34,6 +34,7 @@ export const Node = styled.div<{ bgColor?: string, fgColor?: string, shape: stri
 export const NodeContainer = styled.div<{ shape: string }>`
   flex-direction: column;
   display: flex;
+  flex: 1;
   justify-content: center;
   align-content: center;
   align-items: center;
@@ -51,7 +52,7 @@ export const NodeName = styled.p`
   overflow: hidden;
 `;
 
-export const DeleteButton = styled.div`
+export const DeleteButton = styled.div<{ shape: string }>`
   background-color: ${theme.colors.danger};
   width: 20px;
   height: 20px;
@@ -61,8 +62,8 @@ export const DeleteButton = styled.div`
   justify-content: center;
   align-content: center;
   position: absolute;
-  right: -5px;
-  top: -5px;
+  right: ${props => props.shape === 'square' ? '-10' : '3'}px;
+  top: ${props => props.shape === 'square' ? '-30' : '-20'}px;
   z-index: 999999;
 `;
 

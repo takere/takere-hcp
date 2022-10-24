@@ -6,7 +6,7 @@
  */
 
 import * as Styled from "./styled";
-import { MenuDrawer } from "../../components/menuDrawer";
+import MenuDrawer from "../../components/menuDrawer";
 import LocaleService from "../../services/locale.service";
 import StorageService from "../../services/storage.service";
 import UserInformation from "../../parts/userInformation";

@@ -8,7 +8,7 @@
 import { useEffect, useState } from "react";
 import * as Styled from "./styled";
 import { useHistory } from "react-router-dom";
-import { MenuDrawer } from "../../components/menuDrawer";
+import MenuDrawer from "../../components/menuDrawer";
 import LocaleService from "../../services/locale.service";
 import FlowService from "../../services/flow.service";
 import TakereHeader from "../../components/takere/header";
@@ -81,11 +81,11 @@ function handleClick(
   history: any
 ) {
   if (event.target.id === "close") {
-    flowService.deleteFlowById(flow._id).then(() => {
+    flowService.deleteFlowById(flow.id).then(() => {
       fetchFlows(flowService, setFlows);
     });
   } 
   else {
-    history.push(`/dash/flow/${flow._id}`);
+    history.push(`/dash/flow/${flow.id}`);
   }
 }

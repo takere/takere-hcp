@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import * as Styled from "./styled";
 import Progress from "../../../domain/progress.domain";
-import { MenuDrawer } from "../../../components/menuDrawer";
+import MenuDrawer from "../../../components/menuDrawer";
 import PatientDialog from "../../../components/dialog/patient";
 import PatientProgress from "../../../components/patientProgress";
 import Loading from "../../../components/loading";

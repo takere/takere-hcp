@@ -9,7 +9,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './style.css'
 import { Spacing } from '../styled';
-import RichTextImputer from '../../../models/rich-text-imputer.model';
+import RichTextImputer from '../../../models/imputer/rich-text-imputer.model';
 
 
 // ----------------------------------------------------------------------------

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import * as Styled from "./styled";
 import ProgressService from "../../services/progress.service";
 import { useHistory } from "react-router-dom";
-import { MenuDrawer } from "../../components/menuDrawer";
+import MenuDrawer from "../../components/menuDrawer";
 import LocaleService from "../../services/locale.service";
 import Progress from "../../domain/progress.domain";
 import PatientCard from "../../parts/card/patient";

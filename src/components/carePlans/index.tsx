@@ -27,7 +27,7 @@ const CarePlanCards = ({ flows, onClick }: any) => {
     <Styled.ItemBox
       id={"box"}
       key={flow.id}
-      onClick={onClick}
+      onClick={(event: any) => onClick(event, flow)}
     >
       <DeleteButton />
       <Styled.ItemName id={"box"}>

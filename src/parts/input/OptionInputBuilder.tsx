@@ -73,7 +73,7 @@ const OptionValue = ({ label, option, onChange }: any) => (
   />
 );
 
-const RemoveButton = ({ onClick }: { onClick: (index: number) => void })  => (
+const RemoveButton = ({ onClick }: any)  => (
   <DangerButton 
       iconName='remove' 
       onClick={onClick} 

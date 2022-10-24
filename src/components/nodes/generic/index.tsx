@@ -17,7 +17,7 @@ import { rotationByShape } from "../shape";
 const GenericNode = ({ data, onRemove, id, SpecificNodeInformation }: any) => (
   <Styled.Node bgColor={data?.color} shape={data?.shape}>
     <Styled.NodeContainer shape={data?.shape}>
-      <CloseButton onClick={() => onRemove(id)} />
+      <CloseButton onClick={() => onRemove(id)} shape={data?.shape} />
       <Styled.NodeName>
         { data?.name }
       </Styled.NodeName>
@@ -33,9 +33,10 @@ const GenericNode = ({ data, onRemove, id, SpecificNodeInformation }: any) => (
 
 export default GenericNode;
 
-const CloseButton = ({ onClick }: any) => (
+const CloseButton = ({ onClick, shape }: any) => (
   <Styled.DeleteButton
     id={"close"}
+    shape={shape}
     onClick={onClick}
   >
     <Styled.IconItem id={"close"} fontSize="inherit">
@@ -53,7 +54,7 @@ const InputHandler = ({ inputList, shape }: any) => {
     <Handle
       key={index}
       type="target"
-      position={direction}
+      position={direction as any}
       id={`${direction}_${index}`}
       style={buildStyleForDirection(direction, shape)}
     />
@@ -69,7 +70,7 @@ const OutputHandler = ({ outputList, shape }: any) => {
     <Handle
       key={index}
       type="source"
-      position={direction}
+      position={direction as any}
       id={`${direction}_${index}`}
       style={buildStyleForDirection(direction, shape)}
     />
@@ -92,7 +93,7 @@ function buildStyleForDirection(direction: string, shape: string) {
 
   if (shape === 'square') {
     if (direction === "top" || direction === "bottom") {
-      style["left" as keyof typeof style] = "50%";
+      style["left" as keyof typeof style] = "40%";
     }
   }
   else if (shape === 'diamond') {

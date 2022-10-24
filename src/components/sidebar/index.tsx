@@ -18,7 +18,7 @@ const Sidebar = () => {
 
   const [search, setSearch] = useState("");
   const [nodes, setNodes] = useState([]);
-  const [filteredElements, setFoundNodes] = useState([]);
+  const [filteredElements, setFilteredElements] = useState([]);
 
   const localeService = new LocaleService();
   const nodeService = new NodeService();
@@ -28,7 +28,7 @@ const Sidebar = () => {
       .getNodes()
       .then((fetchedNodes: any) => {
         setNodes(fetchedNodes);
-        setFoundNodes(fetchedNodes);
+        setFilteredElements(fetchedNodes);
       });
   }, []);
 
@@ -41,11 +41,11 @@ const Sidebar = () => {
         <Filter 
           localeService={localeService}
           search={search}
-          onSearch={(event: any) => searchNodesWithName(
-            event.target.value,
+          onSearch={(text: string) => searchNodesWithName(
+            text,
             nodes,
             setSearch,
-            setFoundNodes
+            setFilteredElements
           )}
         />
         <CarePlanElements 
@@ -75,10 +75,10 @@ const Filter = ({ localeService, search, onSearch }: any) => (
 
 const CarePlanElements = ({ 
   localeService,
-  foundNodes,
+  filteredElements,
   onDragStart
 }: any) => {
-  if (!foundNodes || foundNodes.length === 0) {
+  if (!filteredElements || filteredElements.length === 0) {
     return (
       <Styled.NameTitle style={{ textAlign: "center" }}>
         { localeService.translate("NO_ELEMENTS_FOUND") }
@@ -89,7 +89,7 @@ const CarePlanElements = ({
   return (
     <Styled.List>
       <FilteredElements 
-        filteredElements={foundNodes} 
+        filteredElements={filteredElements} 
         onDragStart={onDragStart} 
       />
     </Styled.List>
@@ -129,7 +129,7 @@ function searchNodesWithName(
 ) {
   if (keyword !== "") {
     const results = nodes.filter((node: any) => {
-      return node.label.toLowerCase().startsWith(keyword.toLowerCase());
+      return node.name.toLowerCase().startsWith(keyword.toLowerCase());
     });
 
     setFoundNodes(results);

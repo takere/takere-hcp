@@ -11,9 +11,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import SaveFlowDialog from './save';
-import ConditionalDialog from './conditional';
-import DialogFactoryException from './exception/DialogFactoryException';
-import GenericDialog from './generic';
+import ConditionalDialog from './node/conditional';
+import DialogFactoryException from './exception/dialog-factory.exception';
+import GenericDialog from './node/generic';
 
 
 // ----------------------------------------------------------------------------
