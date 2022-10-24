@@ -16,6 +16,10 @@ export const Container = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  background-image: url('/assets/images/peace.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   background-color: ${theme.colors.day.x1};
   align-content: center;
   align-items: center;

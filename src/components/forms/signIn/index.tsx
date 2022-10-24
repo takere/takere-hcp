@@ -9,6 +9,8 @@ import { useState } from "react";
 import * as Styled from "./styled";
 import UserService from "../../../services/user.service";
 import LocaleService from "../../../services/locale.service";
+import DefaultButton from "../../buttons/DefaultButton";
+import AccentButton from "../../buttons/AccentButton";
 
 // ----------------------------------------------------------------------------
 //         Components
@@ -37,6 +39,7 @@ const SignInForm = ({ onSuccess }: any) => {
         onChange={(event: any) => handlePasswordChange(event, setPassword)}
       />
       <SubmitButton 
+        localeService={localeService}
         onClick={() => handleSubmit(
           userService, 
           email, 
@@ -52,10 +55,7 @@ const SignInForm = ({ onSuccess }: any) => {
 export default SignInForm;
 
 const EmailInput = ({ localeService, error, email, onChange }: any) => (
-  <>
-    <Styled.Description>
-      {localeService.translate("EMAIL")}
-    </Styled.Description>
+  <Styled.InputField>
     <Styled.Input
       id="outlined-basic"
       label="Email"
@@ -67,14 +67,11 @@ const EmailInput = ({ localeService, error, email, onChange }: any) => (
       size="medium"
       placeholder={localeService.translate("TYPE_EMAIL")}
     />
-  </>
+  </Styled.InputField>
 );
 
 const PasswordInput = ({ localeService, error, password, onChange }: any) => (
-  <>
-    <Styled.Description style={{ marginTop: 30 }}>
-      {localeService.translate("PASSWORD")}
-    </Styled.Description>
+  <Styled.InputField>
     <Styled.Input
       id="outlined-basic"
       label={localeService.translate("PASSWORD")}
@@ -86,16 +83,15 @@ const PasswordInput = ({ localeService, error, password, onChange }: any) => (
       size="medium"
       placeholder={localeService.translate("TYPE_PASSWORD")}
     />
-  </>
+  </Styled.InputField>
 );
 
 const SubmitButton = ({ localeService, onClick }: any) => (
-  <Styled.SignInButton
+  <AccentButton
     onClick={onClick}
-    variant="contained"
-  >
-    { localeService.translate("SIGN_IN") }
-  </Styled.SignInButton>
+    title={localeService.translate("SIGN_IN")}
+    style={{ width: '100%', marginTop: 20 }}
+  />
 );
 
 

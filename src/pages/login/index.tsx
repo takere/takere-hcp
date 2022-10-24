@@ -8,7 +8,7 @@
 import * as Styled from "./styled";
 import { useHistory } from "react-router-dom";
 import SignInForm from "../../components/forms/signIn";
-import LocaleService from "../../services/locale.service";
+import TakereHeader from "../../components/takere/header";
 
 
 // ----------------------------------------------------------------------------
@@ -17,23 +17,16 @@ import LocaleService from "../../services/locale.service";
 const Login = () => {
 
   const history = useHistory();
-  const localeService = new LocaleService();
 
   return (
     <Styled.Container>
-      <Title localeService={localeService} />
+      <TakereHeader />
       <SignInForm onSuccess={() => handleSignIn(history)} />
     </Styled.Container>
   );
 };
 
 export default Login;
-
-const Title = ({ localeService }: any) => (
-  <Styled.NameTitle>
-    Takere - HCP: {localeService.translate("LOGIN")}
-  </Styled.NameTitle>
-);
 
 
 // ----------------------------------------------------------------------------

@@ -61,5 +61,6 @@
     "GREATER": "Greater than",
     "LESS": "Less than",
     "NO_ELEMENTS_FOUND": "No elements found",
-    "FILTER": "Filter"
+    "FILTER": "Filter",
+    "TYPE_EMAIL": "Type your email"
 }

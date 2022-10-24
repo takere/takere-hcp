@@ -8,36 +8,25 @@
 import styled from 'styled-components'
 import theme from "../../../assets/themes";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
 export const Container = styled.div`
-  background-color: ${theme.colors.night.x5};
+  background-color: ${theme.colors.day.x2};
   width: 550px;
   border-radius: 16px;
+  border: 1px solid #aaa;
   padding: 35px;
-`;
-
-export const NameTitle = styled.h1`
-   color: ${theme.colors.night.x1};
-   padding: 5px;
-`;
-
-export const Description = styled.p`
-   color: ${theme.colors.night.x1};
-   margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 20px 0;
 `;
 
 export const Input = styled(TextField)`
   width: 100%;
 `;
 
-export const SignInButton = styled(Button)`
-  margin-top: 30;
-  background-color: ${theme.colors.feedback.success.x1}
-  width: 100%;
+export const InputField = styled.div`
+  margin: 20px 0;
 `;
+

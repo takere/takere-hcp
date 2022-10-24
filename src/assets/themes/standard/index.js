@@ -10,7 +10,8 @@ const StandardTheme = {
         cold: '#49a9ff',
         light: '#dddddd',
         day: {
-            x1: '#EEEEEE'
+            x1: '#EEEEEE',
+            x2: 'rgba(255,255,255,0.5)',
         },
         night: {
             x1: '#222831',
