@@ -71,25 +71,38 @@ Special thanks to [Rodolfo Viola](https://github.com/rodolfoviolac) for starting
 
 ## 🖼 Gallery
 
+#### Care plan flow creation
+
 ![gif showing care plan creation](https://github.com/takere/takere-hcp/blob/main/docs/gifs/creation.gif?raw=true)
+
+#### Care plan flow connections
 
 ![gif showing care plan connections](https://github.com/takere/takere-hcp/blob/main/docs/gifs/connections.gif?raw=true)
 
+#### Checking patient progress
+
 ![gif showing patient progress](https://github.com/takere/takere-hcp/blob/main/docs/gifs/progress.gif?raw=true)
 
-<div style="display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap">
+#### Home screen
 
-<img height=400 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/home.png" alt="home screen" />
+<img width=400 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/home.png" alt="home screen" />
+
+#### Care plan flow
 
 <img height=400 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/care-plan-flow.png" alt="care plan flow" />
 
+#### List of patients
+
 <img height=400 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/patients.png" alt="list of patients" />
+
+#### Patient progress
 
 <img height=400 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/progress.png" alt="patient progress" />
 
-<img height=400 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/progress-detail.png" alt="input provided by some patient" />
+#### Input provided by some patient
 
-</div>
+<img height=200 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/progress-detail.png" alt="input provided by some patient" />
+
 
 ## 🚩 Changelog
 Details about each version are documented in the [releases section](https://github.com/takere/takere-hcp/releases).
