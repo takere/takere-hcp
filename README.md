@@ -28,6 +28,9 @@ Takere for healthcare professionals (HCP) is a system that allows the definition
 |------- | ----- |
 | william@email.com |123|
 
+### ⚠ Warning
+The hosting service may have a certain delay (~ 2 min) for uploading the application so the loading of the website may have a certain delay. 
+
 ### Care plan flow
 We use drag-and-drop concept for building a care plan flow. The system shows care plan elements available for use in the flow. To include an element in the flow, the user needs to drag it and drop it in the flow (Figure 1). After that, it is necessary to connect these elements. Each connection is an arrow, indicating a dependency relation. For example, if an element Y should be generated only after an element X was completed, then the user must connect X with Y (in this order), resulting in the Figure 2.
 Each flow must begin with the ’Begin’ element, which indicates when the care plan begins and when it ends (Figure 3). If the end date is unknown, it can be marked as ’undefined end’, indicating the flow should stay active without a time to become disabled. Finally, each flow has a name, a description, and the email of the target patient.
