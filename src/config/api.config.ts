@@ -1,6 +1,11 @@
+import environment from "./environment.config";
+
+
 const ApiConfig = {
-  BASE_URL: 'http://localhost:3002/',
-  REQUEST_TIMEOUT: 10000
+  BASE_URL: environment.BASE_URL,
+  REQUEST_TIMEOUT: environment.REQUEST_TIMEOUT
 };
 
 export default ApiConfig;
+
+

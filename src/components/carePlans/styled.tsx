@@ -41,7 +41,7 @@ export const DeleteButton = styled.div`
 
 export const IconItem = styled(Icon)`
   font-size: 24px;
-  color: ${theme.colors.night.x1};
+  color: ${theme.colors.light};
   text-align: center;
   justify-content: center;
   align-content: center;

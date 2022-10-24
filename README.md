@@ -6,10 +6,10 @@
 <h1 align='center'>Takere - HCP</h1>
 <p align='center'>Takere for healthcare professionals</p>
 <p align="center">
-	<a href="https://github.com/takere/takere-hcp/actions/workflows/windows.yml"><img src="https://github.com/takere/takere-hcp/actions/workflows/windows.yml/badge.svg" alt=""></a>
-	<a href="https://github.com/takere/takere-hcp/actions/workflows/macos.yml"><img src="https://github.com/takere/takere-hcp/actions/workflows/macos.yml/badge.svg" alt=""></a>
-	<a href="https://github.com/takere/takere-hcp/actions/workflows/ubuntu.yml"><img src="https://github.com/takere/takere-hcp/actions/workflows/ubuntu.yml/badge.svg" alt=""></a>
-	<a href="https://reactnative.dev/"><img src="https://img.shields.io/badge/React-14.0+-D0008F.svg" alt="React"></a>
+	<a href="https://github.com/takere/takere-hcp/actions/workflows/windows.yml"><img src="https://github.com/takere/takere-hcp/actions/workflows/windows.yml/badge.svg" alt="windows build status"></a>
+	<a href="https://github.com/takere/takere-hcp/actions/workflows/macos.yml"><img src="https://github.com/takere/takere-hcp/actions/workflows/macos.yml/badge.svg" alt="mac os build status"></a>
+	<a href="https://github.com/takere/takere-hcp/actions/workflows/ubuntu.yml"><img src="https://github.com/takere/takere-hcp/actions/workflows/ubuntu.yml/badge.svg" alt="ubuntu build status"></a>
+	<a href="https://reactjs.org"><img src="https://img.shields.io/badge/React-14.0+-D0008F.svg" alt="React"></a>
 	<a href="https://github.com/takere/takere-hcp/blob/master/LICENSE"><img src="https://img.shields.io/github/license/takere/takere-hcp" alt="License"></a>
 	<a href="https://github.com/takere/takere-hcp/releases"><img src="https://img.shields.io/github/v/release/takere/takere-hcp" alt="Release"></a>
 </p>
@@ -18,6 +18,11 @@
 
 ## ❇ Introduction
 Takere for healthcare professionals (HCP) is a system that allows the definition of a care plan along with monitoring patients’ progress. It is developed using [React](https://reactjs.org), which is a framework for creating websites using component-oriented programming.
+
+### Login information
+| Email| Password |
+|------- | ----- |
+| william@email.com |123|
 
 ### Care plan flow
 We use drag-and-drop concept for building a care plan flow. The system shows care plan elements available for use in the flow. To include an element in the flow, the user needs to drag it and drop it in the flow (Figure 1). After that, it is necessary to connect these elements. Each connection is an arrow, indicating a dependency relation. For example, if an element Y should be generated only after an element X was completed, then the user must connect X with Y (in this order), resulting in the Figure 2.
@@ -52,22 +57,39 @@ Special thanks to [Rodolfo Viola](https://github.com/rodolfoviolac) for starting
 
 ## ✔ Requirements
 
-```
-Coming soon
-```
+- [NodeJS](https://nodejs.org).
+
 
 ## ℹ How to run
 
-```
-Coming soon
-```
+1. Go to config folder and configure the environment (configuration files are in the environments folder while environment selection is defined in environment.config.ts);
+
+2. Open a terminal in the project root and run the following command: `npm start`;
+
+3. Now open your browser and go to http://localhost:3000.
+
 
 ## 🖼 Gallery
 
-```
-Coming soon
-```
+![gif showing care plan creation](https://github.com/takere/takere-hcp/blob/main/docs/gifs/creation.gif?raw=true)
 
+![gif showing care plan connections](https://github.com/takere/takere-hcp/blob/main/docs/gifs/connections.gif?raw=true)
+
+![gif showing patient progress](https://github.com/takere/takere-hcp/blob/main/docs/gifs/progress.gif?raw=true)
+
+<div style="display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap">
+
+<img height=400 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/home.png" alt="home screen" />
+
+<img height=400 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/care-plan-flow.png" alt="care plan flow" />
+
+<img height=400 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/patients.png" alt="list of patients" />
+
+<img height=400 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/progress.png" alt="patient progress" />
+
+<img height=400 src="https://raw.githubusercontent.com/takere/takere-hcp/main/docs/images/screens/progress-detail.png" alt="input provided by some patient" />
+
+</div>
 
 ## 🚩 Changelog
 Details about each version are documented in the [releases section](https://github.com/takere/takere-hcp/releases).
