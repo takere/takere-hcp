@@ -71,9 +71,11 @@ Special thanks to [Rodolfo Viola](https://github.com/rodolfoviolac) for starting
 
 1. Go to config folder and configure the environment (configuration files are in the environments folder while environment selection is defined in environment.config.ts);
 
-2. Open a terminal in the project root and run the following command: `npm start`;
+2. Open a terminal in the project root and run the following command: `npm install --legacy-peer-deps`;
 
-3. Now open your browser and go to http://localhost:3000.
+3. Run the following command: `npm start`;
+
+4. Now open your browser and go to http://localhost:3000.
 
 
 ## 🖼 Gallery
